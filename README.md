@@ -6,3 +6,10 @@ This is a game I will use to learn game development. The initial idea is very ba
 
 ## Game concept
 You can check the concept of the game on this [document](https://docs.google.com/document/d/1VEOTnC9N4-9KWOarlTR5_SHRbzlGuOpvtSXMWkIF8vs/edit?usp=sharing).
+
+## Development
+
+### Start local server
+```
+npm run start
+```
