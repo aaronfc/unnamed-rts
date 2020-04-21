@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import logoImg from "./assets/logo.png";
+import Villager from "./villager.js";
 
 const config = {
   type: Phaser.AUTO,
@@ -25,21 +25,11 @@ function create() {
   mainBuilding.setOrigin(0,0);
   
   // Create Adan
-  var villagerPosition = [
+  var villagerPosition = new Phaser.Math.Vector2(
     mainBuilding.x + mainBuilding.width + 10,
     mainBuilding.y + mainBuilding.height + 10
-  ];
-  this.villager = this.add.circle(villagerPosition[0], villagerPosition[1], 5, "0x0000FF");
-  this.villager.setInteractive();
-  this.villager.destination = villagerPosition;
-  this.villager.selected = false;
-  this.ignoreFirstClick = false;
-  this.villager.on('pointerdown', () => {
-    this.villager.setStrokeStyle(1, "0xFF0000");
-    this.villager.selected = true;
-    this.ignoreFirstClick = true;
-  });
-
+  );
+  this.villager = new Villager(this, villagerPosition.x, villagerPosition.y);
   // Input
   this.input.mouse.disableContextMenu();
   this.input.on('pointerdown', (pointer) => {
@@ -47,34 +37,20 @@ function create() {
         {
             if (this.villager.selected)
             {
-                this.villager.destination = [pointer.x, pointer.y];
+                this.villager.destination = new Phaser.Math.Vector2(pointer.x, pointer.y);
                 this.villager.selected = false;
-                this.villager.setStrokeStyle(0);
             }
         }
         if (pointer.leftButtonDown())
         {
-            if (this.villager.selected && !this.ignoreFirstClick)
+            if (this.villager.selected)
             {
                 this.villager.selected = false;
-                this.villager.setStrokeStyle(0);
             }
-            this.ignoreFirstClick = false;
         }
     });
 }
 
 function update() {
-  //this.villager.x += Math.random();
-  //this.villager.x -= Math.random();
-  //this.villager.y += Math.random();
-  //this.villager.y -= Math.random();
-  var villagerDistanceToDestinationX = Math.abs(this.villager.destination[0] - this.villager.x);
-  var villagerDistanceToDestinationY = Math.abs(this.villager.destination[1] - this.villager.y);
-  if (villagerDistanceToDestinationX > 1) {
-    this.villager.x += this.villager.destination[0] > this.villager.x ? 1 : -1;
-  }
-  if (villagerDistanceToDestinationY > 1) {
-    this.villager.y += this.villager.destination[1] > this.villager.y ? 1 : -1;
-  }
+  this.villager.update();
 }
