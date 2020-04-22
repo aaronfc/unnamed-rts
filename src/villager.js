@@ -14,7 +14,6 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Events
     this.setInteractive();
     this.on('pointerdown', (pointer, localX, localY, event) => {
-      console.log("villager clicked");
       this.selected = !this.selected;
       event.stopPropagation();
     });
