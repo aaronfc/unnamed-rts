@@ -34,13 +34,30 @@ function create() {
     this.villagers.push(new Villager(this, newPosition.x, newPosition.y));
     event.stopPropagation();
   });
-  
+
   // Create Adan
   var newPosition = new Phaser.Math.Vector2(
     mainBuilding.x + mainBuilding.width + 10,
     mainBuilding.y + mainBuilding.height + 10
   );
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y));
+
+  // Create resource mine
+  var resourceMine = this.add.rectangle(400, 400, 30, 30, "0xFF00FF");
+  resourceMine.setOrigin(0,0);
+  resourceMine.setInteractive();
+  resourceMine.on('pointerdown', (pointer, localX, localY, event) => {
+    var isRightClick = pointer.button == 2;
+    var selectedVillagers = this.villagers.filter(v => v.selected);
+    if (selectedVillagers.length > 0 && isRightClick) {
+      selectedVillagers.forEach(villager => {
+        villager.destination = new Phaser.Math.Vector2(resourceMine.x, resourceMine.y)
+        villager.selected = false;
+      });
+    }
+    event.stopPropagation();
+  });
+
   // Input
   this.input.mouse.disableContextMenu();
   this.input.on('pointerdown', (pointer) => {
