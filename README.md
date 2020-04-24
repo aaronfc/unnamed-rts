@@ -9,6 +9,9 @@ You can check the concept of the game on this [document](https://docs.google.com
 
 ## Development
 
+### Notes
+Notes can be found [here](dev-notes.md).
+
 ### Start local server
 ```
 npm run start
