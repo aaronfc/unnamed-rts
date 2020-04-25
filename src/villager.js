@@ -6,6 +6,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Circle
     super(scene, x, y, 5, 0, 360, false, "0x0000FF", 1);
     scene.add.existing(this);
+    scene.physics.add.existing(this, 0);
+    this.body.setCollideWorldBounds(true);
 
     // Properties
     this.selected = false;
@@ -18,6 +20,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
       amount: 0
     }
     this.events = scene.events;
+    this.scene = scene;
 
     // Input Events
     this.setInteractive();
@@ -41,6 +44,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
       var villagerDistanceToDestinationX = Math.abs(this.destination.x - this.x);
       var villagerDistanceToDestinationY = Math.abs(this.destination.y - this.y);
       if (villagerDistanceToDestinationY < 1 && villagerDistanceToDestinationX < 1) {
+        this.body.setVelocity(0, 0);
         this.destination = null;
       }
     }
@@ -55,7 +59,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
         var distanceToResourceX = Math.abs(this.target.x - this.x);
         var distanceToResourceY = Math.abs(this.target.y - this.y);
-        if (distanceToResourceX < 1 && distanceToResourceY < 1) {
+        if (distanceToResourceX <= this.target.width/2 + this.width/2
+          && distanceToResourceY <= this.target.height/2 + this.height/2) {
           // Collect
           this.bagpack.amount += 1;
           // TODO Discount amount from resource
@@ -67,7 +72,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
         var distanceToDepositX = Math.abs(this.closestDeposit.x - this.x);
         var distanceToDepositY = Math.abs(this.closestDeposit.y - this.y);
-        if (distanceToDepositX < 1 && distanceToDepositY < 1) {
+        if (distanceToDepositX <= this.closestDeposit.width/2 + this.width/2
+          && distanceToDepositY <= this.closestDeposit.height/2 + this.height/2) {
           // Unload
           this.bagpack.amount = 0;
         }
@@ -79,15 +85,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
   // Private functions
   
   _moveCloserTo(x, y) {
-    var distanceX = Math.abs(x - this.x);
-    var distanceY = Math.abs(y - this.y);
-
-    if (distanceX >= 1) {
-      this.x += x > this.x ? 1 : -1;
-    }
-    if (distanceY >= 1) {
-      this.y += y > this.y ? 1 : -1;
-    }
+    this.scene.physics.moveTo(this, x, y, 50);
   }
 
   // Public functions
