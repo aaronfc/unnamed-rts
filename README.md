@@ -10,7 +10,10 @@ You can check the concept of the game on this [document](https://docs.google.com
 ## Development
 
 ### Notes
-Notes can be found [here](dev-notes.md).
+Notes can be found [here](docs/dev-notes.md).
+
+### Tasks
+Tasks can be found [tasks](docs/tasks.md).
 
 ### Start local server
 ```
