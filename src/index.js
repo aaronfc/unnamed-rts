@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Villager from "./villager.js";
 import Resource from "./resource.js";
+import TownCenter from "./town_center.js";
 
 const config = {
   type: Phaser.AUTO,
@@ -31,26 +32,16 @@ function create() {
   this.buildings = [];
   this.resources = [];
 
-  // Create main building
-  var mainBuilding = this.add.rectangle(100, 50, 100, 50, "0x0000FF");
-  this.physics.add.existing(mainBuilding, 1); // This needs to happen after positioning the object. If not we need to call the .refreshBody() method.
-  mainBuilding.setInteractive();
-  mainBuilding.on('pointerdown', (pointer, localX, localY, event) => {
-    var newPosition = new Phaser.Math.Vector2(
-      mainBuilding.x + mainBuilding.width + 10,
-      mainBuilding.y + mainBuilding.height + 10
-    );
-    this.villagers.push(new Villager(this, newPosition.x, newPosition.y, mainBuilding));
-    event.stopPropagation();
-  });
-  this.buildings.push(mainBuilding);
+  // Create Town Center
+  var townCenter = new TownCenter(this, 100, 50);
+  this.buildings.push(townCenter);
 
   // Create Adan
   var newPosition = new Phaser.Math.Vector2(
-    mainBuilding.x + mainBuilding.width + 10,
-    mainBuilding.y + mainBuilding.height + 10
+    townCenter.x + townCenter.width + 10,
+    townCenter.y + townCenter.height + 10
   );
-  this.villagers.push(new Villager(this, newPosition.x, newPosition.y, mainBuilding));
+  this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
   // Resource
   var resource = new Resource(this, 200, 200);

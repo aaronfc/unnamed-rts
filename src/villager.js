@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class Villager extends Phaser.GameObjects.Arc {
 
-  constructor(scene, x, y, mainBuilding) {
+  constructor(scene, x, y, townCenter) {
     // Circle
     super(scene, x, y, 5, 0, 360, false, "0x0000FF", 1);
     scene.add.existing(this);
@@ -12,7 +12,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Properties
     this.selected = false;
     this.destination = new Phaser.Math.Vector2(x, y);
-    this.closestDeposit = mainBuilding; // TODO Calculate this somewhere else
+    this.closestDeposit = townCenter; // TODO Calculate this somewhere else
     this.target = null;
     this.status = 'idle';
     this.bagpack = {
