@@ -1,9 +1,10 @@
 # Tasks
 
 ## Pipeline
-- [ ] Extract building to a separate class
-- [ ] Check if `.update()` has to be manually called or it's already called by adding the GameObject to the scene.
-- [ ] Migrate "movement" to a "walking-to-position" status.
+- [X] Extract building to a separate class
+- [X] Check if `.update()` has to be manually called or it's already called by adding the GameObject to the scene. - We need it!
+- [X] Migrate "movement" to a "walking-to-position" status.
+- [ ] Refactor: Generify the walking to "somewhere" behaviour.
 - [ ] Resource depletion.
 	- Resource representation: for the moment play with opacity.
 	- When empty, resource should be destroyed.

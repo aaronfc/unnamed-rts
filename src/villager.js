@@ -37,7 +37,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
   update() {
 
     // Movement
-    if (this.destination != null) {
+    if (this.status == "walking-to-destination") {
 
       this._moveCloserTo(this.destination.x, this.destination.y);
 
@@ -46,6 +46,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
       if (villagerDistanceToDestinationY < 1 && villagerDistanceToDestinationX < 1) {
         this.body.setVelocity(0, 0);
         this.destination = null;
+        this.status = 'idle';
       }
     }
 
@@ -108,7 +109,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
   moveToPosition(position) {
     this.destination = new Phaser.Math.Vector2(position.x, position.y);
-    this.status = 'moving';
+    this.status = 'walking-to-destination';
     this.target = null;
     this.unselect();
   }
