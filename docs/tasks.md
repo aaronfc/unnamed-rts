@@ -4,11 +4,12 @@
 - [X] Extract building to a separate class
 - [X] Check if `.update()` has to be manually called or it's already called by adding the GameObject to the scene. - We need it!
 - [X] Migrate "movement" to a "walking-to-position" status.
-- [ ] Refactor: Generify the walking to "somewhere" behaviour.
+- [X] Refactor: Generify the walking to "somewhere" behaviour. - Yes, we did it but only the first phase.
 - [ ] Resource depletion.
 	- Resource representation: for the moment play with opacity.
 	- When empty, resource should be destroyed.
 	- Implement logic on villagers for when Resource is destroyed.
+- [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behviour.
 - [ ] GUI
 	- Create "Game Counters / Score"
 	- Number of villagers
