@@ -13,10 +13,11 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.selected = false;
     this.destination = new Phaser.Math.Vector2(x, y);
     this.closestDeposit = townCenter; // TODO Calculate this somewhere else
+    this.gatherCapacity = 1;
     this.target = null;
     this.status = 'idle';
     this.bagpack = {
-      maxCapacity: 300,
+      maxCapacity: 10,
       amount: 0
     }
     this.events = scene.events;
@@ -52,16 +53,21 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Collection
     if (this.status == "collecting") {
       
+      // Note: Here target must be Resource
+      
       // If villager is not full it he collects
-      if (this.bagpack.amount < this.bagpack.maxCapacity) {
+      if (this.bagpack.amount < this.bagpack.maxCapacity && this.target.amount > 0) {
 
         if (this._isAsClosestAsPossibleTo(this.target, this.target.width/2 + this.width/2, this.target.height/2 + this.height/2)) {
+          // Stop movement
           this.body.setVelocity(0, 0);
-          // TODO Discount amount from resource
-          // Collect
-          this.bagpack.amount += 1;
+          // Collect resource
+          var amountConsumed = this.target.consume(this.gatherCapacity);
+          this.bagpack.amount += amountConsumed;
+          if (amountConsumed < this.gatherCapacity) {
+            this.target = null; // TODO Calculate next resource
+          }
         } else {
-          // Note: Here target must be Resource
           this._moveCloserTo(this.target.x, this.target.y);
         }
 
@@ -72,11 +78,15 @@ export default class Villager extends Phaser.GameObjects.Arc {
           // Unload
           // TODO Make it take some time. ⚠️  If logic is not modified after unloading a little of the resource, the villager will go back to resource mine.
           this.bagpack.amount = 0;
+
         } else {
           // Note: Here target must be Resource
           this._moveCloserTo(this.closestDeposit.x, this.closestDeposit.y);
         }
 
+        if (this.bagpack.amount == 0 && this.target.amount == 0) {
+          this.moveToPosition(this.closestDeposit.getNewVillagerPosition());
+        }
       }
     }
   }
@@ -101,6 +111,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Start listening for commands
     this.events.once('resource-right-clicked', this.startCollectingResource, this);
     this.events.once('map-right-clicked', this.moveToPosition, this);
+    this.events.once('map-left-or-middle-clicked', this.unselect, this);
   }
 
   unselect() {

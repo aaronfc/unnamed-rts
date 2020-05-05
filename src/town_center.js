@@ -13,10 +13,7 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
     // Events
     this.setInteractive();
     this.on('pointerdown', (pointer, localX, localY, event) => {
-      var newPosition = new Phaser.Math.Vector2(
-        this.x + this.width + 10,
-        this.y + this.height + 10
-      );
+      var newPosition = this.getNewVillagerPosition();
       // TODO Maybe remove this reference to scene's villagers array and also dependency on Villager entity.
       scene.villagers.push(new Villager(scene, newPosition.x, newPosition.y, this));
       event.stopPropagation();
@@ -26,4 +23,10 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
   update() {
   }
 
+  getNewVillagerPosition() {
+    return new Phaser.Math.Vector2(
+      this.x + this.width/2+ 10,
+      this.y + this.height/2 + 10
+    );
+  }
 }

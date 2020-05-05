@@ -37,21 +37,29 @@ function create() {
   this.buildings.push(townCenter);
 
   // Create Adan
-  var newPosition = new Phaser.Math.Vector2(
-    townCenter.x + townCenter.width + 10,
-    townCenter.y + townCenter.height + 10
-  );
+  let newPosition = townCenter.getNewVillagerPosition();
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
   // Resource
-  var resource = new Resource(this, 200, 200);
+  var resource = new Resource(this, 200, 200, 100);
   this.resources.push(resource);
 
   // Input
   this.input.mouse.disableContextMenu();
   this.input.on('pointerdown', (pointer) => {
-    this.events.emit('map-right-clicked', pointer);
+    if (pointer.rightButtonDown()) {
+      this.events.emit('map-right-clicked', pointer);
+    } else {
+      this.events.emit('map-left-or-middle-clicked', pointer)
+    }
   });
+
+  // Events
+  this.events.on('resource-destroyed', (resource) => {
+    this.resources = this.resources.filter( r => r != resource);
+    console.log("Resource destroyed!");
+    console.log(this.resources);
+  }, this);
 
   // Physics / Collisions
   this.physics.add.collider(this.villagers, this.villagers);
@@ -61,5 +69,6 @@ function create() {
 
 function update() {
   this.villagers.forEach( v => v.update());
+  this.resources.forEach( r => r.update());
 }
 

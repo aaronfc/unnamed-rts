@@ -1,14 +1,15 @@
-# Tasks
+## Tasks
 
 ## Pipeline
 - [X] Extract building to a separate class
 - [X] Check if `.update()` has to be manually called or it's already called by adding the GameObject to the scene. - We need it!
 - [X] Migrate "movement" to a "walking-to-position" status.
 - [X] Refactor: Generify the walking to "somewhere" behaviour. - Yes, we did it but only the first phase.
-- [ ] Resource depletion.
+- [X] Resource depletion.
 	- Resource representation: for the moment play with opacity.
 	- When empty, resource should be destroyed.
 	- Implement logic on villagers for when Resource is destroyed.
+- [ ] Make game bigger for stream
 - [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behviour.
 - [ ] GUI
 	- Create "Game Counters / Score"
@@ -46,8 +47,12 @@
 	- Game (everything done until now)
 
 ## Bugs 🐛 
-- [ ] Villagers are overlapping one with eachother when crowded.
+- [ ] 🐛 Villagers are overlapping one with eachother when crowded.
 	- Maybe we can create some simplified test? To see if it's because of Arcade physics and find possible solutions.
+- [ ] 🐛 Villagers moving infinitely upon collision
+- [ ] 🐛 Villagers getting "stuck" while consuming resource. Not consuming and not moving. Maybe there is a gap between them and the resource but the movement is not getting them closer?
+- [ ] 🐛 Villagers might start sliding while consuming resource. Maybe it's because of collisions?
+- [ ] 🐛 Villager might get into an unknown status when trying to gather resource and resource is destroyed. It was detected while doing a quick test by generating many villagers and sending them to consume the same resource. All of them behaved correctly (going back to initial position) except from one, which was "stuck" close to the already non-existent resource.
 
 
 # References
