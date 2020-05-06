@@ -9,13 +9,18 @@
 	- Resource representation: for the moment play with opacity.
 	- When empty, resource should be destroyed.
 	- Implement logic on villagers for when Resource is destroyed.
-- [ ] Make game bigger for stream
-- [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behviour.
-- [ ] GUI
+- [X] Make game bigger for stream
+- [X] GUI
 	- Create "Game Counters / Score"
 	- Number of villagers
 	- Game time
 	- Amount of resource
+- [ ] GUI beutify
+	- Text is blurry because of the canvas manual resizing done in index.html
+	- Time needs to be formatted properly so that we have minutes and hours
+	- Increase depth level so that GUI is over the rest of the game
+- [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behviour.
+- [ ] Bugfixing?
 - [ ] Main Building / Villagers creation
 	- Display actions popup.
 	- Add button to create villager.

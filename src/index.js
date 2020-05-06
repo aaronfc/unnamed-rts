@@ -28,6 +28,13 @@ function preload() {}
 
 function create() {
 
+  this.counters = {
+    villagers: 1,
+    gameTime: 0,
+    resource: 0,
+  };
+  console.log(this);
+  this.gui = this.add.text(this.sys.game.canvas.width - 140, 0, formatGuiText(this.counters), {color: '#000000', fontSize: 14});
   this.villagers = [];
   this.buildings = [];
   this.resources = [];
@@ -60,6 +67,12 @@ function create() {
     console.log("Resource destroyed!");
     console.log(this.resources);
   }, this);
+  this.events.on('new-villager-created', (villager) => {
+    this.counters.villagers += 1;
+  }, this);
+  this.events.on('resource-deposit-increased', (amount) => {
+    this.counters.resource += amount;
+  }, this);
 
   // Physics / Collisions
   this.physics.add.collider(this.villagers, this.villagers);
@@ -67,8 +80,15 @@ function create() {
   this.physics.add.collider(this.villagers, this.resources);
 }
 
-function update() {
+function update(time, delta) {
+  this.counters.gameTime = Math.floor(time/1000);
   this.villagers.forEach( v => v.update());
   this.resources.forEach( r => r.update());
+  this.gui.setText(formatGuiText(this.counters));
 }
 
+function formatGuiText(counters) {
+  return 'resource: ' + counters.resource + ' \n'
+      + 'villagers: ' + counters.villagers + ' \n'
+      + 'game time: ' + counters.gameTime + 's';
+}

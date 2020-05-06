@@ -77,6 +77,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
           this.body.setVelocity(0, 0);
           // Unload
           // TODO Make it take some time. ⚠️  If logic is not modified after unloading a little of the resource, the villager will go back to resource mine.
+          this.closestDeposit.deposit(this.bagpack.amount);
           this.bagpack.amount = 0;
 
         } else {

@@ -10,13 +10,20 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
     scene.add.existing(this);
     scene.physics.add.existing(this, 1); // This needs to happen after positioning the object. If not we need to call the .refreshBody() method.
 
+    // Properties
+    this.events = scene.events;
+
     // Events
     this.setInteractive();
     this.on('pointerdown', (pointer, localX, localY, event) => {
-      var newPosition = this.getNewVillagerPosition();
-      // TODO Maybe remove this reference to scene's villagers array and also dependency on Villager entity.
-      scene.villagers.push(new Villager(scene, newPosition.x, newPosition.y, this));
-      event.stopPropagation();
+      if (pointer.leftButtonDown()) {
+        var newPosition = this.getNewVillagerPosition();
+        // TODO Maybe remove this reference to scene's villagers array and also dependency on Villager entity.
+        let newVillager = new Villager(scene, newPosition.x, newPosition.y, this);
+        scene.villagers.push(newVillager);
+        this.events.emit('new-villager-created', newVillager);
+        event.stopPropagation();
+      }
     });
   }
 
@@ -28,5 +35,9 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
       this.x + this.width/2+ 10,
       this.y + this.height/2 + 10
     );
+  }
+
+  deposit(amount) {
+    this.events.emit('resource-deposit-increased', amount, this);
   }
 }
