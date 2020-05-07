@@ -15,18 +15,24 @@
 	- Number of villagers
 	- Game time
 	- Amount of resource
-- [ ] GUI beutify
+- [X] Make GUI more fancy
 	- Text is blurry because of the canvas manual resizing done in index.html
 	- Time needs to be formatted properly so that we have minutes and hours
 	- Increase depth level so that GUI is over the rest of the game
-- [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behviour.
-- [ ] Bugfixing?
+	- Add icons
+- [ ] Bugfixing / Debugging villagers movement issues
+- [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behaviour.
+- [ ] Slow down the collecting action
 - [ ] Main Building / Villagers creation
 	- Display actions popup.
 	- Add button to create villager.
 	- Make villager creation to cost resource and time
 	- Avoid villagers stacking / overlapping on creation
 	- Show basic info on villagers enqueued for creation
+- [ ] GUI revamp
+	- Use smaller icons (currently 512x512, which is too big)
+	- Get an icon for time
+	- Add number formatting to resource amount (10,000 or maybe 10k)
 - [ ] Create Enemy entity
 	- [ ] Make enemies appear randomly (time and space)
 	- [ ] Make enemies logic to attack the villagers

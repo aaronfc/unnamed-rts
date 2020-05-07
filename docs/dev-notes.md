@@ -10,3 +10,8 @@ Some ideas:
 - Lower the velocity to lower than 50 or increase it to see if it happens more or lessthan now.
 - Stop calling moveTo on every update loop. Maybe this is generating the issue. Take into account that this might break the "correcting" behaviour after villagers collide with each other. Maybe we can check if it was colliding and if not then move.
 - Villagers pushing one to another is nice, but after a villager stops pushing another one the second one should stop moving immediately.
+
+
+## On calling update
+Apparently if a GameObject has a `preUpdate` method, then the it will be added to the update list automatically.
+- 💡 Maybe we can test that, on villagers or any other entity. But... What should be done in preUpdate and what in update?

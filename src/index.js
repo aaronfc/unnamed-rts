@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Villager from "./villager.js";
 import Resource from "./resource.js";
 import TownCenter from "./town_center.js";
+import GUI from "./gui.js";
 
 const config = {
   type: Phaser.AUTO,
@@ -12,7 +13,7 @@ const config = {
       debug: false
     }
   },
-  width: 800,
+  width: 916, // This is the real size in pixels of half my screen so that we do not have blurry text after 100% width resize in index.html
   height: 600,
   scene: {
     preload: preload,
@@ -24,7 +25,10 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-function preload() {}
+function preload() {
+  this.load.image('villager-icon', 'assets/villager-icon.png');
+  this.load.image('resource-icon', 'assets/resource-icon.png');
+}
 
 function create() {
 
@@ -33,8 +37,7 @@ function create() {
     gameTime: 0,
     resource: 0,
   };
-  console.log(this);
-  this.gui = this.add.text(this.sys.game.canvas.width - 140, 0, formatGuiText(this.counters), {color: '#000000', fontSize: 14});
+  this.gui = new GUI(this, this.sys.game.canvas.width - 270, 10, this.counters);
   this.villagers = [];
   this.buildings = [];
   this.resources = [];
@@ -64,8 +67,6 @@ function create() {
   // Events
   this.events.on('resource-destroyed', (resource) => {
     this.resources = this.resources.filter( r => r != resource);
-    console.log("Resource destroyed!");
-    console.log(this.resources);
   }, this);
   this.events.on('new-villager-created', (villager) => {
     this.counters.villagers += 1;
@@ -84,7 +85,8 @@ function update(time, delta) {
   this.counters.gameTime = Math.floor(time/1000);
   this.villagers.forEach( v => v.update());
   this.resources.forEach( r => r.update());
-  this.gui.setText(formatGuiText(this.counters));
+  //this.gui.setText(formatGuiText(this.counters));
+  this.gui.update();
 }
 
 function formatGuiText(counters) {
