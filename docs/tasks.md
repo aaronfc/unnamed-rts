@@ -67,6 +67,8 @@
 	- Maybe we can create some simplified test? To see if it's because of Arcade physics and find possible solutions.
 	- More difficult to reproduce probably since we started using `physics.move` method.
 	- Still happened, though... And can't find a way to reproduce.
+	- After talking on Discord with @samme it seems like my initial guess was right. It seems a limitation on how Arcade Physics resolve collisions. They rely on a "Projection Method" which does not take into account any other collision. The only suggestion is to move to MatterJS physiscs engine.
+	- Some MatterJS + Phaser3 tutorial here: https://itnext.io/modular-game-worlds-in-phaser-3-tilemaps-4-meet-matter-js-abf4dfa65ca1
 - [ ] #3 🐛 Villagers getting "stuck" while consuming resource. Not consuming and not moving. Maybe there is a gap between them and the resource but the movement is not getting them closer?
 - [ ] #4 🐛 Villager might get into an unknown status when trying to gather resource and resource is destroyed. It was detected while doing a quick test by generating many villagers and sending them to consume the same resource. All of them behaved correctly (going back to initial position) except from one, which was "stuck" close to the already non-existent resource. ⚠️ This might be related to #3.
 
