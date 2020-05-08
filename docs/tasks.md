@@ -20,7 +20,12 @@
 	- Time needs to be formatted properly so that we have minutes and hours
 	- Increase depth level so that GUI is over the rest of the game
 	- Add icons
-- [ ] Bugfixing / Debugging villagers movement issues
+- [.] Bugfixing / Debugging villagers movement issues
+	- [X] #2 🐛 Villagers moving infinitely upon collision
+		- Set villagers as inmovable didn't work. Because when two bodies are immovable they won't collide (which kind-of makes sense).
+		- Setting `drag` fixed the issue. But we spent a lot of time trying to set it up because we missunderstood the value passed to the `setDrag` method, it's not a percentage but an amount of pixel.
+- [ ] Add reference to Phaser3 in README.
+- [ ] Why is text still a little blurry?
 - [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behaviour.
 - [ ] Slow down the collecting action
 - [ ] Main Building / Villagers creation
@@ -58,12 +63,12 @@
 	- Game (everything done until now)
 
 ## Bugs 🐛 
-- [ ] 🐛 Villagers are overlapping one with eachother when crowded.
+- [ ] #1 🐛 Villagers are overlapping one with eachother when crowded.
 	- Maybe we can create some simplified test? To see if it's because of Arcade physics and find possible solutions.
-- [ ] 🐛 Villagers moving infinitely upon collision
-- [ ] 🐛 Villagers getting "stuck" while consuming resource. Not consuming and not moving. Maybe there is a gap between them and the resource but the movement is not getting them closer?
-- [ ] 🐛 Villagers might start sliding while consuming resource. Maybe it's because of collisions?
-- [ ] 🐛 Villager might get into an unknown status when trying to gather resource and resource is destroyed. It was detected while doing a quick test by generating many villagers and sending them to consume the same resource. All of them behaved correctly (going back to initial position) except from one, which was "stuck" close to the already non-existent resource.
+	- More difficult to reproduce probably since we started using `physics.move` method.
+	- Still happened, though... And can't find a way to reproduce.
+- [ ] #3 🐛 Villagers getting "stuck" while consuming resource. Not consuming and not moving. Maybe there is a gap between them and the resource but the movement is not getting them closer?
+- [ ] #4 🐛 Villager might get into an unknown status when trying to gather resource and resource is destroyed. It was detected while doing a quick test by generating many villagers and sending them to consume the same resource. All of them behaved correctly (going back to initial position) except from one, which was "stuck" close to the already non-existent resource. ⚠️ This might be related to #3.
 
 
 # References

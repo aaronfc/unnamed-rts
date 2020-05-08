@@ -10,7 +10,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   },
   width: 916, // This is the real size in pixels of half my screen so that we do not have blurry text after 100% width resize in index.html
@@ -33,7 +33,7 @@ function preload() {
 function create() {
 
   this.counters = {
-    villagers: 1,
+    villagers: 0,
     gameTime: 0,
     resource: 0,
   };
@@ -51,7 +51,7 @@ function create() {
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
   // Resource
-  var resource = new Resource(this, 200, 200, 100);
+  var resource = new Resource(this, 200, 200, 1000);
   this.resources.push(resource);
 
   // Input
@@ -79,6 +79,16 @@ function create() {
   this.physics.add.collider(this.villagers, this.villagers);
   this.physics.add.collider(this.villagers, this.buildings);
   this.physics.add.collider(this.villagers, this.resources);
+
+  // Testing movement
+  for (var i=1; i< 20; i++) {
+    this.villagers.push(new Villager(this, 100+i*11, 100, townCenter));
+    this.villagers[i].startCollectingResource(this.resources[0]);
+  }
+
+  //this.villagers[1].body.setVelocity(-100, 0);
+  //this.villagers[1].moveToPosition({x: 200, y: 300});
+  //this.villagers[2].body.setVelocity(-500, 0);
 }
 
 function update(time, delta) {
