@@ -8,7 +8,8 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
     // Create resource mine
     super(scene, x, y, 100, 50, "0x0000FF");
     scene.add.existing(this);
-    scene.physics.add.existing(this, 1); // This needs to happen after positioning the object. If not we need to call the .refreshBody() method.
+    scene.matter.add.gameObject(this);
+    this.setStatic(true);
 
     // Properties
     this.events = scene.events;

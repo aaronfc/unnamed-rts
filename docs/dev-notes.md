@@ -15,3 +15,10 @@ Some ideas:
 ## On calling update
 Apparently if a GameObject has a `preUpdate` method, then the it will be added to the update list automatically.
 - 💡 Maybe we can test that, on villagers or any other entity. But... What should be done in preUpdate and what in update?
+
+## Arcade Physiscs engine limitations
+Why collisions didn't work sometimes and some small gameobjects get overlapped when they should? This is basically a known limitation on the Arcade Physics game.
+Collision resolution mechanism Projection Movement:
+- Measures how much of an entity went "inside" another one.
+- Based on this measure it calculates new position for the collision resolution.
+- ⚠️  This new position is not considered for further collisions.

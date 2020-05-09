@@ -8,9 +8,10 @@ const config = {
   type: Phaser.AUTO,
   parent: "phaser-example",
   physics: {
-    default: 'arcade',
-    arcade: {
-      debug: true
+    default: 'matter',
+    matter: {
+      debug: false,
+      gravity: { x: 0, y: 0}
     }
   },
   width: 916, // This is the real size in pixels of half my screen so that we do not have blurry text after 100% width resize in index.html
@@ -75,32 +76,17 @@ function create() {
     this.counters.resource += amount;
   }, this);
 
-  // Physics / Collisions
-  this.physics.add.collider(this.villagers, this.villagers);
-  this.physics.add.collider(this.villagers, this.buildings);
-  this.physics.add.collider(this.villagers, this.resources);
-
   // Testing movement
-  for (var i=1; i< 20; i++) {
-    this.villagers.push(new Villager(this, 100+i*11, 100, townCenter));
-    this.villagers[i].startCollectingResource(this.resources[0]);
-  }
-
-  //this.villagers[1].body.setVelocity(-100, 0);
-  //this.villagers[1].moveToPosition({x: 200, y: 300});
-  //this.villagers[2].body.setVelocity(-500, 0);
+  //for (var i=1; i< 20; i++) {
+  //  this.villagers.push(new Villager(this, 100+i*11, 100, townCenter));
+  //  this.villagers[i].startCollectingResource(this.resources[0]);
+  //}
 }
 
 function update(time, delta) {
   this.counters.gameTime = Math.floor(time/1000);
+  this.counters.villagers = this.villagers.length;
   this.villagers.forEach( v => v.update());
   this.resources.forEach( r => r.update());
-  //this.gui.setText(formatGuiText(this.counters));
   this.gui.update();
-}
-
-function formatGuiText(counters) {
-  return 'resource: ' + counters.resource + ' \n'
-      + 'villagers: ' + counters.villagers + ' \n'
-      + 'game time: ' + counters.gameTime + 's';
 }

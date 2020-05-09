@@ -20,20 +20,29 @@
 	- Time needs to be formatted properly so that we have minutes and hours
 	- Increase depth level so that GUI is over the rest of the game
 	- Add icons
-- [.] Bugfixing / Debugging villagers movement issues
+- [X] Bugfixing / Debugging villagers movement issues
+	- [X] #1 🐛 Villagers are overlapping one with eachother when crowded.
+		- Maybe we can create some simplified test? To see if it's because of Arcade physics and find possible solutions.
+		- More difficult to reproduce probably since we started using `physics.move` method.
+		- Still happened, though... And can't find a way to reproduce.
+		- After talking on Discord with @samme it seems like my initial guess was right. It seems a limitation on how Arcade Physics resolve collisions. They rely on a "Projection Method" which does not take into account any other collision. The only suggestion is to move to MatterJS physiscs engine.
+		- Some MatterJS + Phaser3 tutorial here: https://itnext.io/modular-game-worlds-in-phaser-3-tilemaps-4-meet-matter-js-abf4dfa65ca1
 	- [X] #2 🐛 Villagers moving infinitely upon collision
 		- Set villagers as inmovable didn't work. Because when two bodies are immovable they won't collide (which kind-of makes sense).
 		- Setting `drag` fixed the issue. But we spent a lot of time trying to set it up because we missunderstood the value passed to the `setDrag` method, it's not a percentage but an amount of pixel.
-- [ ] Add reference to Phaser3 in README.
-- [ ] Why is text still a little blurry?
-- [ ] Refactor: Generify the moveCloserIfNotAsClosestAsPossible behaviour.
-- [ ] Slow down the collecting action
+	- [X] #4 🐛 Villager might get into an unknown status when trying to gather resource and resource is destroyed. It was detected while doing a quick test by generating many villagers and sending them to consume the same resource. All of them behaved correctly (going back to initial position) except from one, which was "stuck" close to the already non-existent resource. ⚠️ This might be related to #3.
+	- [X] #3 🐛 Villagers getting "stuck" while consuming resource. Not consuming and not moving. Maybe there is a gap between them and the resource but the movement is not getting them closer?
+		- Increased the marging to consider an object as "closer" as possible to another one.
+- [X] Moving to MatterJS physics engine
+- [X] Add reference to Phaser3 in README.
+- [ ] Increase "drag" for villagers upon receiving a collision.
 - [ ] Main Building / Villagers creation
 	- Display actions popup.
 	- Add button to create villager.
 	- Make villager creation to cost resource and time
 	- Avoid villagers stacking / overlapping on creation
 	- Show basic info on villagers enqueued for creation
+- [ ] Slow down the collecting action
 - [ ] GUI revamp
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time
@@ -47,11 +56,15 @@
 	- [ ] Attack when commanded
 - Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time...
 - [ ] Add "You survived for XX time" message with a "restart" button when dead. Store record?
+- [ ] Movement logic:
+	- Refactor: Generify the moveCloserIfNotAsClosestAsPossible behaviour.
+	- Rethink movement logic: what to do when destination is already occupied.
+- [ ] Camera.
+	- [offline] How the camera should work?
+	- [offline] Document that in the [game document][1].
+	- Implement camera.
 - 🎉 Basic game concept done! 0.1 version
 - [ ] 🧠 Review documentation notes and tasks and plan future versions (0.2)
-- [ ] Camera.
-	- How the camera should work?
-	- Document that in the [game document][1].
 - [ ] Randomly generate map.
 	- Main building position and resources.
 	- Document that in the [game document][1].
@@ -63,14 +76,6 @@
 	- Game (everything done until now)
 
 ## Bugs 🐛 
-- [ ] #1 🐛 Villagers are overlapping one with eachother when crowded.
-	- Maybe we can create some simplified test? To see if it's because of Arcade physics and find possible solutions.
-	- More difficult to reproduce probably since we started using `physics.move` method.
-	- Still happened, though... And can't find a way to reproduce.
-	- After talking on Discord with @samme it seems like my initial guess was right. It seems a limitation on how Arcade Physics resolve collisions. They rely on a "Projection Method" which does not take into account any other collision. The only suggestion is to move to MatterJS physiscs engine.
-	- Some MatterJS + Phaser3 tutorial here: https://itnext.io/modular-game-worlds-in-phaser-3-tilemaps-4-meet-matter-js-abf4dfa65ca1
-- [ ] #3 🐛 Villagers getting "stuck" while consuming resource. Not consuming and not moving. Maybe there is a gap between them and the resource but the movement is not getting them closer?
-- [ ] #4 🐛 Villager might get into an unknown status when trying to gather resource and resource is destroyed. It was detected while doing a quick test by generating many villagers and sending them to consume the same resource. All of them behaved correctly (going back to initial position) except from one, which was "stuck" close to the already non-existent resource. ⚠️ This might be related to #3.
 
 
 # References

@@ -6,9 +6,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Circle
     super(scene, x, y, 5, 0, 360, false, "0x0000FF", 1);
     scene.add.existing(this);
-    scene.physics.add.existing(this, 0);
-    this.body.setCollideWorldBounds(true);
-    this.body.setDrag(200, 200);
+    scene.matter.add.gameObject(this);
+    this.setCircle(5);
 
     // Properties
     this.selected = false;
@@ -40,8 +39,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
     // Movement
     if (this.status == "walking-to-destination") {
-      if (this._isAsClosestAsPossibleTo(this.destination, 1, 1)) {
-        this.body.stop();
+      if (this._isAsClosestAsPossibleTo(this.destination, 2, 2)) {
+        this.setVelocity(0);
         this.destination = null;
         this.status = 'idle';
       } else {
@@ -58,9 +57,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
       // If villager is not full it he collects
       if (this.bagpack.amount < this.bagpack.maxCapacity && this.target.amount > 0) {
 
-        if (this._isAsClosestAsPossibleTo(this.target, this.target.width/2 + this.width/2, this.target.height/2 + this.height/2)) {
+        if (this._isAsClosestAsPossibleTo(this.target, this.target.width/2 + this.width/2 + 2, this.target.height/2 + this.height/2 + 2)) {
           // Stop movement
-          this.body.stop();
+          this.setVelocity(0);
           // Collect resource
           var amountConsumed = this.target.consume(this.gatherCapacity);
           this.bagpack.amount += amountConsumed;
@@ -73,8 +72,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
       } else { // Villager is at full capacity
 
-        if (this._isAsClosestAsPossibleTo(this.closestDeposit, this.closestDeposit.width/2 + this.width/2, this.closestDeposit.height/2 + this.height/2)) {
-          this.body.stop();
+        if (this._isAsClosestAsPossibleTo(this.closestDeposit, this.closestDeposit.width/2 + this.width/2 + 2, this.closestDeposit.height/2 + this.height/2 + 2)) {
+          this.setVelocity(0);
           // Unload
           // TODO Make it take some time. ⚠️  If logic is not modified after unloading a little of the resource, the villager will go back to resource mine.
           this.closestDeposit.deposit(this.bagpack.amount);
@@ -95,7 +94,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
   // Private functions
   
   _moveCloserTo(x, y) {
-    this.scene.physics.moveTo(this, x, y, 50);
+    let vector = new Phaser.Math.Vector2(x-this.x, y-this.y).normalize();
+    this.setVelocity(vector.x, vector.y);
   }
 
   _isAsClosestAsPossibleTo(destination, marginX, marginY) {

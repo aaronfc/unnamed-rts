@@ -7,7 +7,8 @@ export default class Resource extends Phaser.GameObjects.Rectangle {
     // Create resource mine
     super(scene, x, y, 30, 30, "0xFF00FF");
     scene.add.existing(this);
-    scene.physics.add.existing(this, 1);
+    scene.matter.add.gameObject(this);
+    this.setStatic(true);
 
     // Properties
     this.initialAmount = initialAmount;
