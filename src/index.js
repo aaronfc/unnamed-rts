@@ -87,6 +87,7 @@ function update(time, delta) {
   this.counters.gameTime = Math.floor(time/1000);
   this.counters.villagers = this.villagers.length;
   this.villagers.forEach( v => v.update());
+  this.buildings.forEach( b => b.update());
   this.resources.forEach( r => r.update());
   this.gui.update();
 }

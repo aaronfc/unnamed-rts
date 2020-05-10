@@ -111,8 +111,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.selected = true;
     // Start listening for commands
     this.events.once('resource-right-clicked', this.startCollectingResource, this);
-    this.events.once('map-right-clicked', this.moveToPosition, this);
     this.events.once('map-left-or-middle-clicked', this.unselect, this);
+    this.events.on('map-right-clicked', this.moveToPosition, this);
   }
 
   unselect() {
@@ -127,7 +127,6 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.destination = new Phaser.Math.Vector2(position.x, position.y);
     this.status = 'walking-to-destination';
     this.target = null;
-    this.unselect();
   }
 
   startCollectingResource(resource) {
