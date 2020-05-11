@@ -14,7 +14,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.selected = false;
     this.destination = new Phaser.Math.Vector2(x, y);
     this.closestDeposit = townCenter; // TODO Calculate this somewhere else
-    this.gatherCapacity = 1;
+    this.resourceGatheringSpeed = 0.5; // Units per second
+    this.latestGatheringTime = null;
     this.target = null;
     this.status = 'idle';
     this.bagpack = {
@@ -63,10 +64,15 @@ export default class Villager extends Phaser.GameObjects.Arc {
           // Stop movement
           this.setVelocity(0);
           // Collect resource
-          var amountConsumed = this.target.consume(this.gatherCapacity);
-          this.bagpack.amount += amountConsumed;
-          if (amountConsumed < this.gatherCapacity) {
-            this.target = null; // TODO Calculate next resource
+          let nowTime = Math.floor(new Date().getTime()/1000);
+          let timeSinceLatestGather = nowTime - this.latestGatheringTime;
+          if (timeSinceLatestGather >= 1/this.resourceGatheringSpeed) {
+            var amountConsumed = this.target.consume(1); // Consuming unit by unit
+            this.bagpack.amount += amountConsumed;
+            if (amountConsumed < 1) {
+              this.target = null; // TODO Calculate next resource
+            }
+            this.latestGatheringTime = nowTime;
           }
         } else {
           this._moveCloserTo(this.target.x, this.target.y);
@@ -111,6 +117,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
       this.setFrictionAir(0.5); // High friction because we are idle
     } else {
       this.setFrictionAir(0.01);
+    }
+    if (newStatus == 'collecting') {
+      this.latestGatheringTime = Math.floor(new Date().getTime() / 1000);
     }
     this.status = newStatus;
   }

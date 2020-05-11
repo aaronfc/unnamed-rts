@@ -36,7 +36,7 @@ function create() {
   this.counters = {
     villagers: 0,
     gameTime: 0,
-    resource: 0,
+    resource: 100,
   };
   this.gui = new GUI(this, this.sys.game.canvas.width - 270, 10, this.counters);
   this.villagers = [];

@@ -10,12 +10,12 @@
 	- extra ball: show villager creation progress info
 - [X] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
 - [X] Increase "drag" for villagers upon receiving a collision - using setFrictionAir
-- [ ] Slow down the collecting action
-- [ ] Review if we can use `setFriction` instead of `setFrictionAir`
+- [X] Slow down the collecting action
 - [ ] GUI revamp
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time
 	- Add number formatting to resource amount (10,000 or maybe 10k)
+- [ ] Review if we can use `setFriction` instead of `setFrictionAir`
 - [ ] TownCenterMenu restyling
 - [ ] TownCenter + TownCenterMenu refactoring
 - [ ] Create Enemy entity
