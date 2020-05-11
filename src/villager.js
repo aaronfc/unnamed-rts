@@ -109,18 +109,23 @@ export default class Villager extends Phaser.GameObjects.Arc {
   select() {
     this.setStrokeStyle(1, "0xFF0000");
     this.selected = true;
-    // Start listening for commands
+    // Emit events
+    this.events.emit('new-villager-selected');
+    // Start listening for events
     this.events.once('resource-right-clicked', this.startCollectingResource, this);
     this.events.once('map-left-or-middle-clicked', this.unselect, this);
     this.events.on('map-right-clicked', this.moveToPosition, this);
+    this.events.once('new-building-selected', this.unselect, this);
   }
 
   unselect() {
     this.setStrokeStyle(0);
     this.selected = false;
-    // Stop listening for commands
+    // Stop listening for events
     this.events.off('resource-right-clicked', this.startCollectingResource, this);
+    this.events.off('map-left-or-middle-clicked', this.unselect, this);
     this.events.off('map-right-clicked', this.moveToPosition, this);
+    this.events.off('new-building-selected', this.unselect, this);
   }
 
   moveToPosition(position) {

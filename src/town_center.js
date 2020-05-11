@@ -33,6 +33,7 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
         if (this.selected) {
           this.unselect();
         } else {
+          this.events.emit('new-building-selected');
           this.select();
         }
         // Display action menu
@@ -72,6 +73,7 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
     this.menu.visible = true;
     // Listen for any map click to unselect
     this.events.once('map-left-or-middle-clicked', this.unselect, this);
+    this.events.once('new-villager-selected', this.unselect, this);
   }
 
   unselect() {

@@ -8,15 +8,15 @@
 	- Avoid villagers stacking / overlapping on creation
 	- Show basic info on villagers enqueued for creation
 	- extra ball: show villager creation progress info
-- [ ] TownCenterMenu restyling
-- [ ] TownCenter + TownCenterMenu refactoring
+- [ ] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
 - [ ] Increase "drag" for villagers upon receiving a collision.
 - [ ] Slow down the collecting action
-- [ ] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
 - [ ] GUI revamp
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time
 	- Add number formatting to resource amount (10,000 or maybe 10k)
+- [ ] TownCenterMenu restyling
+- [ ] TownCenter + TownCenterMenu refactoring
 - [ ] Create Enemy entity
 	- [ ] Make enemies appear randomly (time and space)
 	- [ ] Make enemies logic to attack the villagers
