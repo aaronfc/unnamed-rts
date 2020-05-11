@@ -8,6 +8,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setCircle(5);
+    this.setFrictionAir(0.5); // High friction because we are idle
 
     // Properties
     this.selected = false;
@@ -42,7 +43,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
       if (this._isAsClosestAsPossibleTo(this.destination, 2, 2)) {
         this.setVelocity(0);
         this.destination = null;
-        this.status = 'idle';
+        this._setStatus('idle');
+        this.setFrictionAir(0.5); // High friction because we are idle
       } else {
         this._moveCloserTo(this.destination.x, this.destination.y);
       }
@@ -104,6 +106,15 @@ export default class Villager extends Phaser.GameObjects.Arc {
       return villagerDistanceToDestinationX <= marginX && villagerDistanceToDestinationY <= marginY;
   }
 
+  _setStatus(newStatus) {
+    if (newStatus == 'idle') {
+      this.setFrictionAir(0.5); // High friction because we are idle
+    } else {
+      this.setFrictionAir(0.01);
+    }
+    this.status = newStatus;
+  }
+
   // Public functions
 
   select() {
@@ -130,13 +141,13 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
   moveToPosition(position) {
     this.destination = new Phaser.Math.Vector2(position.x, position.y);
-    this.status = 'walking-to-destination';
+    this._setStatus('walking-to-destination');
     this.target = null;
   }
 
   startCollectingResource(resource) {
     this.destination = null;
-    this.status = 'collecting';
+    this._setStatus('collecting');
     this.target = resource;
     this.unselect();
   }

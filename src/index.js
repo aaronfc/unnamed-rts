@@ -47,8 +47,9 @@ function create() {
   var townCenter = new TownCenter(this, 100, 50);
   this.buildings.push(townCenter);
 
-  // Create Adan
+  // Create Adan and Eva
   let newPosition = townCenter.getNewVillagerPosition();
+  this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
   // Resource

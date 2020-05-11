@@ -8,9 +8,10 @@
 	- Avoid villagers stacking / overlapping on creation
 	- Show basic info on villagers enqueued for creation
 	- extra ball: show villager creation progress info
-- [ ] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
-- [ ] Increase "drag" for villagers upon receiving a collision.
+- [X] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
+- [X] Increase "drag" for villagers upon receiving a collision - using setFrictionAir
 - [ ] Slow down the collecting action
+- [ ] Review if we can use `setFriction` instead of `setFrictionAir`
 - [ ] GUI revamp
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time

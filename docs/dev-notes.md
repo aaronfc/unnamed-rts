@@ -22,3 +22,17 @@ Collision resolution mechanism Projection Movement:
 - Measures how much of an entity went "inside" another one.
 - Based on this measure it calculates new position for the collision resolution.
 - ⚠️  This new position is not considered for further collisions.
+
+## About friction
+We found out that there are three different values for Friction in MatterJS:
+- default: Between 0 and 1. 0 allows the body to move indefinitely and 1 will stop almost immediately **after a force stops being applied**.
+	- ⚠️  Apparently this is not working for collisions. An object with `setFriction(1)` will still move a lot after colliding.
+- static: The higher this amount, the higher the energy you neeed to start moving this object.
+- air: Resistance with the air when this object moves through the empty space.
+
+Asked to Phaser Discord about how the setFriction method is supposed to work:
+```
+Hi! I recently migrated my small game to use MatterJS instead of arcade Physics.
+In arcade I had the setDrag called so that my entities did not move that much after a collision.
+Now on MatterJS I am trying to do the same. I found about the setFriction method. And I got it working as I want by using the setFrictionAir, but I do not understand why the "default" setFriction does not work. Based on the documentation I would expect it to work like this:
+If I two bodies with friction set to 1, they shouldn't move at all after colliding. But they are moving a lot.```
