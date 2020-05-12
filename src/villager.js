@@ -12,9 +12,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
     // Properties
     this.selected = false;
-    this.destination = new Phaser.Math.Vector2(x, y);
     this.closestDeposit = townCenter; // TODO Calculate this somewhere else
-    this.resourceGatheringSpeed = 0.5; // Units per second
+    this.resourceGatheringSpeed = 5; // Units per second
     this.latestGatheringTime = null;
     this.target = null;
     this.status = 'idle';
@@ -41,15 +40,12 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
     // Movement
     if (this.status == "walking-to-destination") {
-      if (this._isAsClosestAsPossibleTo(this.destination, 2, 2)) {
+      this._keepMovingTowardsTargetUntilReached(this.target, () => {
         this.setVelocity(0);
-        this.destination = null;
+        this.target = null;
         this._setStatus('idle');
         this.setFrictionAir(0.5); // High friction because we are idle
-      } else {
-        this._moveCloserTo(this.destination.x, this.destination.y);
-      }
-
+      });
     }
 
     // Collection
@@ -57,10 +53,10 @@ export default class Villager extends Phaser.GameObjects.Arc {
       
       // Note: Here target must be Resource
       
-      // If villager is not full it he collects
+      // If villager is not full, keeps collecting
       if (this.bagpack.amount < this.bagpack.maxCapacity && this.target.amount > 0) {
 
-        if (this._isAsClosestAsPossibleTo(this.target, this.target.width/2 + this.width/2 + 2, this.target.height/2 + this.height/2 + 2)) {
+        this._keepMovingTowardsTargetUntilReached(this.target, () => {
           // Stop movement
           this.setVelocity(0);
           // Collect resource
@@ -74,23 +70,17 @@ export default class Villager extends Phaser.GameObjects.Arc {
             }
             this.latestGatheringTime = nowTime;
           }
-        } else {
-          this._moveCloserTo(this.target.x, this.target.y);
-        }
+        });
 
       } else { // Villager is at full capacity
 
-        if (this._isAsClosestAsPossibleTo(this.closestDeposit, this.closestDeposit.width/2 + this.width/2 + 2, this.closestDeposit.height/2 + this.height/2 + 2)) {
+        this._keepMovingTowardsTargetUntilReached(this.closestDeposit, () => {
           this.setVelocity(0);
           // Unload
           // TODO Make it take some time. ⚠️  If logic is not modified after unloading a little of the resource, the villager will go back to resource mine.
           this.closestDeposit.deposit(this.bagpack.amount);
           this.bagpack.amount = 0;
-
-        } else {
-          // Note: Here target must be Resource
-          this._moveCloserTo(this.closestDeposit.x, this.closestDeposit.y);
-        }
+        });
 
         if (this.bagpack.amount == 0 && this.target.amount == 0) {
           this.moveToPosition(this.closestDeposit.getNewVillagerPosition());
@@ -124,6 +114,21 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.status = newStatus;
   }
 
+  _keepMovingTowardsTargetUntilReached(target, reachedCallback) {
+    let marginX = this.width/2 + 2;
+    let marginY = this.height/2 + 2;
+    if (typeof target.getBounds === "function") { // Checking if target is a point or has an actual body
+      let bounds = target.getBounds();
+      marginX += bounds.width/2;
+      marginY += bounds.height/2;
+    }
+    if (this._isAsClosestAsPossibleTo(target, marginX, marginY)) {
+      reachedCallback();
+    } else {
+      this._moveCloserTo(target.x, target.y);
+    }
+  }
+
   // Public functions
 
   select() {
@@ -149,15 +154,14 @@ export default class Villager extends Phaser.GameObjects.Arc {
   }
 
   moveToPosition(position) {
-    this.destination = new Phaser.Math.Vector2(position.x, position.y);
+    this.target = new Phaser.Math.Vector2(position.x, position.y);
     this._setStatus('walking-to-destination');
-    this.target = null;
   }
 
   startCollectingResource(resource) {
-    this.destination = null;
     this._setStatus('collecting');
     this.target = resource;
     this.unselect();
   }
+
 }

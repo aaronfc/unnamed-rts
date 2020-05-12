@@ -11,17 +11,21 @@
 - [X] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
 - [X] Increase "drag" for villagers upon receiving a collision - using setFrictionAir
 - [X] Slow down the collecting action
+- [ ] Refactoring villagers code preparing for enemies creation
+	- Reduce `.target` and `.destination` entities into a single one.
+	- Delegated the margin calculation to the `.target` object.
+	- Extracted the if/else construction for movement to a separate method.
 - [ ] GUI revamp
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time
 	- Add number formatting to resource amount (10,000 or maybe 10k)
 - [ ] Review if we can use `setFriction` instead of `setFrictionAir`
-- [ ] TownCenterMenu restyling
-- [ ] TownCenter + TownCenterMenu refactoring
 - [ ] Create Enemy entity
 	- [ ] Make enemies appear randomly (time and space)
 	- [ ] Make enemies logic to attack the villagers
 	- [ ] Add "health" concept for enemies and villagers
+- [ ] TownCenterMenu restyling
+- [ ] TownCenter + TownCenterMenu refactoring
 - [ ] Add defensive capabilities to Villagers
 	- [ ] Defend when attacked
 	- [ ] Attack when commanded
