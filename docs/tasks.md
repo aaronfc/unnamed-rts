@@ -11,10 +11,11 @@
 - [X] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
 - [X] Increase "drag" for villagers upon receiving a collision - using setFrictionAir
 - [X] Slow down the collecting action
-- [ ] Refactoring villagers code preparing for enemies creation
+- [X] Refactoring villagers code preparing for enemies creation
 	- Reduce `.target` and `.destination` entities into a single one.
 	- Delegated the margin calculation to the `.target` object.
 	- Extracted the if/else construction for movement to a separate method.
+	- Extracted all movement related methods to a separated `movement.js`
 - [ ] GUI revamp
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time

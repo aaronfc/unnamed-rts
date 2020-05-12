@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import Movement from './movement.js'
 
 export default class Villager extends Phaser.GameObjects.Arc {
 
@@ -24,6 +25,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.events = scene.events;
     this.scene = scene;
 
+    // Behaviours
+    this.movement = new Movement(); // TODO Do not instantiate one of this for every villager
+
     // Input Events
     this.setInteractive();
     this.on('pointerdown', (pointer, localX, localY, event) => {
@@ -40,7 +44,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
     // Movement
     if (this.status == "walking-to-destination") {
-      this._keepMovingTowardsTargetUntilReached(this.target, () => {
+      this.movement.moveTo(this, this.target, () => {
         this.setVelocity(0);
         this.target = null;
         this._setStatus('idle');
@@ -56,7 +60,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
       // If villager is not full, keeps collecting
       if (this.bagpack.amount < this.bagpack.maxCapacity && this.target.amount > 0) {
 
-        this._keepMovingTowardsTargetUntilReached(this.target, () => {
+        this.movement.moveTo(this, this.target, () => {
           // Stop movement
           this.setVelocity(0);
           // Collect resource
@@ -74,7 +78,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
       } else { // Villager is at full capacity
 
-        this._keepMovingTowardsTargetUntilReached(this.closestDeposit, () => {
+        this.movement.moveTo(this, this.closestDeposit, () => {
           this.setVelocity(0);
           // Unload
           // TODO Make it take some time. ⚠️  If logic is not modified after unloading a little of the resource, the villager will go back to resource mine.
@@ -91,17 +95,6 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
   // Private functions
   
-  _moveCloserTo(x, y) {
-    let vector = new Phaser.Math.Vector2(x-this.x, y-this.y).normalize();
-    this.setVelocity(vector.x, vector.y);
-  }
-
-  _isAsClosestAsPossibleTo(destination, marginX, marginY) {
-      var villagerDistanceToDestinationX = Math.abs(destination.x - this.x);
-      var villagerDistanceToDestinationY = Math.abs(destination.y - this.y);
-      return villagerDistanceToDestinationX <= marginX && villagerDistanceToDestinationY <= marginY;
-  }
-
   _setStatus(newStatus) {
     if (newStatus == 'idle') {
       this.setFrictionAir(0.5); // High friction because we are idle
@@ -112,21 +105,6 @@ export default class Villager extends Phaser.GameObjects.Arc {
       this.latestGatheringTime = Math.floor(new Date().getTime() / 1000);
     }
     this.status = newStatus;
-  }
-
-  _keepMovingTowardsTargetUntilReached(target, reachedCallback) {
-    let marginX = this.width/2 + 2;
-    let marginY = this.height/2 + 2;
-    if (typeof target.getBounds === "function") { // Checking if target is a point or has an actual body
-      let bounds = target.getBounds();
-      marginX += bounds.width/2;
-      marginY += bounds.height/2;
-    }
-    if (this._isAsClosestAsPossibleTo(target, marginX, marginY)) {
-      reachedCallback();
-    } else {
-      this._moveCloserTo(target.x, target.y);
-    }
   }
 
   // Public functions
