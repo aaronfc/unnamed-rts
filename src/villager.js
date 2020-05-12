@@ -14,7 +14,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Properties
     this.selected = false;
     this.closestDeposit = townCenter; // TODO Calculate this somewhere else
-    this.resourceGatheringSpeed = 5; // Units per second
+    this.resourceGatheringSpeed = 0.5; // Units per second
+    // ☝️  ⚠️  Current implementation does not support speeds faster than 1u/s
     this.latestGatheringTime = null;
     this.target = null;
     this.status = 'idle';

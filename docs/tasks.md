@@ -25,6 +25,7 @@
 	- [ ] Make enemies appear randomly (time and space)
 	- [ ] Make enemies logic to attack the villagers
 	- [ ] Add "health" concept for enemies and villagers
+- [ ] 🐛 Support gathering speed for villagers higher than 1u/s
 - [ ] TownCenterMenu restyling
 - [ ] TownCenter + TownCenterMenu refactoring
 - [ ] Add defensive capabilities to Villagers
@@ -40,6 +41,7 @@
 	- [offline] Document that in the [game document][1].
 	- Implement camera.
 - 🎉 Basic game concept done! 0.1 version
+- [ ] Villager refactor: Extract status to Tasks
 - [ ] 🧠 Review documentation notes and tasks and plan future versions (0.2)
 - [ ] Randomly generate map.
 	- Main building position and resources.
