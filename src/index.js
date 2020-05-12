@@ -29,6 +29,7 @@ const game = new Phaser.Game(config);
 function preload() {
   this.load.image('villager-icon', 'assets/villager-icon.png');
   this.load.image('resource-icon', 'assets/resource-icon.png');
+  this.load.image('time-icon', 'assets/time-icon.png');
 }
 
 function create() {

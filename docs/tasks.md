@@ -16,11 +16,10 @@
 	- Delegated the margin calculation to the `.target` object.
 	- Extracted the if/else construction for movement to a separate method.
 	- Extracted all movement related methods to a separated `movement.js`
-- [ ] GUI revamp
+- [X] GUI revamp
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time
-	- Add number formatting to resource amount (10,000 or maybe 10k)
-- [ ] Review if we can use `setFriction` instead of `setFrictionAir`
+- [X] Review if we can use `setFriction` instead of `setFrictionAir` - we can not
 - [ ] Create Enemy entity
 	- [ ] Make enemies appear randomly (time and space)
 	- [ ] Make enemies logic to attack the villagers

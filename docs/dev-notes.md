@@ -35,4 +35,11 @@ Asked to Phaser Discord about how the setFriction method is supposed to work:
 Hi! I recently migrated my small game to use MatterJS instead of arcade Physics.
 In arcade I had the setDrag called so that my entities did not move that much after a collision.
 Now on MatterJS I am trying to do the same. I found about the setFriction method. And I got it working as I want by using the setFrictionAir, but I do not understand why the "default" setFriction does not work. Based on the documentation I would expect it to work like this:
-If I two bodies with friction set to 1, they shouldn't move at all after colliding. But they are moving a lot.```
+If I two bodies with friction set to 1, they shouldn't move at all after colliding. But they are moving a lot.
+```
+Answer from "コズミック":
+```
+setFriction works against bodies
+so after your bodies collide and they seperate there's no more friction
+while frictionAir is friction from air which is always there
+```

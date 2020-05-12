@@ -127,7 +127,7 @@ class TownCenterMenu extends Phaser.GameObjects.Container {
     // Villagers info
     this.villagersIcon = scene.add.image(5, 5, 'villager-icon')
       .setOrigin(0)
-      .setScale(0.03)
+      .setScale(0.5)
       .setInteractive({cursor: 'pointer'});
     this.villagersIcon.on('pointerdown', (pointer, localX, localY, event) => {
       if (pointer.leftButtonDown()) {
