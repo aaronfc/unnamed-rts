@@ -20,16 +20,19 @@
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time
 - [X] Review if we can use `setFriction` instead of `setFrictionAir` - we can not
-- [ ] Create Enemy entity
-	- [ ] Make enemies appear randomly (time and space)
-	- [ ] Make enemies logic to attack the villagers
-	- [ ] Add "health" concept for enemies and villagers
+- [ ] Basic enemies
+	- Create the enemy entity
+	- Make enemies logic to attack the villagers
+	- Add "health" concept for villagers
+	- Make enemies appear randomly (time and space)
 - [ ] 🐛 Support gathering speed for villagers higher than 1u/s
 - [ ] TownCenterMenu restyling
 - [ ] TownCenter + TownCenterMenu refactoring
 - [ ] Add defensive capabilities to Villagers
-	- [ ] Defend when attacked
-	- [ ] Attack when commanded
+	- Refactor all fighting related logic from Enemy
+	- Add health concept to enemies
+	- Defend when attacked
+	- Attack when commanded
 - Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time...
 - [ ] Add "You survived for XX time" message with a "restart" button when dead. Store record?
 - [ ] Movement logic:

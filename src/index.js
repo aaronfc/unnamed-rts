@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Villager from "./villager.js";
 import Resource from "./resource.js";
 import TownCenter from "./town_center.js";
+import Enemy from "./enemy.js";
 import GUI from "./gui.js";
 
 const config = {
@@ -43,6 +44,7 @@ function create() {
   this.villagers = [];
   this.buildings = [];
   this.resources = [];
+  this.enemies = [];
 
   // Create Town Center
   var townCenter = new TownCenter(this, 100, 50);
@@ -52,6 +54,10 @@ function create() {
   let newPosition = townCenter.getNewVillagerPosition();
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
+
+  // Create bad guy
+  let newBadGuyPosition = {x: 500, y: 500};
+  this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
 
   // Resource
   var resource = new Resource(this, 200, 200, 1000);
@@ -91,5 +97,6 @@ function update(time, delta) {
   this.villagers.forEach( v => v.update());
   this.buildings.forEach( b => b.update());
   this.resources.forEach( r => r.update());
+  this.enemies.forEach( e => e.update());
   this.gui.update();
 }
