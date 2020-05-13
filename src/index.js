@@ -56,12 +56,31 @@ function create() {
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
   // Create bad guy
-  let newBadGuyPosition = {x: 500, y: 500};
-  this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
+  //let newBadGuyPosition = {x: 500, y: 500};
+  //this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
 
   // Resource
   var resource = new Resource(this, 200, 200, 1000);
   this.resources.push(resource);
+
+  // Enemies creation
+  this.enemiesNextWave = 1;
+  this.scheduleNextWave = () => {
+    this.time.addEvent({
+      delay: (_randomInt(60, 300)) * 1000,
+      callback: () => {
+        for(var i=0; i<this.enemiesNextWave; i++ ) {
+          // create random enemy
+          let randomPosition = {x: _randomInt(0, 500), y: _randomInt(0, 500)};
+          this.enemies.push(new Enemy(this, randomPosition.x, randomPosition.y));
+        }
+        this.enemiesNextWave += 1;
+        this.scheduleNextWave();
+      },
+      callbackScope: this
+    });
+  }
+  this.scheduleNextWave();
 
   // Input
   this.input.mouse.disableContextMenu();
@@ -83,6 +102,9 @@ function create() {
   this.events.on('resource-deposit-increased', (amount) => {
     this.counters.resource += amount;
   }, this);
+  this.events.on('villager-died', (villager) => {
+      this.villagers = this.villagers.filter(v => v != villager);
+  }, this);
 
   // Testing movement
   //for (var i=1; i< 20; i++) {
@@ -99,4 +121,8 @@ function update(time, delta) {
   this.resources.forEach( r => r.update());
   this.enemies.forEach( e => e.update());
   this.gui.update();
+}
+
+function _randomInt(min, max) {
+  return Math.random() * (max - min) + min;
 }

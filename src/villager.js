@@ -147,8 +147,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
   hit(damage) {
     this.health -= damage;
     if (this.health < 0) {
-      // TODO 👇 Move this to events. ⚠️  We need to ensure that events are processed before next enemy update.
-      this.scene.villagers = this.scene.villagers.filter(v => v != this);
+      this.scene.events.emit('villager-died', this);
       this.destroy();
       return true;
     }

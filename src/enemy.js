@@ -31,6 +31,14 @@ export default class Enemy extends Phaser.GameObjects.Arc {
       }
       event.stopPropagation();
     });
+
+    // Listen events
+    this.events.on('villager-died', (villager) => {
+      if (this.target == villager) {
+        this.target = null;
+        this._setStatus("looking-for-victim");
+      }
+    });
   }
 
   update() {
@@ -44,11 +52,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
       this.movement.moveTo(this, this.target, () => {
         let now = Math.floor(new Date()/1000);
         if (now - this.latestAttackTime >= 1) {
-          let isTargetDead = this.target.hit(10);
-          if (isTargetDead) {
-            this.target = null;
-            this._setStatus("looking-for-victim");
-          }
+          this.target.hit(10);
           this.latestAttackTime = now;
         }
       });

@@ -20,7 +20,7 @@
 	- Use smaller icons (currently 512x512, which is too big)
 	- Get an icon for time
 - [X] Review if we can use `setFriction` instead of `setFrictionAir` - we can not
-- [ ] Basic enemies
+- [X] Basic enemies
 	- Create the enemy entity
 	- Make enemies logic to attack the villagers
 	- Add "health" concept for villagers
