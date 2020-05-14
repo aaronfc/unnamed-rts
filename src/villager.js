@@ -15,8 +15,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.selected = false;
     this.closestDeposit = townCenter; // TODO Calculate this somewhere else
     this.resourceGatheringSpeed = 0.5; // Units per second
-    // ☝️  ⚠️  Current implementation does not support speeds faster than 1u/s
-    this.latestGatheringTime = null;
+    this.latestGatheringTime = 0;
     this.target = null;
     this.status = 'idle';
     this.bagpack = {
@@ -66,7 +65,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
           // Stop movement
           this.setVelocity(0);
           // Collect resource
-          let nowTime = Math.floor(new Date().getTime()/1000);
+          let nowTime = new Date().getTime()/1000;
           let timeSinceLatestGather = nowTime - this.latestGatheringTime;
           if (timeSinceLatestGather >= 1/this.resourceGatheringSpeed) {
             var amountConsumed = this.target.consume(1); // Consuming unit by unit

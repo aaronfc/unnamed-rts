@@ -25,19 +25,15 @@
 	- Make enemies logic to attack the villagers
 	- Add "health" concept for villagers
 	- Make enemies appear randomly (time and space)
-- [ ] 🐛 Support gathering speed for villagers higher than 1u/s
-- [ ] TownCenterMenu restyling
-- [ ] TownCenter + TownCenterMenu refactoring
+- [X] 🐛 Support gathering speed for villagers higher than 1u/s
+- [X] TownCenter + TownCenterMenu refactoring
 - [ ] Add defensive capabilities to Villagers
 	- Refactor all fighting related logic from Enemy
 	- Add health concept to enemies
 	- Defend when attacked
 	- Attack when commanded
-- Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time...
+- [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 - [ ] Add "You survived for XX time" message with a "restart" button when dead. Store record?
-- [ ] Movement logic:
-	- Refactor: Generify the moveCloserIfNotAsClosestAsPossible behaviour.
-	- Rethink movement logic: what to do when destination is already occupied.
 - [ ] Camera.
 	- [offline] How the camera should work?
 	- [offline] Document that in the [game document][1].

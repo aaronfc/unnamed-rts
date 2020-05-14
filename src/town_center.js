@@ -13,6 +13,7 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
     this.setStatic(true);
 
     // Properties
+    this.scene = scene;
     this.events = scene.events;
     this.selected = false;
     this.menu = new TownCenterMenu(scene, x-50, y+25, this);
@@ -21,8 +22,8 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
     this.ORDERS = {
       'create-villager': {
         action: this.createVillager.bind(this),
-        cost: { resource: 1 },
-        time: 5
+        cost: { resource: 20 },
+        time: 10
       }
     }
 
@@ -43,27 +44,24 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
   }
 
   update() {
+    // If there is a running order, check if it's done and then execute the action
     if (this.runningOrder != null) {
-      let orderInfo = this.ORDERS[this.runningOrder.order];
-      let percentage = (new Date().getTime() - this.runningOrder.startTime) / (orderInfo.time*1000);
-      if (percentage >= 1) {
+      let runningOrder = this.getRunningOrder();
+      if (runningOrder.percentage >= 100) {
         orderInfo.action();
         this.runningOrder = null;
       }
-      this.menu.villagersText.setText(Math.floor(percentage*100) + "%");
-    } else {
-      this.menu.villagersText.setText("");
     }
 
-    if (this.runningOrder == null && this.enqueuedOrders.length > 0) {
+    // If not running any order and there are orders pending: start the next one
+    if (this.runningOrder == null && this.getEnqueuedOrdersAmount() > 0) {
       let order = this.enqueuedOrders.shift();
       this.runningOrder = { order: order, startTime: new Date().getTime() };
     }
 
-    if (this.enqueuedOrders.length > 0) {
-      this.menu.villagersEnqueuedText.setText("Q:" + this.enqueuedOrders.length);
-    } else {
-      this.menu.villagersEnqueuedText.setText("");
+    // Update menu if visible
+    if (this.menu.visible) {
+      this.menu.update();
     }
   }
 
@@ -91,16 +89,37 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
 
   createVillager() {
     var newPosition = this.getNewVillagerPosition();
-    // TODO Maybe remove this reference to scene's villagers array and also dependency on Villager entity.
     let newVillager = new Villager(this.scene, newPosition.x, newPosition.y, this);
-    this.scene.villagers.push(newVillager);
     this.events.emit('new-villager-created', newVillager);
+  }
+
+  addCreateVillagerOrder() {
+    let order = this.ORDERS['create-villager'];
+    if (this.scene.counters.resource >= order.cost.resource) {
+      this.scene.counters.resource -= order.cost.resource;
+      this.enqueuedOrders.push('create-villager');
+    } else {
+      console.log("Not enough resource...");
+      // TODO Pretty message to the user informing about "warning" or "error"
+    }
   }
 
   deposit(amount) {
     this.events.emit('resource-deposit-increased', amount, this);
   }
 
+  getRunningOrder() {
+    if (this.runningOrder != null) {
+      let orderInfo = this.ORDERS[this.runningOrder.order];
+      let percentage = (new Date().getTime() - this.runningOrder.startTime) / (orderInfo.time*1000);
+      return {...orderInfo, percentage}
+    }
+    return null;
+  }
+
+  getEnqueuedOrdersAmount() {
+    return this.enqueuedOrders.length;
+  }
 }
 
 class TownCenterMenu extends Phaser.GameObjects.Container {
@@ -129,15 +148,10 @@ class TownCenterMenu extends Phaser.GameObjects.Container {
       .setOrigin(0)
       .setScale(0.5)
       .setInteractive({cursor: 'pointer'});
+    // Adding action to the villagersIcon
     this.villagersIcon.on('pointerdown', (pointer, localX, localY, event) => {
       if (pointer.leftButtonDown()) {
-        let order = this.townCenter.ORDERS['create-villager'];
-        if (this.scene.counters.resource >= order.cost.resource) {
-          this.scene.counters.resource -= order.cost.resource;
-          this.townCenter.enqueuedOrders.push('create-villager');
-        } else {
-          console.log("Not enough resource...");
-        }
+        this.townCenter.addCreateVillagerOrder();
         event.stopPropagation();
       }
     });
@@ -149,6 +163,15 @@ class TownCenterMenu extends Phaser.GameObjects.Container {
   }
 
   update() {
+    let runningOrder = this.townCenter.getRunningOrder();
+    if (runningOrder != null) {
+      this.villagersText.setText(Math.floor(runningOrder.percentage*100) + "%");
+    } else {
+      this.villagersText.setText("");
+    }
+
+    let enqueuedOrdersAmount = this.townCenter.getEnqueuedOrdersAmount();
+    this.villagersEnqueuedText.setText(enqueuedOrdersAmount == 0 ? "" : "Q:" + enqueuedOrdersAmount);
   }
 }
 

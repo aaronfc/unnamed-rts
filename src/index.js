@@ -97,7 +97,7 @@ function create() {
     this.resources = this.resources.filter( r => r != resource);
   }, this);
   this.events.on('new-villager-created', (villager) => {
-    this.counters.villagers += 1;
+    this.villagers.push(villager);
   }, this);
   this.events.on('resource-deposit-increased', (amount) => {
     this.counters.resource += amount;
