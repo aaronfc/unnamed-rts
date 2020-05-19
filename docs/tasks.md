@@ -27,6 +27,7 @@
 	- Make enemies appear randomly (time and space)
 - [X] 🐛 Support gathering speed for villagers higher than 1u/s
 - [X] TownCenter + TownCenterMenu refactoring
+- [X] 🐛 Villagers creation taking forever (over 100%)
 - [ ] Add defensive capabilities to Villagers
 	- Refactor all fighting related logic from Enemy
 	- Add health concept to enemies

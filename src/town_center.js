@@ -47,8 +47,8 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
     // If there is a running order, check if it's done and then execute the action
     if (this.runningOrder != null) {
       let runningOrder = this.getRunningOrder();
-      if (runningOrder.percentage >= 100) {
-        orderInfo.action();
+      if (runningOrder.percentage >= 1) {
+        runningOrder.action();
         this.runningOrder = null;
       }
     }
