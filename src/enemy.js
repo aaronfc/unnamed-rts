@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Movement from './movement.js'
+import Fighting from './fighting.js'
 
 export default class Enemy extends Phaser.GameObjects.Arc {
 
@@ -20,6 +21,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
 
     // Behaviours
     this.movement = new Movement(); // TODO Do not instantiate one of this for every enemy
+    this.fighting = new Fighting(this.movement);
 
     // Input Events
     this.setInteractive();
@@ -43,40 +45,18 @@ export default class Enemy extends Phaser.GameObjects.Arc {
 
   update() {
     if (this.status == "looking-for-victim") {
-      let closestVictim = this._getClosestVictim(this.scene.villagers);
+      let closestVictim = this.fighting.getClosestEntity(this, this.scene.villagers);
       if (closestVictim != null) {
         this.target = closestVictim;
         this._setStatus("attacking");
       }
     } else if (this.status == "attacking") {
-      this.movement.moveTo(this, this.target, () => {
-        let now = Math.floor(new Date()/1000);
-        if (now - this.latestAttackTime >= 1) {
-          this.target.hit(10);
-          this.latestAttackTime = now;
-        }
-      });
+      this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 10, 1);
     }
   }
 
   // Private functions
   
-  _getClosestVictim(villagers) {
-    if (villagers.length > 0) {
-      let closestVictim = villagers[0];
-      let closestVictimDistance = Infinity;
-      for (var i=1; i<villagers.length; i++) {
-        let villager = villagers[i];
-        let distance = Phaser.Math.Distance.BetweenPoints(this, villager);
-        if (distance < closestVictimDistance) {
-          closestVictim = villager;
-          closestVictimDistance = distance;
-        }
-      }
-      return closestVictim;
-    }
-    return null;
-  }
 
   _setStatus(newStatus) {
     this.status = newStatus;
