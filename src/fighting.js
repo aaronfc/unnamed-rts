@@ -16,7 +16,7 @@ export default class Fighting {
     this.movement.moveTo(element, target, () => {
       let now = Math.floor(new Date()/1000);
       if (now - this.latestAttackTime >= periodInSeconds) {
-        target.hit(damage);
+        target.hit(element, damage);
         this.latestAttackTime = now;
       }
     });

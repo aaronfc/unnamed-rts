@@ -28,11 +28,13 @@
 - [X] 🐛 Support gathering speed for villagers higher than 1u/s
 - [X] TownCenter + TownCenterMenu refactoring
 - [X] 🐛 Villagers creation taking forever (over 100%)
-- [ ] Add defensive capabilities to Villagers
+- [X] Add defensive capabilities to Villagers
 	- Refactor all fighting related logic from Enemy
 	- Add health concept to enemies
 	- Defend when attacked
 	- Attack when commanded
+- [ ] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
+- [ ] Do more testing about fighting and check the [game document][1]
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 - [ ] Add "You survived for XX time" message with a "restart" button when dead. Store record?
 - [ ] Camera.

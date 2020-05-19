@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Movement from './movement.js'
+import Fighting from './fighting.js'
 
 export default class Villager extends Phaser.GameObjects.Arc {
 
@@ -28,6 +29,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
     // Behaviours
     this.movement = new Movement(); // TODO Do not instantiate one of this for every villager
+    this.fighting = new Fighting(this.movement);
 
     // Input Events
     this.setInteractive();
@@ -39,6 +41,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
       }
       event.stopPropagation();
     });
+    
+    // Listen for enemies dying
+    this.events.on('enemy-died', this._onEnemyDied, this);
   }
 
   update() {
@@ -51,10 +56,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
         this._setStatus('idle');
         this.setFrictionAir(0.5); // High friction because we are idle
       });
-    }
 
-    // Collection
-    if (this.status == "collecting") {
+    // Collecting
+    } else if (this.status == "collecting") {
       
       // Note: Here target must be Resource
       
@@ -91,6 +95,16 @@ export default class Villager extends Phaser.GameObjects.Arc {
           this.moveToPosition(this.closestDeposit.getNewVillagerPosition());
         }
       }
+    } else if (this.status == "attacking") {
+      this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 5, 1);
+    } else if (this.status == "looking-for-enemy") {
+      let closestEnemy = this.fighting.getClosestEntity(this, this.scene.enemies);
+      if (closestEnemy != null) {
+        this.target = closestEnemy;
+        this._setStatus("attacking");
+      } else {
+        this._setStatus("idle");
+      }
     }
   }
 
@@ -108,6 +122,13 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.status = newStatus;
   }
 
+  _onEnemyDied(enemy) {
+    if (this.target == enemy) {
+      this.target = null;
+      this._setStatus("looking-for-enemy");
+    }
+  }
+
   // Public functions
 
   select() {
@@ -120,6 +141,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.events.once('map-left-or-middle-clicked', this.unselect, this);
     this.events.on('map-right-clicked', this.moveToPosition, this);
     this.events.once('new-building-selected', this.unselect, this);
+    this.events.once('enemy-right-clicked', this.attackEnemy, this);
   }
 
   unselect() {
@@ -130,6 +152,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.events.off('map-left-or-middle-clicked', this.unselect, this);
     this.events.off('map-right-clicked', this.moveToPosition, this);
     this.events.off('new-building-selected', this.unselect, this);
+    this.events.off('enemy-right-clicked', this.attackEnemy, this);
   }
 
   moveToPosition(position) {
@@ -143,14 +166,28 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.unselect();
   }
 
-  hit(damage) {
+  hit(attacker, damage) {
+    // In case we are attacked: abort what we were doing and target first attacker.
+    if (this.status != 'attacking') {
+      this._setStatus('attacking');
+      if (attacker != this.target) {
+        this.target = attacker;
+      }
+    }
+    // Process damage
     this.health -= damage;
     if (this.health < 0) {
-      this.scene.events.emit('villager-died', this);
+      this.events.emit('villager-died', this);
+      this.events.off('enemy-died', this._onEnemyDied, this);
       this.destroy();
       return true;
     }
     return false;
+  }
+
+  attackEnemy(enemy) {
+    this._setStatus("attacking");
+    this.target = enemy;
   }
 
 }
