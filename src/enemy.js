@@ -68,6 +68,15 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     }
   }
 
+  _onDie() {
+    this.unselect(); // Call unselect just in case it was selected
+    // Remove listeners
+    this.events.off('villager-died', this._onVictimDied, this);
+    // Emit died event
+    this.events.emit('enemy-died', this);
+    this.destroy();
+  }
+
   // Public functions
 
   select() {
@@ -77,7 +86,6 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     this.events.emit('new-enemy-selected');
     // Start listening for events
     this.events.once('map-left-or-middle-clicked', this.unselect, this);
-    this.events.on('map-right-clicked', this.moveToPosition, this);
     this.events.once('new-building-selected', this.unselect, this);
     this.events.once('new-villager-selected', this.unselect, this);
   }
@@ -87,7 +95,6 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     this.selected = false;
     // Stop listening for events
     this.events.off('map-left-or-middle-clicked', this.unselect, this);
-    this.events.off('map-right-clicked', this.moveToPosition, this);
     this.events.off('new-building-selected', this.unselect, this);
     this.events.off('new-villager-selected', this.unselect, this);
   }
@@ -96,9 +103,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     // Process damage
     this.health -= damage;
     if (this.health < 0) {
-      this.events.emit('enemy-died', this);
-      this.events.off('villager-died', this._onVictimDied, this);
-      this.destroy();
+      this._onDie();
       return true;
     }
     return false;

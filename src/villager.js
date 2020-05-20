@@ -121,6 +121,16 @@ export default class Villager extends Phaser.GameObjects.Arc {
     }
   }
 
+  _onDie() {
+    this.unselect(); // We call unselect just in case it was selected
+    // Remove all listeners
+    this.events.off('enemy-died', this._onEnemyDied, this);
+    // Emit the died event
+    this.events.emit('villager-died', this); // remo
+
+    this.destroy();
+  }
+
   // Public functions
 
   select() {
@@ -169,9 +179,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Process damage
     this.health -= damage;
     if (this.health < 0) {
-      this.events.emit('villager-died', this);
-      this.events.off('enemy-died', this._onEnemyDied, this);
-      this.destroy();
+      this._onDie();
       return true;
     }
     return false;

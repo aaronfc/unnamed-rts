@@ -35,7 +35,7 @@
 	- Attack when commanded
 - [X] 🐛 Make entities stop moving sliding when fighting
 - [X] 🐛 Enemy not looking for closest enemy continuously
-- [ ] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
+- [X] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
 - [ ] Add some health bar or similar.
 - [ ] Do more testing about fighting and check the [game document][1]
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
@@ -46,6 +46,7 @@
 	- [offline] Document that in the [game document][1].
 	- Implement camera.
 - 🎉 Basic game concept done! 0.1 version
+- [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] Villager refactor: Extract status to Tasks
 - [ ] 🧠 Review documentation notes and tasks and plan future versions (0.2)
 - [ ] Randomly generate map.
