@@ -37,14 +37,16 @@
 - [X] 🐛 Enemy not looking for closest enemy continuously
 - [X] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
 - [X] Add some health bar or similar.
-- [ ] Do more testing about fighting and check the [game document][1]
-- [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
-	- Set waves to happeng every 1 minute increasing in size.
+- [X] Do more testing about fighting and check the [game document][1]
 - [ ] Add "You survived for XX time" message with a "restart" button when dead. Store record?
 - [ ] Camera.
 	- [offline] How the camera should work?
 	- [offline] Document that in the [game document][1].
 	- Implement camera.
+	- Implement map borders.
+- [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
+	- Set waves to happeng every 1 minute increasing in size.
+	- Set more resources along the map.
 - 🎉 Basic game concept done! 0.1 version
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] Villager refactor: Extract status to Tasks
