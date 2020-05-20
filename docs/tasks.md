@@ -33,9 +33,13 @@
 	- Add health concept to enemies
 	- Defend when attacked
 	- Attack when commanded
+- [X] 🐛 Make entities stop moving sliding when fighting
+- [ ] 🐛 Enemy not looking for closest enemy continuously
 - [ ] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
+- [ ] Add some health bar or similar.
 - [ ] Do more testing about fighting and check the [game document][1]
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
+	- Set waves to happeng every 1 minute increasing in size.
 - [ ] Add "You survived for XX time" message with a "restart" button when dead. Store record?
 - [ ] Camera.
 	- [offline] How the camera should work?

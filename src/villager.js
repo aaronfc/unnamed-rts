@@ -10,7 +10,6 @@ export default class Villager extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setCircle(5);
-    this.setFrictionAir(0.5); // High friction because we are idle
 
     // Properties
     this.selected = false;
@@ -51,10 +50,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Movement
     if (this.status == "walking-to-destination") {
       this.movement.moveTo(this, this.target, () => {
-        this.setVelocity(0);
         this.target = null;
         this._setStatus('idle');
-        this.setFrictionAir(0.5); // High friction because we are idle
       });
 
     // Collecting
@@ -111,11 +108,6 @@ export default class Villager extends Phaser.GameObjects.Arc {
   // Private functions
   
   _setStatus(newStatus) {
-    if (newStatus == 'idle') {
-      this.setFrictionAir(0.5); // High friction because we are idle
-    } else {
-      this.setFrictionAir(0.01);
-    }
     if (newStatus == 'collecting') {
       this.latestGatheringTime = Math.floor(new Date().getTime() / 1000);
     }

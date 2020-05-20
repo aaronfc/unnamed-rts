@@ -27,8 +27,14 @@ export default class Movement {
       marginY += bounds.height/2;
     }
     if (this._isAsClosestAsPossibleTo(element, target, marginX, marginY)) {
+      // Set high friction and stop velocity
+      element.setFrictionAir(0.5);
+      element.setVelocity(0);
+      // Run the actual callback
       reachedCallback();
     } else {
+      // Set low friction
+      element.setFrictionAir(0.01);
       this._moveCloserTo(element, target.x, target.y);
     }
   }
