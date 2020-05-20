@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Movement from './movement.js'
 import Fighting from './fighting.js'
+import HealthBar from './health-bar.js'
 
 export default class Villager extends Phaser.GameObjects.Arc {
 
@@ -22,9 +23,13 @@ export default class Villager extends Phaser.GameObjects.Arc {
       maxCapacity: 10,
       amount: 0
     }
+    this.initialHealth = 100;
     this.health = 100;
     this.events = scene.events;
     this.scene = scene;
+
+    // Subparts
+    this.healthBar = new HealthBar(this.scene, this);
 
     // Behaviours
     this.movement = new Movement(); // TODO Do not instantiate one of this for every villager
@@ -103,6 +108,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
         this._setStatus("idle");
       }
     }
+
+    // Update subparts
+    this.healthBar.update();
   }
 
   // Private functions
@@ -127,6 +135,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.events.off('enemy-died', this._onEnemyDied, this);
     // Emit the died event
     this.events.emit('villager-died', this); // remo
+    // Destroy subparts
+    this.healthBar.destroy();
 
     this.destroy();
   }
@@ -189,5 +199,5 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this._setStatus("attacking");
     this.target = enemy;
   }
-
 }
+

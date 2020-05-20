@@ -36,7 +36,7 @@
 - [X] 🐛 Make entities stop moving sliding when fighting
 - [X] 🐛 Enemy not looking for closest enemy continuously
 - [X] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
-- [ ] Add some health bar or similar.
+- [X] Add some health bar or similar.
 - [ ] Do more testing about fighting and check the [game document][1]
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 	- Set waves to happeng every 1 minute increasing in size.

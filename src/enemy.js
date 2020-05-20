@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Movement from './movement.js'
 import Fighting from './fighting.js'
+import HealthBar from './health-bar.js'
 
 export default class Enemy extends Phaser.GameObjects.Arc {
 
@@ -18,11 +19,15 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     this.latestAttackTime = 0;
     this.events = scene.events;
     this.scene = scene;
+    this.initialHealth = 100;
     this.health = 100;
 
     // Behaviours
     this.movement = new Movement(); // TODO Do not instantiate one of this for every enemy
     this.fighting = new Fighting(this.movement);
+
+    // Subparts
+    this.healthBar = new HealthBar(this.scene, this);
 
     // Input Events
     this.setInteractive();
@@ -53,6 +58,9 @@ export default class Enemy extends Phaser.GameObjects.Arc {
         this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 10, 1);
       }
     }
+
+    // Update subparts
+    this.healthBar.update();
   }
 
   // Private functions
@@ -74,6 +82,9 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     this.events.off('villager-died', this._onVictimDied, this);
     // Emit died event
     this.events.emit('enemy-died', this);
+    // Destroy subparts
+    this.healthBar.destroy();
+
     this.destroy();
   }
 
