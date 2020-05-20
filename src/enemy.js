@@ -14,7 +14,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     // Properties
     this.selected = false;
     this.target = null;
-    this.status = 'looking-for-victim';
+    this.status = 'attacking';
     this.latestAttackTime = 0;
     this.events = scene.events;
     this.scene = scene;
@@ -44,14 +44,14 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   }
 
   update() {
-    if (this.status == "looking-for-victim") {
-      let closestVictim = this.fighting.getClosestEntity(this, this.scene.villagers);
-      if (closestVictim != null) {
+    if (this.status == "attacking") {
+      let closestVictim = this.fighting.getClosestEntity(this, this.scene.villagers); // TODO ⚠️  Non-optimal approach. We are calculating the closest enemy for every tick of the game!
+      if (closestVictim != this.target) {
         this.target = closestVictim;
-        this._setStatus("attacking");
       }
-    } else if (this.status == "attacking") {
-      this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 10, 1);
+      if (this.target != null) {
+        this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 10, 1);
+      }
     }
   }
 
@@ -65,7 +65,6 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   _onVictimDied(villager) {
     if (this.target == villager) {
       this.target = null;
-      this._setStatus("looking-for-victim");
     }
   }
 
@@ -94,13 +93,6 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   }
 
   hit(attacker, damage) {
-    // In case we are attacked: abort what we were doing and target first attacker.
-    if (this.status != 'attacking') {
-      this._setStatus('attacking');
-      if (attacker != this.target) {
-        this.target = attacker;
-      }
-    }
     // Process damage
     this.health -= damage;
     if (this.health < 0) {

@@ -28,8 +28,8 @@ export default class Fighting {
   getClosestEntity(element, entities) {
     if (entities.length > 0) {
       let closestEntity = entities[0];
-      let closestEntityDistance = Infinity;
-      for (var i=1; i<entities.length; i++) {
+      let closestEntityDistance = Phaser.Math.Distance.BetweenPoints(element, closestEntity);
+      for (var i=1; i < entities.length; i++) {
         let entity = entities[i];
         let distance = Phaser.Math.Distance.BetweenPoints(element, entity);
         if (distance < closestEntityDistance) {

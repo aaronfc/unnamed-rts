@@ -34,7 +34,7 @@
 	- Defend when attacked
 	- Attack when commanded
 - [X] 🐛 Make entities stop moving sliding when fighting
-- [ ] 🐛 Enemy not looking for closest enemy continuously
+- [X] 🐛 Enemy not looking for closest enemy continuously
 - [ ] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
 - [ ] Add some health bar or similar.
 - [ ] Do more testing about fighting and check the [game document][1]
