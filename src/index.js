@@ -4,6 +4,7 @@ import Resource from "./resource.js";
 import TownCenter from "./town_center.js";
 import Enemy from "./enemy.js";
 import GUI from "./gui.js";
+import GameOverScreen from "./gameover-screen.js";
 
 const config = {
   type: Phaser.AUTO,
@@ -41,10 +42,12 @@ function create() {
     resource: 100,
   };
   this.gui = new GUI(this, this.sys.game.canvas.width - 270, 10, this.counters);
+  this.gameoverScreen = new GameOverScreen(this, this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, this.counters);
   this.villagers = [];
   this.buildings = [];
   this.resources = [];
   this.enemies = [];
+  this.isGameOver = false;
 
   // Create Town Center
   var townCenter = new TownCenter(this, 100, 50);
@@ -52,7 +55,6 @@ function create() {
 
   // Create Adan and Eva
   let newPosition = townCenter.getNewVillagerPosition();
-  this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
   // Create bad guy
@@ -81,6 +83,7 @@ function create() {
     });
   }
   this.scheduleNextWave();
+
 
   // Input
   this.input.mouse.disableContextMenu();
@@ -117,13 +120,21 @@ function create() {
 }
 
 function update(time, delta) {
-  this.counters.gameTime = Math.floor(time/1000);
-  this.counters.villagers = this.villagers.length;
-  this.villagers.forEach( v => v.update());
-  this.buildings.forEach( b => b.update());
-  this.resources.forEach( r => r.update());
-  this.enemies.forEach( e => e.update());
-  this.gui.update();
+  if (!this.isGameOver) {
+    this.counters.gameTime += delta/1000; // TODO Implement this in a proper way
+    this.counters.villagers = this.villagers.length;
+    this.villagers.forEach( v => v.update());
+    this.buildings.forEach( b => b.update());
+    this.resources.forEach( r => r.update());
+    this.enemies.forEach( e => e.update());
+    this.gui.update();
+
+    if (this.counters.villagers <= 0) {
+      this.gameoverScreen.show();
+      this.isGameOver = true;
+    }
+  }
+
 }
 
 function _randomInt(min, max) {

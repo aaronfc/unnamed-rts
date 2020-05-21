@@ -43,3 +43,6 @@ setFriction works against bodies
 so after your bodies collide and they seperate there's no more friction
 while frictionAir is friction from air which is always there
 ```
+
+## Origin
+For texts, apparently the default origin is set to 0,0 and not to 0.5.

@@ -1,52 +1,17 @@
 ## Tasks
 
 ## Pipeline
-- [X] Main Building / Villagers creation
-	- Display actions popup.
-	- Add button to create villager.
-	- Make villager creation to cost resource and time
-	- Avoid villagers stacking / overlapping on creation
-	- Show basic info on villagers enqueued for creation
-	- extra ball: show villager creation progress info
-- [X] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
-- [X] Increase "drag" for villagers upon receiving a collision - using setFrictionAir
-- [X] Slow down the collecting action
-- [X] Refactoring villagers code preparing for enemies creation
-	- Reduce `.target` and `.destination` entities into a single one.
-	- Delegated the margin calculation to the `.target` object.
-	- Extracted the if/else construction for movement to a separate method.
-	- Extracted all movement related methods to a separated `movement.js`
-- [X] GUI revamp
-	- Use smaller icons (currently 512x512, which is too big)
-	- Get an icon for time
-- [X] Review if we can use `setFriction` instead of `setFrictionAir` - we can not
-- [X] Basic enemies
-	- Create the enemy entity
-	- Make enemies logic to attack the villagers
-	- Add "health" concept for villagers
-	- Make enemies appear randomly (time and space)
-- [X] 🐛 Support gathering speed for villagers higher than 1u/s
-- [X] TownCenter + TownCenterMenu refactoring
-- [X] 🐛 Villagers creation taking forever (over 100%)
-- [X] Add defensive capabilities to Villagers
-	- Refactor all fighting related logic from Enemy
-	- Add health concept to enemies
-	- Defend when attacked
-	- Attack when commanded
-- [X] 🐛 Make entities stop moving sliding when fighting
-- [X] 🐛 Enemy not looking for closest enemy continuously
-- [X] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
-- [X] Add some health bar or similar.
-- [X] Do more testing about fighting and check the [game document][1]
-- [ ] Add "You survived for XX time" message with a "restart" button when dead. Store record?
+- [X] Add "You survived for XX time" message with a "restart" button when dead. Store best score?
 - [ ] Camera.
 	- [offline] How the camera should work?
 	- [offline] Document that in the [game document][1].
 	- Implement camera.
 	- Implement map borders.
+- [ ] Revamp game-over screen style
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 	- Set waves to happeng every 1 minute increasing in size.
 	- Set more resources along the map.
+- [ ] Keep score leader board or similar
 - 🎉 Basic game concept done! 0.1 version
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] Villager refactor: Extract status to Tasks
@@ -96,6 +61,43 @@
 		- Increased the marging to consider an object as "closer" as possible to another one.
 - [X] Moving to MatterJS physics engine
 - [X] Add reference to Phaser3 in README.
+- [X] Main Building / Villagers creation
+	- Display actions popup.
+	- Add button to create villager.
+	- Make villager creation to cost resource and time
+	- Avoid villagers stacking / overlapping on creation
+	- Show basic info on villagers enqueued for creation
+	- extra ball: show villager creation progress info
+- [X] When a building is selected, all other entities should be unselected (villagers). Same for when a building is selected and we click on other entities (villagers).
+- [X] Increase "drag" for villagers upon receiving a collision - using setFrictionAir
+- [X] Slow down the collecting action
+- [X] Refactoring villagers code preparing for enemies creation
+	- Reduce `.target` and `.destination` entities into a single one.
+	- Delegated the margin calculation to the `.target` object.
+	- Extracted the if/else construction for movement to a separate method.
+	- Extracted all movement related methods to a separated `movement.js`
+- [X] GUI revamp
+	- Use smaller icons (currently 512x512, which is too big)
+	- Get an icon for time
+- [X] Review if we can use `setFriction` instead of `setFrictionAir` - we can not
+- [X] Basic enemies
+	- Create the enemy entity
+	- Make enemies logic to attack the villagers
+	- Add "health" concept for villagers
+	- Make enemies appear randomly (time and space)
+- [X] 🐛 Support gathering speed for villagers higher than 1u/s
+- [X] TownCenter + TownCenterMenu refactoring
+- [X] 🐛 Villagers creation taking forever (over 100%)
+- [X] Add defensive capabilities to Villagers
+	- Refactor all fighting related logic from Enemy
+	- Add health concept to enemies
+	- Defend when attacked
+	- Attack when commanded
+- [X] 🐛 Make entities stop moving sliding when fighting
+- [X] 🐛 Enemy not looking for closest enemy continuously
+- [X] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
+- [X] Add some health bar or similar.
+- [X] Do more testing about fighting and check the [game document][1]
 
 # References
 [1]: https://docs.google.com/document/d/1VEOTnC9N4-9KWOarlTR5_SHRbzlGuOpvtSXMWkIF8vs/edit#
