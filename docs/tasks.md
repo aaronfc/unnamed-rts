@@ -2,21 +2,23 @@
 
 ## Pipeline
 - [X] Add "You survived for XX time" message with a "restart" button when dead. Store best score?
+- [X] [offcamera] 🐛 Blurry text
+- [X] [offcamera] Updating the game concept documentation.
 - [ ] 🐛 Enemies will be created even though the game is over
-	- Check also how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
-- [ ] Move to a scene-managed system
-	- Doc: https://phaser.io/phaser3/devlog/119
+- [ ] 🧠 Check how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
+- [ ] Change enemies creation to a fixed 1 minute interval
 - [ ] Camera.
-	- [offline] How the camera should work?
-	- [offline] Document that in the [game document][1].
 	- Implement camera.
 	- Implement map borders.
+- [ ] Move to a scene-managed system
+	- Doc: https://phaser.io/phaser3/devlog/119
 - [ ] Revamp game-over screen style
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 	- Set waves to happeng every 1 minute increasing in size.
 	- Set more resources along the map.
-- [ ] Keep score leader board or similar
+- [ ] Have it playable somewhere (github.io)
 - 🎉 Basic game concept done! 0.1 version
+- [ ] Keep score leader board or similar
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] Villager refactor: Extract status to Tasks
 - [ ] 🧠 Review documentation notes and tasks and plan future versions (0.2)

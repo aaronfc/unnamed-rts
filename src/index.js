@@ -23,6 +23,10 @@ const config = {
     create: create,
     update: update
   },
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  },
   backgroundColor: "#FFFFFF"
 };
 
