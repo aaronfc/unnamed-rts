@@ -53,6 +53,29 @@ function create() {
   this.enemies = [];
   this.isGameOver = false;
 
+
+  // World boders
+  this.matter.world.setBounds(0, 0, 4*1024, 4*1024, 64, true, true, true, true);
+  this.add.rectangle(0, 0, 1024*4, 1024*4, "0xFAFAFA").setOrigin(0, 0);
+
+  // Camera control
+  var cursors = this.input.keyboard.createCursorKeys();
+  var controlConfig = {
+    camera: this.cameras.main,
+    left: cursors.left,
+    right: cursors.right,
+    up: cursors.up,
+    down: cursors.down,
+    zoomIn: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
+    zoomOut: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
+    acceleration: 0.06,
+    drag: 0.0005,
+    maxSpeed: 1.0
+  };
+  this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
+  this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 1)');
+  this.cameras.main.setBounds(-100, -100, 1024 * 4 + 100, 1024 * 4 + 100);
+
   // Create Town Center
   var townCenter = new TownCenter(this, 100, 50);
   this.buildings.push(townCenter);
@@ -60,10 +83,12 @@ function create() {
   // Create Adan and Eva
   let newPosition = townCenter.getNewVillagerPosition();
   this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
+  this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
   // Create bad guy
   let newBadGuyPosition = {x: 500, y: 500};
-  this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
+  //this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
+  //this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
 
   // Resource
   var resource = new Resource(this, 200, 200, 1000);
@@ -138,6 +163,8 @@ function update(time, delta) {
       this.gameoverScreen.show();
       this.time.removeAllEvents();
     }
+
+    this.controls.update(delta);
   }
 
 }

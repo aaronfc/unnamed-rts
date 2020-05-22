@@ -11,6 +11,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setCircle(5);
+    this.setFrictionAir(0.5);
 
     // Properties
     this.selected = false;
@@ -151,7 +152,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Start listening for events
     this.events.once('resource-right-clicked', this.startCollectingResource, this);
     this.events.once('map-left-or-middle-clicked', this.unselect, this);
-    this.events.on('map-right-clicked', this.moveToPosition, this);
+    this.events.on('map-right-clicked', this.moveToCameraPointer, this);
     this.events.once('new-building-selected', this.unselect, this);
     this.events.once('enemy-right-clicked', this.attackEnemy, this);
   }
@@ -162,13 +163,17 @@ export default class Villager extends Phaser.GameObjects.Arc {
     // Stop listening for events
     this.events.off('resource-right-clicked', this.startCollectingResource, this);
     this.events.off('map-left-or-middle-clicked', this.unselect, this);
-    this.events.off('map-right-clicked', this.moveToPosition, this);
+    this.events.off('map-right-clicked', this.moveToCameraPointer, this);
     this.events.off('new-building-selected', this.unselect, this);
     this.events.off('enemy-right-clicked', this.attackEnemy, this);
   }
+  
+  moveToCameraPointer(pointer) {
+    this.moveToPosition({x: pointer.worldX, y: pointer.worldY});
+  }
 
   moveToPosition(position) {
-    this.target = new Phaser.Math.Vector2(position.x, position.y);
+    this.target = new Phaser.Math.Vector2(position);
     this._setStatus('walking-to-destination');
   }
 

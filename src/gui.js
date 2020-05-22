@@ -3,10 +3,11 @@ import Phaser from "phaser";
 export default class GUI extends Phaser.GameObjects.Container {
 
   constructor(scene, x, y, counters) {
-    // Rectangle
+    // Container
     super(scene, x, y, []);
     scene.add.existing(this);
     this.setDepth(999);
+    this.setScrollFactor(0);
 
     // Properties
     this.counters = counters;

@@ -8,11 +8,13 @@
 - [X] 🐛 Enemies still moving after game is over
 - [X] 🧠 Check how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
 - [X] Change enemies creation to a fixed 1 minute interval
-- [ ] Camera.
+- [X] Camera.
 	- Implement camera.
 	- Implement map borders.
 - [ ] Move to a scene-managed system
 	- Doc: https://phaser.io/phaser3/devlog/119
+	- Move UI (GUI and GameOverScreen) to a separate scene (above the game scene)
+- [ ] 🐛 Zooming breaks UI (it's out of the camera and game pauses, so...)
 - [ ] Revamp game-over screen style
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 	- Set waves to happeng every 1 minute increasing in size.

@@ -7,6 +7,7 @@ export default class GameOverScreen extends Phaser.GameObjects.Container {
     scene.add.existing(this);
     this.setDepth(999);
     this.visible = false;
+    this.setScrollFactor(0);
 
     // Properties
     this.counters = counters;
