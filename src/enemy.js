@@ -11,6 +11,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setCircle(5);
+    this.setFrictionAir(0.5); // High friction (not moving)
 
     // Properties
     this.selected = false;
@@ -56,6 +57,9 @@ export default class Enemy extends Phaser.GameObjects.Arc {
       }
       if (this.target != null) {
         this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 10, 1);
+      } else {
+        this.setVelocity(0, 0);
+        this.setFrictionAir(0.5); // High friction (not moving)
       }
     }
 

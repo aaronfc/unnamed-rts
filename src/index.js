@@ -73,7 +73,7 @@ function create() {
   this.enemiesNextWave = 1;
   this.scheduleNextWave = () => {
     this.time.addEvent({
-      delay: (_randomInt(60, 300)) * 1000,
+      delay: 1000,
       callback: () => {
         for(var i=0; i<this.enemiesNextWave; i++ ) {
           // create random enemy
@@ -134,8 +134,9 @@ function update(time, delta) {
     this.gui.update();
 
     if (this.counters.villagers <= 0) {
-      this.gameoverScreen.show();
       this.isGameOver = true;
+      this.gameoverScreen.show();
+      this.time.removeAllEvents();
     }
   }
 

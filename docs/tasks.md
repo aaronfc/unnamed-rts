@@ -4,7 +4,8 @@
 - [X] Add "You survived for XX time" message with a "restart" button when dead. Store best score?
 - [X] [offcamera] 🐛 Blurry text
 - [X] [offcamera] Updating the game concept documentation.
-- [ ] 🐛 Enemies will be created even though the game is over
+- [X] 🐛 Enemies still being created after game is over
+- [X] 🐛 Enemies still moving after game is over
 - [ ] 🧠 Check how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
 - [ ] Change enemies creation to a fixed 1 minute interval
 - [ ] Camera.
