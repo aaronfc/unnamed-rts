@@ -73,7 +73,7 @@ function create() {
   this.enemiesNextWave = 1;
   this.scheduleNextWave = () => {
     this.time.addEvent({
-      delay: 1000,
+      delay: 60*1000, // Enemies appear every 1 minute
       callback: () => {
         for(var i=0; i<this.enemiesNextWave; i++ ) {
           // create random enemy

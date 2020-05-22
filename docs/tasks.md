@@ -6,8 +6,8 @@
 - [X] [offcamera] Updating the game concept documentation.
 - [X] 🐛 Enemies still being created after game is over
 - [X] 🐛 Enemies still moving after game is over
-- [ ] 🧠 Check how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
-- [ ] Change enemies creation to a fixed 1 minute interval
+- [X] 🧠 Check how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
+- [X] Change enemies creation to a fixed 1 minute interval
 - [ ] Camera.
 	- Implement camera.
 	- Implement map borders.
