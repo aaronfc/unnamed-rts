@@ -1,5 +1,5 @@
 # Unnamed RTS
-Open-source RTS game inspired by Age Of Empires II but much simpler.
+Open-source RTS game inspired by Age Of Empires II but much simpler. You can see the current status at https://arogigante.itch.io/unnamed-rts
 
 ## What is this?
 This is a game I will use to learn game development. The initial idea is very basic but I intend to construct it in a way that allows me for many further improvements and evolutions.
@@ -19,4 +19,10 @@ Tasks can be found [tasks](docs/tasks.md).
 ### Start local server
 ```
 npm run start
+```
+
+### Build and deploy
+```
+npm run build
+./publishing/butler push dist/ arogigante/unnamed-rts:web
 ```
