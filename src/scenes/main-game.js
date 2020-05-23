@@ -10,6 +10,10 @@ export default class MainGameScene extends Phaser.Scene {
     super('MainGameScene');
   }
 
+  preload() {
+    this.load.image('villager-icon', 'assets/villager-icon.png');
+  }
+
   create() {
     this.counters = {
       villagers: 0,
