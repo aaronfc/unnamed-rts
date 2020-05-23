@@ -1,8 +1,6 @@
-
 import Phaser from "phaser";
 
 export default class Resource extends Phaser.GameObjects.Rectangle {
-
   constructor(scene, x, y, initialAmount) {
     // Create resource mine
     super(scene, x, y, 30, 30, "0xFF00FF");
@@ -17,9 +15,9 @@ export default class Resource extends Phaser.GameObjects.Rectangle {
 
     // Events
     this.setInteractive();
-    this.on('pointerdown', (pointer, localX, localY, event) => {
+    this.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.rightButtonDown()) {
-        scene.events.emit('resource-right-clicked', this);
+        scene.events.emit("resource-right-clicked", this);
       }
     });
   }
@@ -29,7 +27,7 @@ export default class Resource extends Phaser.GameObjects.Rectangle {
 
     if (this.amount == 0) {
       this.destroy();
-      this.events.emit('resource-destroyed', this);
+      this.events.emit("resource-destroyed", this);
     }
   }
 

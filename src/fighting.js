@@ -1,5 +1,4 @@
 export default class Fighting {
-
   constructor(movement) {
     // Dependency injection
     this.movement = movement;
@@ -14,7 +13,7 @@ export default class Fighting {
    */
   moveIntoAttackRangeAndAttack(element, target, damage, periodInSeconds) {
     this.movement.moveTo(element, target, () => {
-      let now = Math.floor(new Date()/1000);
+      let now = Math.floor(new Date() / 1000);
       if (now - this.latestAttackTime >= periodInSeconds) {
         target.hit(element, damage);
         this.latestAttackTime = now;
@@ -28,8 +27,11 @@ export default class Fighting {
   getClosestEntity(element, entities) {
     if (entities.length > 0) {
       let closestEntity = entities[0];
-      let closestEntityDistance = Phaser.Math.Distance.BetweenPoints(element, closestEntity);
-      for (var i=1; i < entities.length; i++) {
+      let closestEntityDistance = Phaser.Math.Distance.BetweenPoints(
+        element,
+        closestEntity
+      );
+      for (var i = 1; i < entities.length; i++) {
         let entity = entities[i];
         let distance = Phaser.Math.Distance.BetweenPoints(element, entity);
         if (distance < closestEntityDistance) {

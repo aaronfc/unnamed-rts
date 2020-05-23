@@ -1,10 +1,9 @@
 import Phaser from "phaser";
-import Movement from './movement.js'
-import Fighting from './fighting.js'
-import HealthBar from './health-bar.js'
+import Movement from "./movement.js";
+import Fighting from "./fighting.js";
+import HealthBar from "./health-bar.js";
 
 export default class Villager extends Phaser.GameObjects.Arc {
-
   constructor(scene, x, y, townCenter) {
     // Circle
     super(scene, x, y, 5, 0, 360, false, "0x0000FF", 1);
@@ -19,11 +18,11 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.resourceGatheringSpeed = 0.5; // Units per second
     this.latestGatheringTime = 0;
     this.target = null;
-    this.status = 'idle';
+    this.status = "idle";
     this.bagpack = {
       maxCapacity: 10,
-      amount: 0
-    }
+      amount: 0,
+    };
     this.initialHealth = 100;
     this.health = 100;
     this.events = scene.events;
@@ -38,7 +37,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
     // Input Events
     this.setInteractive();
-    this.on('pointerdown', (pointer, localX, localY, event) => {
+    this.on("pointerdown", (pointer, localX, localY, event) => {
       if (this.selected) {
         this.unselect();
       } else {
@@ -46,35 +45,35 @@ export default class Villager extends Phaser.GameObjects.Arc {
       }
       event.stopPropagation();
     });
-    
+
     // Listen for enemies dying
-    this.events.on('enemy-died', this._onEnemyDied, this);
+    this.events.on("enemy-died", this._onEnemyDied, this);
   }
 
   update() {
-
     // Movement
     if (this.status == "walking-to-destination") {
       this.movement.moveTo(this, this.target, () => {
         this.target = null;
-        this._setStatus('idle');
+        this._setStatus("idle");
       });
 
-    // Collecting
+      // Collecting
     } else if (this.status == "collecting") {
-      
       // Note: Here target must be Resource
-      
-      // If villager is not full, keeps collecting
-      if (this.bagpack.amount < this.bagpack.maxCapacity && this.target.amount > 0) {
 
+      // If villager is not full, keeps collecting
+      if (
+        this.bagpack.amount < this.bagpack.maxCapacity &&
+        this.target.amount > 0
+      ) {
         this.movement.moveTo(this, this.target, () => {
           // Stop movement
           this.setVelocity(0);
           // Collect resource
-          let nowTime = new Date().getTime()/1000;
+          let nowTime = new Date().getTime() / 1000;
           let timeSinceLatestGather = nowTime - this.latestGatheringTime;
-          if (timeSinceLatestGather >= 1/this.resourceGatheringSpeed) {
+          if (timeSinceLatestGather >= 1 / this.resourceGatheringSpeed) {
             var amountConsumed = this.target.consume(1); // Consuming unit by unit
             this.bagpack.amount += amountConsumed;
             if (amountConsumed < 1) {
@@ -83,8 +82,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
             this.latestGatheringTime = nowTime;
           }
         });
-
-      } else { // Villager is at full capacity
+      } else {
+        // Villager is at full capacity
 
         this.movement.moveTo(this, this.closestDeposit, () => {
           this.setVelocity(0);
@@ -101,7 +100,10 @@ export default class Villager extends Phaser.GameObjects.Arc {
     } else if (this.status == "attacking") {
       this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 5, 1);
     } else if (this.status == "looking-for-enemy") {
-      let closestEnemy = this.fighting.getClosestEntity(this, this.scene.enemies);
+      let closestEnemy = this.fighting.getClosestEntity(
+        this,
+        this.scene.enemies
+      );
       if (closestEnemy != null) {
         this.target = closestEnemy;
         this._setStatus("attacking");
@@ -115,9 +117,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
   }
 
   // Private functions
-  
+
   _setStatus(newStatus) {
-    if (newStatus == 'collecting') {
+    if (newStatus == "collecting") {
       this.latestGatheringTime = Math.floor(new Date().getTime() / 1000);
     }
     this.status = newStatus;
@@ -133,9 +135,9 @@ export default class Villager extends Phaser.GameObjects.Arc {
   _onDie() {
     this.unselect(); // We call unselect just in case it was selected
     // Remove all listeners
-    this.events.off('enemy-died', this._onEnemyDied, this);
+    this.events.off("enemy-died", this._onEnemyDied, this);
     // Emit the died event
-    this.events.emit('villager-died', this); // remo
+    this.events.emit("villager-died", this); // remo
     // Destroy subparts
     this.healthBar.destroy();
 
@@ -148,45 +150,53 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.setStrokeStyle(1, "0xFF0000");
     this.selected = true;
     // Emit events
-    this.events.emit('new-villager-selected');
+    this.events.emit("new-villager-selected");
     // Start listening for events
-    this.events.once('resource-right-clicked', this.startCollectingResource, this);
-    this.events.once('map-left-or-middle-clicked', this.unselect, this);
-    this.events.on('map-right-clicked', this.moveToCameraPointer, this);
-    this.events.once('new-building-selected', this.unselect, this);
-    this.events.once('enemy-right-clicked', this.attackEnemy, this);
+    this.events.once(
+      "resource-right-clicked",
+      this.startCollectingResource,
+      this
+    );
+    this.events.once("map-left-or-middle-clicked", this.unselect, this);
+    this.events.on("map-right-clicked", this.moveToCameraPointer, this);
+    this.events.once("new-building-selected", this.unselect, this);
+    this.events.once("enemy-right-clicked", this.attackEnemy, this);
   }
 
   unselect() {
     this.setStrokeStyle(0);
     this.selected = false;
     // Stop listening for events
-    this.events.off('resource-right-clicked', this.startCollectingResource, this);
-    this.events.off('map-left-or-middle-clicked', this.unselect, this);
-    this.events.off('map-right-clicked', this.moveToCameraPointer, this);
-    this.events.off('new-building-selected', this.unselect, this);
-    this.events.off('enemy-right-clicked', this.attackEnemy, this);
+    this.events.off(
+      "resource-right-clicked",
+      this.startCollectingResource,
+      this
+    );
+    this.events.off("map-left-or-middle-clicked", this.unselect, this);
+    this.events.off("map-right-clicked", this.moveToCameraPointer, this);
+    this.events.off("new-building-selected", this.unselect, this);
+    this.events.off("enemy-right-clicked", this.attackEnemy, this);
   }
-  
+
   moveToCameraPointer(pointer) {
-    this.moveToPosition({x: pointer.worldX, y: pointer.worldY});
+    this.moveToPosition({ x: pointer.worldX, y: pointer.worldY });
   }
 
   moveToPosition(position) {
     this.target = new Phaser.Math.Vector2(position);
-    this._setStatus('walking-to-destination');
+    this._setStatus("walking-to-destination");
   }
 
   startCollectingResource(resource) {
-    this._setStatus('collecting');
+    this._setStatus("collecting");
     this.target = resource;
     this.unselect();
   }
 
   hit(attacker, damage) {
     // In case we are attacked: abort what we were doing and target first attacker.
-    if (this.status != 'attacking') {
-      this._setStatus('attacking');
+    if (this.status != "attacking") {
+      this._setStatus("attacking");
       if (attacker != this.target) {
         this.target = attacker;
       }
@@ -205,4 +215,3 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.target = enemy;
   }
 }
-

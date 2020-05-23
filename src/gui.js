@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 
 export default class GUI extends Phaser.GameObjects.Container {
-
   constructor(scene, x, y, counters) {
     // Container
     super(scene, x, y, []);
@@ -14,47 +13,73 @@ export default class GUI extends Phaser.GameObjects.Container {
     this.scene = scene;
 
     // Create all GUI elements
-    
+
     // Background (rectangle)
-    this.backgroundRectangle = scene.add.rectangle(0, 0, 250, 34, "0x2F3337")
+    this.backgroundRectangle = scene.add
+      .rectangle(0, 0, 250, 34, "0x2F3337")
       .setOrigin(0)
       .setAlpha(0.5);
     this.add(this.backgroundRectangle);
 
     // Villagers info
-    this.villagersIcon = scene.add.image(10, 10, 'villager-icon')
+    this.villagersIcon = scene.add
+      .image(10, 10, "villager-icon")
       .setOrigin(0)
       .setScale(0.5);
     this.add(this.villagersIcon);
-    this.villagersText = scene.add.text(this.villagersIcon.x + this.villagersIcon.displayWidth + 5, 10, '???', {color: '#FFFFFF', fontSize: 14}),
-    this.add(this.villagersText);
+    (this.villagersText = scene.add.text(
+      this.villagersIcon.x + this.villagersIcon.displayWidth + 5,
+      10,
+      "???",
+      { color: "#FFFFFF", fontSize: 14 }
+    )),
+      this.add(this.villagersText);
 
     // Resource info
-    this.resourceIcon = scene.add.image(this.villagersText.x + this.villagersText.displayWidth + 10, this.villagersIcon.y, 'resource-icon')
+    this.resourceIcon = scene.add
+      .image(
+        this.villagersText.x + this.villagersText.displayWidth + 10,
+        this.villagersIcon.y,
+        "resource-icon"
+      )
       .setOrigin(0)
       .setScale(0.5);
     this.add(this.resourceIcon);
-    this.resourceText = scene.add.text(this.resourceIcon.x + this.resourceIcon.displayWidth +  5, this.resourceIcon.y, '?????', {color: '#FFFFFF', fontSize: 14}),
-    this.add(this.resourceText);
+    (this.resourceText = scene.add.text(
+      this.resourceIcon.x + this.resourceIcon.displayWidth + 5,
+      this.resourceIcon.y,
+      "?????",
+      { color: "#FFFFFF", fontSize: 14 }
+    )),
+      this.add(this.resourceText);
 
     // Time info
-    this.timeIcon = scene.add.image(this.resourceText.x + this.resourceText.displayWidth + 10, this.villagersIcon.y, 'time-icon')
+    this.timeIcon = scene.add
+      .image(
+        this.resourceText.x + this.resourceText.displayWidth + 10,
+        this.villagersIcon.y,
+        "time-icon"
+      )
       .setOrigin(0)
       .setScale(0.5);
     this.add(this.timeIcon);
-    this.gameTimeText = scene.add.text(this.timeIcon.x + this.timeIcon.displayWidth + 5, this.resourceText.y, '??:??:??', {color: '#FFFFFF', fontSize: 14}),
-    this.add(this.gameTimeText);
+    (this.gameTimeText = scene.add.text(
+      this.timeIcon.x + this.timeIcon.displayWidth + 5,
+      this.resourceText.y,
+      "??:??:??",
+      { color: "#FFFFFF", fontSize: 14 }
+    )),
+      this.add(this.gameTimeText);
   }
 
   update() {
     this.villagersText.setText(this._formatVillagersCount());
     this.resourceText.setText(this._formatResourceCount());
     this.gameTimeText.setText(this._formatGameTime());
-
   }
 
   // Private methods
-  
+
   _formatVillagersCount() {
     return this.counters.villagers.toString().padStart(3, "0");
   }

@@ -1,10 +1,9 @@
 import Phaser from "phaser";
-import Movement from './movement.js'
-import Fighting from './fighting.js'
-import HealthBar from './health-bar.js'
+import Movement from "./movement.js";
+import Fighting from "./fighting.js";
+import HealthBar from "./health-bar.js";
 
 export default class Enemy extends Phaser.GameObjects.Arc {
-
   constructor(scene, x, y) {
     // Circle
     super(scene, x, y, 5, 0, 360, false, "0xFF0000", 1);
@@ -16,7 +15,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     // Properties
     this.selected = false;
     this.target = null;
-    this.status = 'attacking';
+    this.status = "attacking";
     this.latestAttackTime = 0;
     this.events = scene.events;
     this.scene = scene;
@@ -32,7 +31,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
 
     // Input Events
     this.setInteractive();
-    this.on('pointerdown', (pointer, localX, localY, event) => {
+    this.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.leftButtonDown()) {
         if (this.selected) {
           this.unselect();
@@ -40,18 +39,21 @@ export default class Enemy extends Phaser.GameObjects.Arc {
           this.select();
         }
       } else if (pointer.rightButtonDown()) {
-        this.events.emit('enemy-right-clicked', this);
+        this.events.emit("enemy-right-clicked", this);
       }
       event.stopPropagation();
     });
 
     // Listen events
-    this.events.on('villager-died', this._onVictimDied, this);
+    this.events.on("villager-died", this._onVictimDied, this);
   }
 
   update() {
     if (this.status == "attacking") {
-      let closestVictim = this.fighting.getClosestEntity(this, this.scene.villagers); // TODO ⚠️  Non-optimal approach. We are calculating the closest enemy for every tick of the game!
+      let closestVictim = this.fighting.getClosestEntity(
+        this,
+        this.scene.villagers
+      ); // TODO ⚠️  Non-optimal approach. We are calculating the closest enemy for every tick of the game!
       if (closestVictim != this.target) {
         this.target = closestVictim;
       }
@@ -68,7 +70,6 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   }
 
   // Private functions
-  
 
   _setStatus(newStatus) {
     this.status = newStatus;
@@ -83,9 +84,9 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   _onDie() {
     this.unselect(); // Call unselect just in case it was selected
     // Remove listeners
-    this.events.off('villager-died', this._onVictimDied, this);
+    this.events.off("villager-died", this._onVictimDied, this);
     // Emit died event
-    this.events.emit('enemy-died', this);
+    this.events.emit("enemy-died", this);
     // Destroy subparts
     this.healthBar.destroy();
 
@@ -98,20 +99,20 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     this.setStrokeStyle(1, "0x0000FF");
     this.selected = true;
     // Emit events
-    this.events.emit('new-enemy-selected');
+    this.events.emit("new-enemy-selected");
     // Start listening for events
-    this.events.once('map-left-or-middle-clicked', this.unselect, this);
-    this.events.once('new-building-selected', this.unselect, this);
-    this.events.once('new-villager-selected', this.unselect, this);
+    this.events.once("map-left-or-middle-clicked", this.unselect, this);
+    this.events.once("new-building-selected", this.unselect, this);
+    this.events.once("new-villager-selected", this.unselect, this);
   }
 
   unselect() {
     this.setStrokeStyle(0);
     this.selected = false;
     // Stop listening for events
-    this.events.off('map-left-or-middle-clicked', this.unselect, this);
-    this.events.off('new-building-selected', this.unselect, this);
-    this.events.off('new-villager-selected', this.unselect, this);
+    this.events.off("map-left-or-middle-clicked", this.unselect, this);
+    this.events.off("new-building-selected", this.unselect, this);
+    this.events.off("new-villager-selected", this.unselect, this);
   }
 
   hit(attacker, damage) {

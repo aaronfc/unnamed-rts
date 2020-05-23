@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 
 export default class HealthBar extends Phaser.GameObjects.Container {
-
   constructor(scene, entity) {
     super(scene, entity.x, entity.y - 9, []);
     scene.add.existing(this);
@@ -14,12 +13,24 @@ export default class HealthBar extends Phaser.GameObjects.Container {
     this.healthBarWidth = 15;
 
     // Create all GUI elements
-    
+
     // Background rectangle
-    this.backgroundRectangle = scene.add.rectangle(0, 0, this.healthBarWidth, 3, "0xFF0000");
+    this.backgroundRectangle = scene.add.rectangle(
+      0,
+      0,
+      this.healthBarWidth,
+      3,
+      "0xFF0000"
+    );
     this.add(this.backgroundRectangle);
     // Health rectangle
-    this.healthRectangle = scene.add.rectangle(0, 0, this.healthBarWidth, 3, "0x33BB33");
+    this.healthRectangle = scene.add.rectangle(
+      0,
+      0,
+      this.healthBarWidth,
+      3,
+      "0x33BB33"
+    );
     this.add(this.healthRectangle);
   }
 
