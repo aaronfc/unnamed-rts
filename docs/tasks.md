@@ -11,16 +11,17 @@
 - [X] Camera.
 	- Implement camera.
 	- Implement map borders.
-- [ ] Move to a scene-managed system
+- [X] Move to a scene-managed system
 	- Doc: https://phaser.io/phaser3/devlog/119
 	- Move UI (GUI and GameOverScreen) to a separate scene (above the game scene)
-- [ ] 🐛 Zooming breaks UI (it's out of the camera and game pauses, so...)
+- [X] 🐛 Zooming breaks UI (it's out of the camera and game pauses, so...)
 - [ ] Have it playable somewhere (github.io)
 - 🎉 Basic game concept done! 0.1 version
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 	- Set waves to happeng every 1 minute increasing in size.
 	- Set more resources along the map.
 - [ ] Revamp game-over screen style
+- [ ] Study alternatives to accessing Scene's data directly from, for example, GameOverSceen. Scene Registry?
 - [ ] Keep score leader board or similar
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] Villager refactor: Extract status to Tasks
