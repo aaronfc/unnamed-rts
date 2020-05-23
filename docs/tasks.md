@@ -15,8 +15,8 @@
 	- Doc: https://phaser.io/phaser3/devlog/119
 	- Move UI (GUI and GameOverScreen) to a separate scene (above the game scene)
 - [X] 🐛 Zooming breaks UI (it's out of the camera and game pauses, so...)
-- [ ] Have it playable somewhere (github.io)
-- 🎉 Basic game concept done! 0.1 version
+- [X] Have it playable somewhere (github.io) - https://arogigante.itch.io/unnamed-rts
+- [X] 🎉 Basic game concept done! 0.1 version
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map...
 	- Set waves to happeng every 1 minute increasing in size.
 	- Set more resources along the map.
