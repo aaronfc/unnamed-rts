@@ -42,7 +42,7 @@ export default class MainGameScene extends Phaser.Scene {
     };
     this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 1)');
-    this.cameras.main.setBounds(-100, -100, 1024 * 4 + 100, 1024 * 4 + 100);
+    this.cameras.main.setBounds(-100, -100, 1024 * 4 + 200, 1024 * 4 + 200);
 
     // Create Town Center
     var townCenter = new TownCenter(this, 100, 50);
@@ -130,6 +130,8 @@ export default class MainGameScene extends Phaser.Scene {
       this.controls.update(delta);
     }
 
+    // Limit zoom
+    this.cameras.main.setZoom(Phaser.Math.Clamp(this.cameras.main.zoom, 0.5, 1.5));
   }
 
   _randomInt(min, max) {
