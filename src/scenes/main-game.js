@@ -59,8 +59,8 @@ export default class MainGameScene extends Phaser.Scene {
 
     // Create bad guy
     let newBadGuyPosition = {x: 500, y: 500};
-    this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
-    this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
+    //this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
+    //this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
 
     // Resource
     var resource = new Resource(this, 200, 200, 1000);
