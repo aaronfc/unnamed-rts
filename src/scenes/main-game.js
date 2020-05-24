@@ -149,7 +149,6 @@ export default class MainGameScene extends Phaser.Scene {
   update(time, delta) {
     // Enemies creation
     if (this.nextWaveTime <= this.time.now) {
-      console.log("Triggering enemies wave");
       this._generateEnemiesWave();
       this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
     }
