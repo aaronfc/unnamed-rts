@@ -12,8 +12,8 @@ const config = {
       gravity: { x: 0, y: 0 },
     },
   },
-  width: 916, // This is the real size in pixels of half my screen so that we do not have blurry text after 100% width resize in index.html
-  height: 600,
+  width: 1080, // This is the real size in pixels of half my screen so that we do not have blurry text after 100% width resize in index.html
+  height: 720,
   scene: [MainGameScene, UIScene],
   scale: {
     mode: Phaser.Scale.FIT,

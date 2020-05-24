@@ -14,6 +14,7 @@ export default class MainGameScene extends Phaser.Scene {
   }
 
   create() {
+    this.initialTime = this.time.now;
     this.counters = {
       villagers: 0,
       gameTime: 0,
@@ -37,7 +38,7 @@ export default class MainGameScene extends Phaser.Scene {
       true,
       true
     );
-    this.add.rectangle(0, 0, 1024 * 4, 1024 * 4, "0xFAFAFA").setOrigin(0, 0);
+    this.add.rectangle(0, 0, 1024 * 4, 1024 * 4, "0xDDFFDD").setOrigin(0, 0);
 
     // Camera control
     var cursors = this.input.keyboard.createCursorKeys();
@@ -88,8 +89,8 @@ export default class MainGameScene extends Phaser.Scene {
           for (var i = 0; i < this.enemiesNextWave; i++) {
             // create random enemy
             let randomPosition = {
-              x: _randomInt(0, 500),
-              y: _randomInt(0, 500),
+              x: this._randomInt(0, 500),
+              y: this._randomInt(0, 500),
             };
             this.enemies.push(
               new Enemy(this, randomPosition.x, randomPosition.y)
@@ -156,7 +157,7 @@ export default class MainGameScene extends Phaser.Scene {
 
   update(time, delta) {
     if (!this.isGameOver) {
-      this.counters.gameTime += delta / 1000; // TODO Implement this in a proper way
+      this.counters.gameTime = (this.time.now - this.initialTime) / 1000; // TODO Implement this in a proper way
       this.counters.villagers = this.villagers.length;
       this.villagers.forEach((v) => v.update());
       this.buildings.forEach((b) => b.update());
@@ -176,6 +177,8 @@ export default class MainGameScene extends Phaser.Scene {
       Phaser.Math.Clamp(this.cameras.main.zoom, 0.5, 1.5)
     );
   }
+
+  // Private methods
 
   _randomInt(min, max) {
     return Math.random() * (max - min) + min;

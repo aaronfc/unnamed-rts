@@ -12,10 +12,14 @@
 - [x] Camera. - Implement camera. - Implement map borders.
 - [x] Move to a scene-managed system - Doc: https://phaser.io/phaser3/devlog/119 - Move UI (GUI and GameOverScreen) to a separate scene (above the game scene)
 - [x] 🐛 Zooming breaks UI (it's out of the camera and game pauses, so...)
-- [x] Have it playable somewhere (github.io) - https://arogigante.itch.io/unnamed-rts
-- [x] 🎉 Basic game concept done! 0.1 version
-- [ ] 🐛 \_randomInt is not defined when enemies are created
+- [x] Have it playable somewhere (github.io) - https://aaronfc.github.io/unnamed-rts
+- [x] 🎉 Basic game concept done! 0.1 version -
+- [x] 🐛 \_randomInt is not defined when enemies are created
+- [x] Adjust size for screen
 - [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map... - Set waves to happeng every 1 minute increasing in size. - Set more resources along the map.
+- [ ] 🐛 Zooming / blurry on Firefox
+- [ ] Document: Github Pages
+- [ ] 🐛 villager-icon key already in use - Fix: Move all images loading to a booting scene
 - [ ] Revamp game-over screen style
 - [ ] Study alternatives to accessing Scene's data directly from, for example, GameOverSceen. Scene Registry?
 - [ ] Keep score leader board or similar
