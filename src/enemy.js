@@ -4,9 +4,9 @@ import Fighting from "./fighting.js";
 import HealthBar from "./health-bar.js";
 
 export default class Enemy extends Phaser.GameObjects.Arc {
-  constructor(scene, x, y) {
+  constructor(scene, position) {
     // Circle
-    super(scene, x, y, 5, 0, 360, false, "0xFF0000", 1);
+    super(scene, position.x, position.y, 5, 0, 360, false, "0xFF0000", 1);
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setCircle(5);

@@ -16,7 +16,9 @@
 - [x] 🎉 Basic game concept done! 0.1 version -
 - [x] 🐛 \_randomInt is not defined when enemies are created
 - [x] Adjust size for screen
-- [ ] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map... - Set waves to happeng every 1 minute increasing in size. - Set more resources along the map.
+- [x] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map... - Set waves to happeng every 1 minute increasing in size. - Set more resources along the map.
+- [ ] Multi-selection
+- [ ] Make zooming work with the mouse scroll event
 - [ ] 🐛 Zooming / blurry on Firefox
 - [ ] Document: Github Pages
 - [ ] 🐛 villager-icon key already in use - Fix: Move all images loading to a booting scene

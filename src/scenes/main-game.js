@@ -4,6 +4,12 @@ import Resource from "../resource.js";
 import TownCenter from "../town_center.js";
 import Enemy from "../enemy.js";
 
+const MAP_WIDTH = 4 * 1024;
+const MAP_HEIGHT = 4 * 1024;
+const INITIAL_ENEMIES = 0;
+const ENEMY_WAVES_INCREASE = 1;
+const EXTRA_RESOURCES = 5;
+
 export default class MainGameScene extends Phaser.Scene {
   constructor() {
     super("MainGameScene");
@@ -25,40 +31,43 @@ export default class MainGameScene extends Phaser.Scene {
     this.resources = [];
     this.enemies = [];
     this.isGameOver = false;
+    this.isGameStarted = false;
 
     // World boders
     this.matter.world.setBounds(
       0,
       0,
-      4 * 1024,
-      4 * 1024,
+      MAP_WIDTH,
+      MAP_HEIGHT,
       64,
       true,
       true,
       true,
       true
     );
-    this.add.rectangle(0, 0, 1024 * 4, 1024 * 4, "0xDDFFDD").setOrigin(0, 0);
+    this.add.rectangle(0, 0, MAP_WIDTH, MAP_HEIGHT, "0xDDFFDD").setOrigin(0, 0);
 
     // Camera control
-    var cursors = this.input.keyboard.createCursorKeys();
+    //var cursors = this.input.keyboard.createCursorKeys();
+    var cursors = this.input.keyboard.addKeys("W,S,A,D");
     var controlConfig = {
       camera: this.cameras.main,
-      left: cursors.left,
-      right: cursors.right,
-      up: cursors.up,
-      down: cursors.down,
+      left: cursors.A,
+      right: cursors.D,
+      up: cursors.W,
+      down: cursors.S,
       zoomIn: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
       zoomOut: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
-      acceleration: 0.06,
-      drag: 0.0005,
+      zoomSpeed: 0.25,
+      acceleration: 1,
+      drag: 1,
       maxSpeed: 1.0,
     };
     this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(
       controlConfig
     );
     this.cameras.main.setBackgroundColor("rgba(0, 0, 0, 1)");
-    this.cameras.main.setBounds(-100, -100, 1024 * 4 + 200, 1024 * 4 + 200);
+    this.cameras.main.setBounds(-100, -100, MAP_WIDTH + 200, MAP_HEIGHT + 200);
 
     // Create Town Center
     var townCenter = new TownCenter(this, 100, 50);
@@ -72,37 +81,17 @@ export default class MainGameScene extends Phaser.Scene {
     //this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
 
     // Create bad guy
-    let newBadGuyPosition = { x: 500, y: 500 };
-    //this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
-    //this.enemies.push(new Enemy(this, newBadGuyPosition.x, newBadGuyPosition.y));
+    let newBadGuyPosition = { x: 300, y: 300 };
+    for (var i = 0; i < INITIAL_ENEMIES; i++) {
+      this.enemies.push(new Enemy(this, newBadGuyPosition));
+    }
 
     // Resource
-    var resource = new Resource(this, 200, 200, 1000);
+    var resource = new Resource(this, { x: 200, y: 200 }, 1000);
     this.resources.push(resource);
-
-    // Enemies creation
-    this.enemiesNextWave = 1;
-    this.scheduleNextWave = () => {
-      this.time.addEvent({
-        delay: 60 * 1000, // Enemies appear every 1 minute
-        callback: () => {
-          for (var i = 0; i < this.enemiesNextWave; i++) {
-            // create random enemy
-            let randomPosition = {
-              x: this._randomInt(0, 500),
-              y: this._randomInt(0, 500),
-            };
-            this.enemies.push(
-              new Enemy(this, randomPosition.x, randomPosition.y)
-            );
-          }
-          this.enemiesNextWave += 1;
-          this.scheduleNextWave();
-        },
-        callbackScope: this,
-      });
-    };
-    this.scheduleNextWave();
+    for (var i = 0; i < EXTRA_RESOURCES; i++) {
+      this.resources.push(new Resource(this, this._randomPosition(), 1000));
+    }
 
     // Input
     this.input.mouse.disableContextMenu();
@@ -156,6 +145,34 @@ export default class MainGameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
+    if (!this.isGameStarted) {
+      this.isGameStarted = true;
+
+      // Enemies creation
+      this.enemiesNextWave = 1;
+      this.scheduleNextWave = () => {
+        console.log("Next wave scheduled:", new Date());
+        this.time.addEvent({
+          delay: 60 * 1000, // Enemies appear every 1 minute
+          callback: () => {
+            console.log("Generating enemies:", new Date());
+            let randomPosition = this._randomPosition();
+            for (var i = 0; i < this.enemiesNextWave; i++) {
+              // create random enemy
+              this.enemies.push(new Enemy(this, randomPosition));
+            }
+            this.enemiesNextWave += 1;
+            this.scheduleNextWave();
+          },
+          callbackScope: this,
+        });
+      };
+      this.scheduleNextWave();
+
+      // Set initial time
+      this.initialTime = this.time.now;
+    }
+
     if (!this.isGameOver) {
       this.counters.gameTime = (this.time.now - this.initialTime) / 1000; // TODO Implement this in a proper way
       this.counters.villagers = this.villagers.length;
@@ -174,7 +191,7 @@ export default class MainGameScene extends Phaser.Scene {
 
     // Limit zoom
     this.cameras.main.setZoom(
-      Phaser.Math.Clamp(this.cameras.main.zoom, 0.5, 1.5)
+      Phaser.Math.Clamp(this.cameras.main.zoom, 0.25, 1.5)
     );
   }
 
@@ -182,5 +199,12 @@ export default class MainGameScene extends Phaser.Scene {
 
   _randomInt(min, max) {
     return Math.random() * (max - min) + min;
+  }
+
+  _randomPosition() {
+    return {
+      x: this._randomInt(300, MAP_WIDTH),
+      y: this._randomInt(300, MAP_HEIGHT),
+    };
   }
 }

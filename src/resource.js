@@ -1,9 +1,9 @@
 import Phaser from "phaser";
 
 export default class Resource extends Phaser.GameObjects.Rectangle {
-  constructor(scene, x, y, initialAmount) {
+  constructor(scene, position, initialAmount) {
     // Create resource mine
-    super(scene, x, y, 30, 30, "0xFF00FF");
+    super(scene, position.x, position.y, 30, 30, "0xFF00FF");
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setStatic(true);
