@@ -8,6 +8,7 @@ const MAP_WIDTH = 4 * 1024;
 const MAP_HEIGHT = 4 * 1024;
 const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
+const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
 
 export default class MainGameScene extends Phaser.Scene {
@@ -31,7 +32,8 @@ export default class MainGameScene extends Phaser.Scene {
     this.resources = [];
     this.enemies = [];
     this.isGameOver = false;
-    this.isGameStarted = false;
+    this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
+    this.enemiesNextWave = 1;
 
     // World boders
     this.matter.world.setBounds(
@@ -145,34 +147,14 @@ export default class MainGameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    if (!this.isGameStarted) {
-      this.isGameStarted = true;
-
-      // Enemies creation
-      this.enemiesNextWave = 1;
-      this.scheduleNextWave = () => {
-        console.log("Next wave scheduled:", new Date());
-        this.time.addEvent({
-          delay: 60 * 1000, // Enemies appear every 1 minute
-          callback: () => {
-            console.log("Generating enemies:", new Date());
-            let randomPosition = this._randomPosition();
-            for (var i = 0; i < this.enemiesNextWave; i++) {
-              // create random enemy
-              this.enemies.push(new Enemy(this, randomPosition));
-            }
-            this.enemiesNextWave += 1;
-            this.scheduleNextWave();
-          },
-          callbackScope: this,
-        });
-      };
-      this.scheduleNextWave();
-
-      // Set initial time
-      this.initialTime = this.time.now;
+    // Enemies creation
+    if (this.nextWaveTime <= this.time.now) {
+      console.log("Triggering enemies wave");
+      this._generateEnemiesWave();
+      this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
     }
 
+    // Game Over
     if (!this.isGameOver) {
       this.counters.gameTime = (this.time.now - this.initialTime) / 1000; // TODO Implement this in a proper way
       this.counters.villagers = this.villagers.length;
@@ -196,6 +178,15 @@ export default class MainGameScene extends Phaser.Scene {
   }
 
   // Private methods
+
+  _generateEnemiesWave() {
+    let randomPosition = this._randomPosition();
+    for (var i = 0; i < this.enemiesNextWave; i++) {
+      // create random enemy
+      this.enemies.push(new Enemy(this, randomPosition));
+    }
+    this.enemiesNextWave += ENEMY_WAVES_INCREASE;
+  }
 
   _randomInt(min, max) {
     return Math.random() * (max - min) + min;
