@@ -4,8 +4,8 @@ import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
 import Enemy from "../entities/enemy.js";
 
-const MAP_WIDTH = 4 * 1024;
-const MAP_HEIGHT = 4 * 1024;
+const MAP_WIDTH = 2 * 1080;
+const MAP_HEIGHT = 2 * 720;
 const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
@@ -172,7 +172,7 @@ export default class MainScene extends Phaser.Scene {
 
     // Limit zoom
     this.cameras.main.setZoom(
-      Phaser.Math.Clamp(this.cameras.main.zoom, 0.25, 1.5)
+      Phaser.Math.Clamp(this.cameras.main.zoom, 0.5, 1.5)
     );
   }
 
