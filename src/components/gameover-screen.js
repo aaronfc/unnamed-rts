@@ -62,9 +62,9 @@ export default class GameOverScreen extends Phaser.GameObjects.Container {
 
   _restartGame() {
     // Restart game scene
-    this.scene.scene.get("MainGameScene").registry.destroy();
-    this.scene.scene.get("MainGameScene").events.off();
-    this.scene.scene.get("MainGameScene").scene.restart();
+    this.scene.scene.get("MainScene").registry.destroy();
+    this.scene.scene.get("MainScene").events.off();
+    this.scene.scene.get("MainScene").scene.restart();
     // Restart UI Scene
     this.scene.registry.destroy();
     this.scene.events.off();

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import GUI from "../gui.js";
-import GameOverScreen from "../gameover-screen.js";
+import GUI from "../components/gui.js";
+import GameOverScreen from "../components/gameover-screen.js";
 
 export default class UIScene extends Phaser.Scene {
   constructor() {
@@ -16,7 +16,7 @@ export default class UIScene extends Phaser.Scene {
   create() {
     // TODO Stop using scene's data and use registry
     this.isGameOver = false;
-    this.counters = this.scene.get("MainGameScene").counters;
+    this.counters = this.scene.get("MainScene").counters;
     this.gui = new GUI(
       this,
       this.sys.game.canvas.width - 270,

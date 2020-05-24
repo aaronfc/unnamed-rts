@@ -1,8 +1,8 @@
 import Phaser from "phaser";
-import Villager from "../villager.js";
-import Resource from "../resource.js";
-import TownCenter from "../town_center.js";
-import Enemy from "../enemy.js";
+import Villager from "../entities/villager.js";
+import Resource from "../entities/resource.js";
+import TownCenter from "../entities/town_center.js";
+import Enemy from "../entities/enemy.js";
 
 const MAP_WIDTH = 4 * 1024;
 const MAP_HEIGHT = 4 * 1024;
@@ -11,9 +11,9 @@ const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
 
-export default class MainGameScene extends Phaser.Scene {
+export default class MainScene extends Phaser.Scene {
   constructor() {
-    super("MainGameScene");
+    super("MainScene");
   }
 
   preload() {

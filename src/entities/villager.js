@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import Movement from "./movement.js";
-import Fighting from "./fighting.js";
-import HealthBar from "./health-bar.js";
+import Movement from "../behaviours/movement.js";
+import Fighting from "../behaviours/fighting.js";
+import HealthBar from "../components/health-bar.js";
 
 export default class Villager extends Phaser.GameObjects.Arc {
   constructor(scene, x, y, townCenter) {
