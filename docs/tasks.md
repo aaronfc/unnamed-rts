@@ -19,7 +19,12 @@
 - [x] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map... - Set waves to happeng every 1 minute increasing in size. - Set more resources along the map.
 - [ ] Multi-selection
 - [ ] Make zooming work with the mouse scroll event
+- [ ] [improvement] Make map smaller
+- [ ] [improvement] Move Game Over to different scene
 - [ ] 🐛 Zooming / blurry on Firefox
+- [ ] 🐛 Pause time when game is paused (changing to different tab)
+- [ ] 🐛 Timer delay (already workarounded but after moving preload to separate scene maybe it's fixed)
+- [ ] Move preload to boot scene / menu
 - [ ] Document: Github Pages
 - [ ] 🐛 villager-icon key already in use - Fix: Move all images loading to a booting scene
 - [ ] Revamp game-over screen style
