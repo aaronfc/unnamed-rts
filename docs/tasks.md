@@ -17,25 +17,25 @@
 - [x] 🐛 \_randomInt is not defined when enemies are created
 - [x] Adjust size for screen
 - [x] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map... - Set waves to happeng every 1 minute increasing in size. - Set more resources along the map.
+- [x] [improvement] Make map smaller
+- [x] 🧠 Review documentation notes and tasks and plan future versions (0.2) - Naming / Goal? Yes. - 0.1: Foundations - 0.2: Less annoying - 0.3: Home, phone - 0.4: In construction - 0.5: Tower defense
 - [ ] Multi-selection
 - [ ] Make zooming work with the mouse scroll event
-- [ ] [improvement] Make map smaller
-- [ ] [improvement] Move Game Over to different scene
+- [ ] Alerts - Add "you are being attacked" or "Next wave is coming" alert. - Not enough resource! - Resource exhausted! - You are being attacked! - ...
+- [ ] Add "Boot" scene - Move preload to boot scene / menu
+- [ ] Add "Menu" scene
+- [ ] Add "Game Over" scene - Revamp game-over screen style
+- [ ] 🎉 0.2 version completed! - Less annoying!
 - [ ] 🐛 Zooming / blurry on Firefox
 - [ ] 🐛 Pause time when game is paused (changing to different tab)
 - [ ] 🐛 Timer delay (already workarounded but after moving preload to separate scene maybe it's fixed)
-- [ ] Move preload to boot scene / menu
 - [ ] Document: Github Pages
 - [ ] 🐛 villager-icon key already in use - Fix: Move all images loading to a booting scene
-- [ ] Revamp game-over screen style
 - [ ] Study alternatives to accessing Scene's data directly from, for example, GameOverSceen. Scene Registry?
 - [ ] Keep score leader board or similar
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] Villager refactor: Extract status to Tasks
-- [ ] 🧠 Review documentation notes and tasks and plan future versions (0.2)
 - [ ] Randomly generate map. - Main building position and resources. - Document that in the [game document][1].
-- [ ] Implement enemy waves
-- [ ] Add "you are being attacked" alert.
 - [ ] Add "scenes" to the game. - Loading screen. - Main menu - Game (everything done until now)
 
 ## Done
