@@ -3,6 +3,7 @@ import Villager from "../entities/villager.js";
 import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
 import Enemy from "../entities/enemy.js";
+import Map from "../entities/map.js";
 
 const MAP_WIDTH = 2 * 1080;
 const MAP_HEIGHT = 2 * 720;
@@ -47,10 +48,9 @@ export default class MainScene extends Phaser.Scene {
       true,
       true
     );
-    this.add.rectangle(0, 0, MAP_WIDTH, MAP_HEIGHT, "0xDDFFDD").setOrigin(0, 0);
+    this.map = new Map(this, MAP_WIDTH, MAP_HEIGHT);
 
     // Camera control
-    //var cursors = this.input.keyboard.createCursorKeys();
     var cursors = this.input.keyboard.addKeys("W,S,A,D");
     var controlConfig = {
       camera: this.cameras.main,
