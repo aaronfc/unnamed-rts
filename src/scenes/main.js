@@ -11,6 +11,8 @@ const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
+const ZOOM_LEVELS = [0.5, 1, 2];
+const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -35,6 +37,7 @@ export default class MainScene extends Phaser.Scene {
     this.isGameOver = false;
     this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
     this.enemiesNextWave = 1;
+    this.zoomLevel = DEFAULT_ZOOM_LEVEL_INDEX;
 
     // World boders
     this.matter.world.setBounds(
@@ -105,6 +108,24 @@ export default class MainScene extends Phaser.Scene {
       }
     });
 
+    // Zooming by using mouse wheel
+    this.input.on("wheel", (pointer, object, dx, dy, dz) => {
+      // TODO Add proper offset so that zooming ends with the mouse below the same point it started.
+      // Something along the lines of: (but this didn't work, probably because of zooming)
+      // Calculate offset from the mouse to the center of the camera
+      // and multiply by zoom Level
+      // Center camera on: pointer.worldX and Y + the calculated offset
+
+      if (dy < 0) {
+        // Moving Up
+        this._changeZoomLevel(1, { x: pointer.worldX, y: pointer.worldY });
+      } else if (dy > 0) {
+        // Moving Down
+        this._changeZoomLevel(-1, { x: pointer.worldX, y: pointer.worldY });
+      }
+      pointer.event.preventDefault(); // Preventing propagation of the event so that the page doesn't move
+    });
+
     // Events
     this.events.on(
       "resource-destroyed",
@@ -169,14 +190,19 @@ export default class MainScene extends Phaser.Scene {
 
       this.controls.update(delta);
     }
-
-    // Limit zoom
-    this.cameras.main.setZoom(
-      Phaser.Math.Clamp(this.cameras.main.zoom, 0.5, 1.5)
-    );
   }
 
   // Private methods
+
+  _changeZoomLevel(increase, position) {
+    this.zoomLevel = Phaser.Math.Clamp(
+      this.zoomLevel + increase,
+      0,
+      ZOOM_LEVELS.length - 1
+    );
+    this.cameras.main.setZoom(ZOOM_LEVELS[this.zoomLevel]);
+    this.cameras.main.centerOn(position.x, position.y);
+  }
 
   _generateEnemiesWave() {
     let randomPosition = this._randomPosition();

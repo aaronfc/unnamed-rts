@@ -17,6 +17,8 @@ export default class Map extends Phaser.GameObjects.Rectangle {
 
     // Input
     this.setInteractive({ draggable: true });
+
+    // Multi-selection
     this.on("dragstart", (pointer, dragX, dragY) => {
       this.selectingRectangle
         .setSize(0, 0)

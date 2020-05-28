@@ -20,7 +20,7 @@
 - [x] [improvement] Make map smaller
 - [x] 🧠 Review documentation notes and tasks and plan future versions (0.2) - Naming / Goal? Yes. - 0.1: Foundations - 0.2: Less annoying - 0.3: Home, phone - 0.4: In construction - 0.5: Tower defense
 - [x] Multi-selection
-- [ ] Make zooming work with the mouse scroll event
+- [ ] Make zooming work with the mouse scroll event - We are still missing a way to keep the mouse in the same position after zooming in or out
 - [ ] Alerts - Add "you are being attacked" or "Next wave is coming" alert. - Not enough resource! - Resource exhausted! - You are being attacked! - ...
 - [ ] Add "Boot" scene - Move preload to boot scene / menu
 - [ ] Add "Menu" scene
