@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import GUI from "../components/gui.js";
 import GameOverScreen from "../components/gameover-screen.js";
+import Alert from "../components/alert.js";
 
 export default class UIScene extends Phaser.Scene {
   constructor() {
@@ -29,6 +30,11 @@ export default class UIScene extends Phaser.Scene {
       this.sys.game.canvas.height / 2,
       this.counters
     );
+    this.alert = new Alert(
+      this,
+      this.sys.game.canvas.width / 2,
+      this.sys.game.canvas.height / 10
+    );
 
     // Input
     this.input.mouse.disableContextMenu();
@@ -37,6 +43,7 @@ export default class UIScene extends Phaser.Scene {
   update(time, delta) {
     if (!this.isGameOver) {
       this.gui.update();
+      this.alert.update();
       if (this.counters.villagers <= 0) {
         this.isGameOver = true;
         this.gameoverScreen.show();

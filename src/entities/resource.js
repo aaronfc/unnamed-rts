@@ -9,6 +9,7 @@ export default class Resource extends Phaser.GameObjects.Rectangle {
     this.setStatic(true);
 
     // Properties
+    this.scene = scene;
     this.initialAmount = initialAmount;
     this.amount = initialAmount;
     this.events = scene.events;
@@ -17,7 +18,7 @@ export default class Resource extends Phaser.GameObjects.Rectangle {
     this.setInteractive();
     this.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.rightButtonDown()) {
-        scene.events.emit("resource-right-clicked", this);
+        this.events.emit("resource-right-clicked", this);
       }
     });
   }
@@ -26,8 +27,9 @@ export default class Resource extends Phaser.GameObjects.Rectangle {
     this.setAlpha(this.amount / this.initialAmount);
 
     if (this.amount == 0) {
-      this.destroy();
+      this.scene.scene.get('UIScene').events.emit('alert-message', "Resource exhausted ...");
       this.events.emit("resource-destroyed", this);
+      this.destroy();
     }
   }
 

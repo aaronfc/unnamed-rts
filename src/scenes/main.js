@@ -36,6 +36,7 @@ export default class MainScene extends Phaser.Scene {
     this.enemies = [];
     this.isGameOver = false;
     this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
+    this.isNextWaveAlerted = false;
     this.enemiesNextWave = 1;
     this.zoomLevel = DEFAULT_ZOOM_LEVEL_INDEX;
 
@@ -174,9 +175,14 @@ export default class MainScene extends Phaser.Scene {
 
   update(time, delta) {
     // Enemies creation
+    if (this.nextWaveTime - 10000 <= this.time.now && !this.isNextWaveAlerted) {
+      this.scene.get('UIScene').events.emit('alert-message', "Next wave is coming in 10 seconds!");
+      this.isNextWaveAlerted = true;
+    }
     if (this.nextWaveTime <= this.time.now) {
       this._generateEnemiesWave();
       this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
+      this.isNextWaveAlerted = false;
     }
 
     // Game Over

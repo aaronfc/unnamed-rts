@@ -101,8 +101,8 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
       this.scene.counters.resource -= order.cost.resource;
       this.enqueuedOrders.push("create-villager");
     } else {
-      console.log("Not enough resource...");
-      // TODO Pretty message to the user informing about "warning" or "error"
+      // TODO Isolate this scene from using UIScene directly - probably events-based
+      this.scene.scene.get('UIScene').events.emit('alert-message', 'Not enough resource!', this);
     }
   }
 
