@@ -22,7 +22,12 @@
 - [x] Multi-selection
 - [x] Make zooming work with the mouse scroll event - We are still missing a way to keep the mouse in the same position after zooming in or out
 - [ ] 🐛 Stop prettifier from modifying markdown files
-- [ ] Alerts - Add "you are being attacked" or "Next wave is coming" alert. - Not enough resource! - Resource exhausted! - You are being attacked! - ...
+- [ ] Alerts
+	- Next wave is coming in X seconds!
+	- Not enough resource!
+	- Resource exhausted!
+	- You are being attacked!
+	- ...
 - [ ] Add "Boot" scene - Move preload to boot scene / menu
 - [ ] Add "Menu" scene
 - [ ] Add "Game Over" scene - Revamp game-over screen style
