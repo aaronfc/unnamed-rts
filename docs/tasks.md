@@ -27,8 +27,10 @@
 	- Not enough resource! ✔️ 
 	- Resource exhausted! ✔️ 
 	- ...
-- [X] Check why prettier is surrounding some lines with `(...),` - See GUI.js
-- [ ] Add animations to Alerts: Shaking and then fading.
+- [ ] Check why prettier is surrounding some lines with `(...),` - See GUI.js
+- [ ] Look into animations:
+	- Alerts: Shaking and then fading.
+	- Camera: Zooming and panning.
 - [ ] 🧠 Document Alerts behaviour.
 - [ ] Add "Boot" scene - Move preload to boot scene / menu
 - [ ] Add "Menu" scene
