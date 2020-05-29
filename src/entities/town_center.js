@@ -102,7 +102,9 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
       this.enqueuedOrders.push("create-villager");
     } else {
       // TODO Isolate this scene from using UIScene directly - probably events-based
-      this.scene.scene.get('UIScene').events.emit('alert-message', 'Not enough resource!', this);
+      this.scene.scene
+        .get("UIScene")
+        .events.emit("alert-message", "Not enough resource!", this);
     }
   }
 
@@ -161,13 +163,13 @@ class TownCenterMenu extends Phaser.GameObjects.Container {
       }
     });
     this.add(this.villagersIcon);
-    (this.villagersText = scene.add.text(
+    this.villagersText = scene.add.text(
       this.villagersIcon.x + this.villagersIcon.displayWidth + 5,
       10,
       "",
       { color: "#000000", fontSize: 10 }
-    )),
-      this.add(this.villagersText);
+    );
+    this.add(this.villagersText);
     this.villagersEnqueuedText = scene.add.text(
       this.villagersIcon.x,
       this.villagersIcon.y + this.villagersIcon.displayHeight,

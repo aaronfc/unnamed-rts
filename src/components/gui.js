@@ -27,13 +27,13 @@ export default class GUI extends Phaser.GameObjects.Container {
       .setOrigin(0)
       .setScale(0.5);
     this.add(this.villagersIcon);
-    (this.villagersText = scene.add.text(
+    this.villagersText = scene.add.text(
       this.villagersIcon.x + this.villagersIcon.displayWidth + 5,
       10,
       "???",
       { color: "#FFFFFF", fontSize: 14 }
-    )),
-      this.add(this.villagersText);
+    );
+    this.add(this.villagersText);
 
     // Resource info
     this.resourceIcon = scene.add
@@ -45,13 +45,13 @@ export default class GUI extends Phaser.GameObjects.Container {
       .setOrigin(0)
       .setScale(0.5);
     this.add(this.resourceIcon);
-    (this.resourceText = scene.add.text(
+    this.resourceText = scene.add.text(
       this.resourceIcon.x + this.resourceIcon.displayWidth + 5,
       this.resourceIcon.y,
       "?????",
       { color: "#FFFFFF", fontSize: 14 }
-    )),
-      this.add(this.resourceText);
+    );
+    this.add(this.resourceText);
 
     // Time info
     this.timeIcon = scene.add
@@ -63,13 +63,13 @@ export default class GUI extends Phaser.GameObjects.Container {
       .setOrigin(0)
       .setScale(0.5);
     this.add(this.timeIcon);
-    (this.gameTimeText = scene.add.text(
+    this.gameTimeText = scene.add.text(
       this.timeIcon.x + this.timeIcon.displayWidth + 5,
       this.resourceText.y,
       "??:??:??",
       { color: "#FFFFFF", fontSize: 14 }
-    )),
-      this.add(this.gameTimeText);
+    );
+    this.add(this.gameTimeText);
   }
 
   update() {
