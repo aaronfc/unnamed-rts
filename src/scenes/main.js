@@ -110,20 +110,22 @@ export default class MainScene extends Phaser.Scene {
 
     // Zooming by using mouse wheel
     this.input.on("wheel", (pointer, object, dx, dy, dz) => {
-      // TODO Add proper offset so that zooming ends with the mouse below the same point it started.
-      // Something along the lines of: (but this didn't work, probably because of zooming)
-      // Calculate offset from the mouse to the center of the camera
-      // and multiply by zoom Level
-      // Center camera on: pointer.worldX and Y + the calculated offset
+      // Calculate mouse offset from the center of the viewport
+      let mouseOffset = {
+        x: pointer.x - this.cameras.main.centerX,
+        y: pointer.y - this.cameras.main.centerY,
+      };
+      let worldCoordinates = {
+        x: pointer.worldX,
+        y: pointer.worldY,
+      };
 
-      if (dy < 0) {
-        // Moving Up
-        this._changeZoomLevel(1, { x: pointer.worldX, y: pointer.worldY });
-      } else if (dy > 0) {
-        // Moving Down
-        this._changeZoomLevel(-1, { x: pointer.worldX, y: pointer.worldY });
-      }
-      pointer.event.preventDefault(); // Preventing propagation of the event so that the page doesn't move
+      // Calculate zoom increase: 1 when scrolling UP, -1 when scrolling DOWN, 0 otherwise
+      let zoomIncrease = dy < 0 ? 1 : dy > 0 ? -1 : 0;
+      this._changeZoomLevel(zoomIncrease, worldCoordinates, mouseOffset);
+
+      // Preventing propagation of the event so that the page doesn't move
+      pointer.event.preventDefault();
     });
 
     // Events
@@ -165,6 +167,9 @@ export default class MainScene extends Phaser.Scene {
 
     // Update counters so that they are consistent
     this.counters.villagers = this.villagers.length;
+
+    // Update camera
+    this.cameras.main.setZoom(ZOOM_LEVELS[this.zoomLevel]);
   }
 
   update(time, delta) {
@@ -194,14 +199,22 @@ export default class MainScene extends Phaser.Scene {
 
   // Private methods
 
-  _changeZoomLevel(increase, position) {
+  _changeZoomLevel(increase, position, offset) {
     this.zoomLevel = Phaser.Math.Clamp(
       this.zoomLevel + increase,
       0,
       ZOOM_LEVELS.length - 1
     );
-    this.cameras.main.setZoom(ZOOM_LEVELS[this.zoomLevel]);
-    this.cameras.main.centerOn(position.x, position.y);
+    let futureZoom = ZOOM_LEVELS[this.zoomLevel];
+    if (this.cameras.main.zoom != futureZoom) {
+      let offsetXCorrected = offset.x / futureZoom;
+      let offsetYCorrected = offset.y / futureZoom;
+      this.cameras.main.setZoom(ZOOM_LEVELS[this.zoomLevel]);
+      this.cameras.main.centerOn(
+        position.x - offsetXCorrected,
+        position.y - offsetYCorrected
+      );
+    }
   }
 
   _generateEnemiesWave() {
