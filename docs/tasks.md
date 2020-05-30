@@ -28,9 +28,10 @@
 	- Resource exhausted! ✔️ 
 	- ...
 - [X] Check why prettier is surrounding some lines with `(...),` - See GUI.js
-- [ ] Look into animations:
+- [X] Look into animations:
 	- Camera: Zooming and panning ✔️ 
-	- Alerts: Shaking and then fading.
+	- Alerts: Fading ✔️ 
+- [ ] 🐛 Alert messages broken after game-over restart
 - [ ] 🧠 Document Alerts behaviour.
 - [ ] Add "Boot" scene - Move preload to boot scene / menu
 - [ ] Add "Menu" scene
@@ -44,6 +45,7 @@
 - [ ] Study alternatives to accessing Scene's data directly from, for example, GameOverSceen. Scene Registry?
 - [ ] Keep score leader board or similar
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
+- [ ] 💡 Make the "Next wave coming in 10 seconds" update the message every second @Chris2A
 - [ ] Villager refactor: Extract status to Tasks
 - [ ] Randomly generate map. - Main building position and resources. - Document that in the [game document][1].
 - [ ] Add "scenes" to the game. - Loading screen. - Main menu - Game (everything done until now)
