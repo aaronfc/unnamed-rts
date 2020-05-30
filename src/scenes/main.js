@@ -176,7 +176,9 @@ export default class MainScene extends Phaser.Scene {
   update(time, delta) {
     // Enemies creation
     if (this.nextWaveTime - 10000 <= this.time.now && !this.isNextWaveAlerted) {
-      this.scene.get('UIScene').events.emit('alert-message', "Next wave is coming in 10 seconds!");
+      this.scene
+        .get("UIScene")
+        .events.emit("alert-message", "Next wave is coming in 10 seconds!");
       this.isNextWaveAlerted = true;
     }
     if (this.nextWaveTime <= this.time.now) {
@@ -213,12 +215,19 @@ export default class MainScene extends Phaser.Scene {
     );
     let futureZoom = ZOOM_LEVELS[this.zoomLevel];
     if (this.cameras.main.zoom != futureZoom) {
-      let offsetXCorrected = offset.x / futureZoom;
-      let offsetYCorrected = offset.y / futureZoom;
-      this.cameras.main.setZoom(ZOOM_LEVELS[this.zoomLevel]);
-      this.cameras.main.centerOn(
-        position.x - offsetXCorrected,
-        position.y - offsetYCorrected
+      this.cameras.main.zoomTo(
+        futureZoom,
+        300,
+        "Power2",
+        false,
+        (camera, progress) => {
+          let offsetXCorrected = offset.x / camera.zoom;
+          let offsetYCorrected = offset.y / camera.zoom;
+          camera.centerOn(
+            position.x - offsetXCorrected,
+            position.y - offsetYCorrected
+          );
+        }
       );
     }
   }
