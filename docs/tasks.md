@@ -31,12 +31,13 @@
 - [X] Look into animations:
 	- Camera: Zooming and panning ✔️ 
 	- Alerts: Fading ✔️ 
-- [ ] 🐛 Alert messages broken after game-over restart
-- [ ] 🧠 Document Alerts behaviour.
+- [X] 🐛 Alert messages broken after game-over restart
 - [ ] Add "Boot" scene - Move preload to boot scene / menu
 - [ ] Add "Menu" scene
 - [ ] Add "Game Over" scene - Revamp game-over screen style
+- [ ] 🧠 Document Alerts behaviour.
 - [ ] 🎉 0.2 version completed! - Less annoying!
+- [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] 🐛 Zooming / blurry on Firefox
 - [ ] 🐛 Pause time when game is paused (changing to different tab)
 - [ ] 🐛 Timer delay (already workarounded but after moving preload to separate scene maybe it's fixed)
@@ -44,7 +45,6 @@
 - [ ] 🐛 villager-icon key already in use - Fix: Move all images loading to a booting scene
 - [ ] Study alternatives to accessing Scene's data directly from, for example, GameOverSceen. Scene Registry?
 - [ ] Keep score leader board or similar
-- [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] 💡 Make the "Next wave coming in 10 seconds" update the message every second @Chris2A
 - [ ] Villager refactor: Extract status to Tasks
 - [ ] Randomly generate map. - Main building position and resources. - Document that in the [game document][1].

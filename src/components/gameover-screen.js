@@ -62,13 +62,33 @@ export default class GameOverScreen extends Phaser.GameObjects.Container {
 
   _restartGame() {
     // Restart game scene
-    this.scene.scene.get("MainScene").registry.destroy();
-    this.scene.scene.get("MainScene").events.off();
-    this.scene.scene.get("MainScene").scene.restart();
+    this._restartScene(this.scene.scene.get("MainScene"));
     // Restart UI Scene
-    this.scene.registry.destroy();
-    this.scene.events.off();
-    this.scene.scene.restart();
+    this._restartScene(this.scene);
+  }
+
+  _restartScene(scene) {
+    scene.registry.destroy();
+    this._removeAllListeners(scene);
+    scene.scene.restart();
+  }
+
+  _removeAllListeners(scene) {
+    let events = [
+      "villager-died",
+      "enemy-died",
+      "map-right-clicked",
+      "resource-destroyed",
+      "new-villager-created",
+      "resource-deposit-increased",
+      "alert-message",
+      "new-building-selected",
+      "map-left-or-middle-clicked",
+      "new-villager-selected",
+      "resource-right-clicked",
+      "enemy-right-clicked",
+    ];
+    events.forEach((e) => scene.events.off(e));
   }
 
   // Public method

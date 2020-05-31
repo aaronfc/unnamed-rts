@@ -62,3 +62,8 @@ For texts, apparently the default origin is set to 0,0 and not to 0.5.
 
 Apparently when using a Scene's `this.time.addEvent` to add a delayed callback we have an initial extra delay (some seconds). From the documentation it reads: "Creates a Timer Event and adds it to the Clock at the start of the frame". Seems like we do not understand this `at the start of the frame` thing.
 For the moment we just went with out own implementation of delayed calls.
+
+
+## Removing all events
+Phaser has a method `removeAllListeners` that is a nuclear operation. It cleans up all the event listeners, **incluiding some that Phaser needs itself** so if you call it manually you are doomed.
+Aleternative: Call the `off(event)` method for every event you have registered.
