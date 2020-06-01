@@ -7,7 +7,7 @@ import Map from "../entities/map.js";
 
 const MAP_WIDTH = 2 * 1080;
 const MAP_HEIGHT = 2 * 720;
-const INITIAL_ENEMIES = 0;
+const INITIAL_ENEMIES = 5;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
@@ -155,6 +155,7 @@ export default class MainScene extends Phaser.Scene {
       "villager-died",
       (villager) => {
         this.villagers = this.villagers.filter((v) => v != villager);
+        console.log("Villager died!");
       },
       this
     );
@@ -198,7 +199,12 @@ export default class MainScene extends Phaser.Scene {
 
       if (this.counters.villagers <= 0) {
         this.isGameOver = true;
-        this.time.removeAllEvents();
+        this._preStopScene(this.scene.get("UIScene"));
+        this.scene.stop("UIScene");
+        this._preStopScene(this); // MainScene
+        this.scene.start("GameOverScene", {
+          counters: this.counters,
+        });
       }
 
       this.controls.update(delta);
@@ -250,5 +256,29 @@ export default class MainScene extends Phaser.Scene {
       x: this._randomInt(300, MAP_WIDTH),
       y: this._randomInt(300, MAP_HEIGHT),
     };
+  }
+
+  _preStopScene(scene) {
+    scene.registry.destroy();
+    this._removeAllListeners(scene);
+    scene.time.removeAllEvents();
+  }
+
+  _removeAllListeners(scene) {
+    let events = [
+      "villager-died",
+      "enemy-died",
+      "map-right-clicked",
+      "resource-destroyed",
+      "new-villager-created",
+      "resource-deposit-increased",
+      "alert-message",
+      "new-building-selected",
+      "map-left-or-middle-clicked",
+      "new-villager-selected",
+      "resource-right-clicked",
+      "enemy-right-clicked",
+    ];
+    events.forEach((e) => scene.events.off(e));
   }
 }

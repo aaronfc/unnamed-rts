@@ -32,9 +32,11 @@
 	- Camera: Zooming and panning ✔️ 
 	- Alerts: Fading ✔️ 
 - [X] 🐛 Alert messages broken after game-over restart
-- [ ] Add "Boot" scene - Move preload to boot scene / menu
-- [ ] Add "Menu" scene
-- [ ] Add "Game Over" scene - Revamp game-over screen style
+- [X] Add "Boot" scene - Move preload to boot scene / menu
+- [X] Add "Menu" scene
+- [X] Add "Game Over" scene
+- [X] 🐛 While on game-over screen some events are still being triggered: `nextEnemiesWave` (alert and enemies) - Now the game-over screen has been replaced by a game over scene.
+- [ ] Revamp game-over screen style
 - [ ] 🧠 Document Alerts behaviour.
 - [ ] 🎉 0.2 version completed! - Less annoying!
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
