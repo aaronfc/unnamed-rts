@@ -66,4 +66,9 @@ For the moment we just went with out own implementation of delayed calls.
 
 ## Removing all events
 Phaser has a method `removeAllListeners` that is a nuclear operation. It cleans up all the event listeners, **incluiding some that Phaser needs itself** so if you call it manually you are doomed.
-Aleternative: Call the `off(event)` method for every event you have registered.
+Anowleternative: Call the `off(event)` method for every event you have registered.
+
+
+## Time / Clock
+When using `this.time.now` in the `create()` from an Scene the value is `0`. But later when used in the `update()` it will be a different value (not matching the initial 0 value).
+https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html See `now` description.

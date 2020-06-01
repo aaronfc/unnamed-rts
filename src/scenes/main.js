@@ -24,7 +24,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.initialTime = this.time.now;
+    this.initialTime = this._getNowTime();
     this.counters = {
       villagers: 0,
       gameTime: 0,
@@ -35,7 +35,7 @@ export default class MainScene extends Phaser.Scene {
     this.resources = [];
     this.enemies = [];
     this.isGameOver = false;
-    this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
+    this.nextWaveTime = this._getNowTime() + ENEMY_WAVES_INTERVAL;
     this.isNextWaveAlerted = false;
     this.enemiesNextWave = 1;
     this.zoomLevel = DEFAULT_ZOOM_LEVEL_INDEX;
@@ -176,21 +176,24 @@ export default class MainScene extends Phaser.Scene {
 
   update(time, delta) {
     // Enemies creation
-    if (this.nextWaveTime - 10000 <= this.time.now && !this.isNextWaveAlerted) {
+    if (
+      this.nextWaveTime - 10000 <= this._getNowTime() &&
+      !this.isNextWaveAlerted
+    ) {
       this.scene
         .get("UIScene")
         .events.emit("alert-message", "Next wave is coming in 10 seconds!");
       this.isNextWaveAlerted = true;
     }
-    if (this.nextWaveTime <= this.time.now) {
+    if (this.nextWaveTime <= this._getNowTime()) {
       this._generateEnemiesWave();
-      this.nextWaveTime = this.time.now + ENEMY_WAVES_INTERVAL;
+      this.nextWaveTime = this._getNowTime() + ENEMY_WAVES_INTERVAL;
       this.isNextWaveAlerted = false;
     }
 
     // Game Over
     if (!this.isGameOver) {
-      this.counters.gameTime = (this.time.now - this.initialTime) / 1000; // TODO Implement this in a proper way
+      this.counters.gameTime = (this._getNowTime() - this.initialTime) / 1000; // TODO Implement this in a proper way
       this.counters.villagers = this.villagers.length;
       this.villagers.forEach((v) => v.update());
       this.buildings.forEach((b) => b.update());
@@ -280,5 +283,9 @@ export default class MainScene extends Phaser.Scene {
       "enemy-right-clicked",
     ];
     events.forEach((e) => scene.events.off(e));
+  }
+
+  _getNowTime() {
+    return new Date().getTime();
   }
 }
