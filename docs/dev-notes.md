@@ -72,3 +72,20 @@ Anowleternative: Call the `off(event)` method for every event you have registere
 ## Time / Clock
 When using `this.time.now` in the `create()` from an Scene the value is `0`. But later when used in the `update()` it will be a different value (not matching the initial 0 value).
 https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html See `now` description.
+
+
+## Pathfinding in Phaser3
+- External libraries:
+	- https://easystarjs.com/
+		- Seems focused on solving pathfinding for tiled or grid-based maps? [needs confirmation]
+	- https://www.mikewesthad.com/navmesh/docs/
+		- Navigation meshed (faster than applygin A*)
+		- Also requires tiled-map or navmesh generation
+- Probably we will need to start using a tile-map.
+- Other developers in a similar starting situation to ours:
+	- https://gamedev.stackexchange.com/questions/119399/dynamic-navigation-mesh-generation-algorithm
+		- Not very possitive comments.
+		- Algorithms mentioned: Hertel-Melhorn Algorithm, 
+	- https://gamedev.stackexchange.com/questions/31208/how-can-i-generate-a-2d-navigation-mesh-in-a-dynamic-environment-at-runtime
+- [ ] Try https://github.com/amaccann/phaser-navmesh-generation with an empty tilemap (empty collisions array also) - check example and use the addSprite method.
+- [ ] Consider creating navmesh manually (or with an unknown plugin) and use: https://www.mikewesthad.com/navmesh/docs/#creating-a-navigation-mesh

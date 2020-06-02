@@ -36,9 +36,30 @@
 - [X] Add "Menu" scene
 - [X] Add "Game Over" scene
 - [X] 🐛 While on game-over screen some events are still being triggered: `nextEnemiesWave` (alert and enemies) - Now the game-over screen has been replaced by a game over scene.
-- [ ] Revamp game-over screen style
-- [ ] 🧠 Document Alerts behaviour.
+- [X] 🧠 Document Alerts behaviour.
+- [X] Look up information about pathfinding on Phaser3.
+- [X] Prepare 0.3 version tasks - focused on pathfinding
+- [ ] Game Over scenes completion:
+	- Add best score.
+	- Add custom message based on result.
+	- Maybe some restyling?
+- [ ] Menu scene completion:
+	- Add the game name
+	- Add the best score
 - [ ] 🎉 0.2 version completed! - Less annoying!
+- [ ] 🧠 Document what the 0.3 version (aka pathfinding) will be.
+- [ ] Keep investigating solutions for pathfinding (get tasks from dev-notes)
+- [.] Research design possibilities for the game:
+	- [.] Check on free assets to add some basic styling to the game.
+		- [X] Identify assets that we really need:
+			- Grass
+			- Town center (big house / castle / camp)
+			- Resource (rocks tinted to pink or something similar?)
+			- Houses (for 0.4)
+		- [ ] What size should the assets be? Tilemap sizing?
+		- [ ] Get some assets
+	- [ ] Check on fonts and buttons/icons.
+- [ ] Revamp game-over screen style
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] 🐛 Zooming / blurry on Firefox
 - [ ] 🐛 Pause time when game is paused (changing to different tab)
