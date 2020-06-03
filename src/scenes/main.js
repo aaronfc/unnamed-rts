@@ -7,7 +7,7 @@ import Map from "../entities/map.js";
 
 const MAP_WIDTH = 2 * 1080;
 const MAP_HEIGHT = 2 * 720;
-const INITIAL_ENEMIES = 5;
+const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
