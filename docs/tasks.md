@@ -1,52 +1,13 @@
 ## Tasks
 
 ## Pipeline
-
-- [x] Add "You survived for XX time" message with a "restart" button when dead. Store best score?
-- [x] [offcamera] 🐛 Blurry text
-- [x] [offcamera] Updating the game concept documentation.
-- [x] 🐛 Enemies still being created after game is over
-- [x] 🐛 Enemies still moving after game is over
-- [x] 🧠 Check how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
-- [x] Change enemies creation to a fixed 1 minute interval
-- [x] Camera. - Implement camera. - Implement map borders.
-- [x] Move to a scene-managed system - Doc: https://phaser.io/phaser3/devlog/119 - Move UI (GUI and GameOverScreen) to a separate scene (above the game scene)
-- [x] 🐛 Zooming breaks UI (it's out of the camera and game pauses, so...)
-- [x] Have it playable somewhere (github.io) - https://aaronfc.github.io/unnamed-rts
-- [x] 🎉 Basic game concept done! 0.1 version -
-- [x] 🐛 \_randomInt is not defined when enemies are created
-- [x] Adjust size for screen
-- [x] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map... - Set waves to happeng every 1 minute increasing in size. - Set more resources along the map.
-- [x] [improvement] Make map smaller
-- [x] 🧠 Review documentation notes and tasks and plan future versions (0.2) - Naming / Goal? Yes. - 0.1: Foundations - 0.2: Less annoying - 0.3: Home, phone - 0.4: In construction - 0.5: Tower defense
-- [x] Multi-selection
-- [x] Make zooming work with the mouse scroll event - We are still missing a way to keep the mouse in the same position after zooming in or out
-- [X] 🐛 Stop prettifier from modifying markdown files
-- [X] Alerts
-	- Next wave is coming in X seconds! ✔️ 
-	- Not enough resource! ✔️ 
-	- Resource exhausted! ✔️ 
-	- ...
-- [X] Check why prettier is surrounding some lines with `(...),` - See GUI.js
-- [X] Look into animations:
-	- Camera: Zooming and panning ✔️ 
-	- Alerts: Fading ✔️ 
-- [X] 🐛 Alert messages broken after game-over restart
-- [X] Add "Boot" scene - Move preload to boot scene / menu
-- [X] Add "Menu" scene
-- [X] Add "Game Over" scene
-- [X] 🐛 While on game-over screen some events are still being triggered: `nextEnemiesWave` (alert and enemies) - Now the game-over screen has been replaced by a game over scene.
-- [X] 🧠 Document Alerts behaviour.
-- [X] Look up information about pathfinding on Phaser3.
-- [X] Prepare 0.3 version tasks - focused on pathfinding
-- [ ] Game Over scenes completion:
-	- Add best score.
-	- Add custom message based on result.
-	- Maybe some restyling?
-- [ ] Menu scene completion:
-	- Add the game name
-	- Add the best score
-- [ ] 🎉 0.2 version completed! - Less annoying!
+- [X] Game Over scenes completion:
+	- Add best score. ✔️ 
+	- Add custom message based on result. ✔️ 
+	- Maybe some restyling? ✔️ 
+- [X] Menu scene completion:
+	- Add the game name ✔️ 
+- [X] 🎉 0.2 version completed! - Less annoying!
 - [ ] 🧠 Document what the 0.3 version (aka pathfinding) will be.
 - [ ] Keep investigating solutions for pathfinding (get tasks from dev-notes)
 - [.] Research design possibilities for the game:
@@ -103,6 +64,43 @@
 - [x] 🐛 When dying (enemy or villager) we should remove all listeners (added when selected for example)
 - [x] Add some health bar or similar.
 - [x] Do more testing about fighting and check the [game document][1]
+- [x] Add "You survived for XX time" message with a "restart" button when dead. Store best score?
+- [x] [offcamera] 🐛 Blurry text
+- [x] [offcamera] Updating the game concept documentation.
+- [x] 🐛 Enemies still being created after game is over
+- [x] 🐛 Enemies still moving after game is over
+- [x] 🧠 Check how clock / gameTime works. Check this: https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html
+- [x] Change enemies creation to a fixed 1 minute interval
+- [x] Camera. - Implement camera. - Implement map borders.
+- [x] Move to a scene-managed system - Doc: https://phaser.io/phaser3/devlog/119 - Move UI (GUI and GameOverScreen) to a separate scene (above the game scene)
+- [x] 🐛 Zooming breaks UI (it's out of the camera and game pauses, so...)
+- [x] Have it playable somewhere (github.io) - https://aaronfc.github.io/unnamed-rts
+- [x] 🎉 Basic game concept done! 0.1 version -
+- [x] 🐛 \_randomInt is not defined when enemies are created
+- [x] Adjust size for screen
+- [x] Tune up the "basic game numbers"? Enemy creation random ranges. Health. Resource. Time... Adding more resources around the map... - Set waves to happeng every 1 minute increasing in size. - Set more resources along the map.
+- [x] [improvement] Make map smaller
+- [x] 🧠 Review documentation notes and tasks and plan future versions (0.2) - Naming / Goal? Yes. - 0.1: Foundations - 0.2: Less annoying - 0.3: Home, phone - 0.4: In construction - 0.5: Tower defense
+- [x] Multi-selection
+- [x] Make zooming work with the mouse scroll event - We are still missing a way to keep the mouse in the same position after zooming in or out
+- [X] 🐛 Stop prettifier from modifying markdown files
+- [X] Alerts
+	- Next wave is coming in X seconds! ✔️ 
+	- Not enough resource! ✔️ 
+	- Resource exhausted! ✔️ 
+	- ...
+- [X] Check why prettier is surrounding some lines with `(...),` - See GUI.js
+- [X] Look into animations:
+	- Camera: Zooming and panning ✔️ 
+	- Alerts: Fading ✔️ 
+- [X] 🐛 Alert messages broken after game-over restart
+- [X] Add "Boot" scene - Move preload to boot scene / menu
+- [X] Add "Menu" scene
+- [X] Add "Game Over" scene
+- [X] 🐛 While on game-over screen some events are still being triggered: `nextEnemiesWave` (alert and enemies) - Now the game-over screen has been replaced by a game over scene.
+- [X] 🧠 Document Alerts behaviour.
+- [X] Look up information about pathfinding on Phaser3.
+- [X] Prepare 0.3 version tasks - focused on pathfinding
 
 # References
 

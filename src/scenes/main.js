@@ -201,12 +201,19 @@ export default class MainScene extends Phaser.Scene {
       this.enemies.forEach((e) => e.update());
 
       if (this.counters.villagers <= 0) {
+        let currentSurvival = this.counters.gameTime;
+        let longestSurvival =
+          window.localStorage.getItem("longest_survival") || currentSurvival;
+        if (currentSurvival >= longestSurvival) {
+          window.localStorage.setItem("longest_survival", currentSurvival);
+        }
         this.isGameOver = true;
         this._preStopScene(this.scene.get("UIScene"));
         this.scene.stop("UIScene");
         this._preStopScene(this); // MainScene
         this.scene.start("GameOverScene", {
-          counters: this.counters,
+          longestSurvivalInSeconds: longestSurvival,
+          currentSurvivalInSeconds: currentSurvival,
         });
       }
 

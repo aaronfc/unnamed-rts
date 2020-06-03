@@ -10,8 +10,20 @@ export default class MenuScene extends Phaser.Scene {
   create() {
     this.input.mouse.disableContextMenu();
 
+    this.gameNameTitleText = this.add
+      .text(0, 0, " Unname RTS... ", {
+        color: "#FFFFFF",
+        backgroundColor: "#000000",
+        fontSize: 64,
+      })
+      .setOrigin(0.5)
+      .setPosition(
+        this.sys.game.canvas.width / 2,
+        this.sys.game.canvas.height / 10
+      );
+
     this.startGameText = this.add
-      .text(0, 0, "Start Game", {
+      .text(0, 0, "> Start Game", {
         color: "#000000",
         fontSize: 32,
       })
