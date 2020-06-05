@@ -87,5 +87,21 @@ https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html See `now` desc
 		- Not very possitive comments.
 		- Algorithms mentioned: Hertel-Melhorn Algorithm, 
 	- https://gamedev.stackexchange.com/questions/31208/how-can-i-generate-a-2d-navigation-mesh-in-a-dynamic-environment-at-runtime
-- [ ] Try https://github.com/amaccann/phaser-navmesh-generation with an empty tilemap (empty collisions array also) - check example and use the addSprite method.
-- [ ] Consider creating navmesh manually (or with an unknown plugin) and use: https://www.mikewesthad.com/navmesh/docs/#creating-a-navigation-mesh
+- amaccann/phaser-navmesh-generation:
+	- ⚠️  We coldn't progress much because we have an error just by importing the package.
+	- ERROR:
+	```
+    Uncaught TypeError: Super expression must either be null or a function, not undefined
+    at o (navmesh-plugin.js?9b19:1)
+    at eval (navmesh-plugin.js?9b19:1)
+    at Object.eval (navmesh-plugin.js?9b19:1)
+    at t (navmesh-plugin.js?9b19:1)
+    at Object.eval (navmesh-plugin.js?9b19:1)
+    at t (navmesh-plugin.js?9b19:1)
+    at Object.eval (navmesh-plugin.js?9b19:1)
+    at t (navmesh-plugin.js?9b19:1)
+    at Object.eval (navmesh-plugin.js?9b19:1)
+    at t (navmesh-plugin.js?9b19:1)
+    	```
+	**Probably this has to do with the plugin being implemented for phaser-ce and not phaser3**
+	

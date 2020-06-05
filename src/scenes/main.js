@@ -4,6 +4,8 @@ import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
 import Enemy from "../entities/enemy.js";
 import Map from "../entities/map.js";
+import Mesh from "../mesh.js";
+import NavMesh from "navmesh/src";
 
 const MAP_WIDTH = 2 * 1080;
 const MAP_HEIGHT = 2 * 720;
@@ -13,6 +15,10 @@ const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
 const ZOOM_LEVELS = [0.5, 1, 2];
 const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
+
+const TILE_SIZE = 16;
+const TILEMAP_WIDTH = 100;
+const TILEMAP_HEIGHT = 100;
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -39,6 +45,9 @@ export default class MainScene extends Phaser.Scene {
     this.isNextWaveAlerted = false;
     this.enemiesNextWave = 1;
     this.zoomLevel = DEFAULT_ZOOM_LEVEL_INDEX;
+
+    this.mesh = new Mesh(MAP_WIDTH, MAP_HEIGHT);
+    this.navMesh = new NavMesh(this.mesh.getData());
 
     // World boders
     this.matter.world.setBounds(
@@ -94,9 +103,11 @@ export default class MainScene extends Phaser.Scene {
 
     // Resource
     var resource = new Resource(this, { x: 200, y: 200 }, 1000);
+    console.log(resource);
     this.resources.push(resource);
     for (var i = 0; i < EXTRA_RESOURCES; i++) {
-      this.resources.push(new Resource(this, this._randomPosition(), 1000));
+      let resource = new Resource(this, this._randomPosition(), 1000);
+      this.resources.push(resource);
     }
 
     // Input
@@ -172,6 +183,13 @@ export default class MainScene extends Phaser.Scene {
 
     // Update camera
     this.cameras.main.setZoom(ZOOM_LEVELS[this.zoomLevel]);
+
+    // Mesh
+    this._regenerateMesh();
+    // Debug for mesh
+    var graphics = this.add.graphics();
+    graphics.setDepth(1000);
+    this.mesh.debugDraw(graphics);
   }
 
   update(time, delta) {
@@ -294,5 +312,11 @@ export default class MainScene extends Phaser.Scene {
 
   _getNowTime() {
     return new Date().getTime();
+  }
+
+  _regenerateMesh() {
+    this.mesh.clean();
+    this.buildings.forEach((b) => this.mesh.addEntity(b));
+    this.resources.forEach((r) => this.mesh.addEntity(r));
   }
 }

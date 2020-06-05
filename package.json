@@ -39,6 +39,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "navmesh": "^2.0.3",
     "phaser": "^3.23.0"
   },
   "husky": {

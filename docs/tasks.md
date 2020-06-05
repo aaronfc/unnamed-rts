@@ -9,6 +9,15 @@
 	- Add the game name ✔️ 
 - [X] 🎉 0.2 version completed! - Less annoying!
 - [ ] 🧠 Document what the 0.3 version (aka pathfinding) will be.
+- [X] Try https://github.com/amaccann/phaser-navmesh-generation with an empty tilemap (empty collisions array also) - check example and use the addSprite method.
+	- ⚠️  We are having errors just by importing the plugin. - Need to check 
+	- Seems like not useful for us because it was implemented for phaser-ce
+- [o] Consider creating navmesh manually (or with an unknown plugin) and use: https://www.mikewesthad.com/navmesh/docs/#creating-a-navigation-mesh
+	- [X] Generate the navmesh
+	- [X] Display the navmesh in some kind of debug
+	- [X] Test that findPath method returns a correct set of points
+	- [ ] Make villagers follow a path when commanding to move somewhere
+	- [ ] Same for enemies
 - [ ] Keep investigating solutions for pathfinding (get tasks from dev-notes)
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.
