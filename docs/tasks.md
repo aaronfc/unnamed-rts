@@ -18,6 +18,7 @@
 	- [X] Test that findPath method returns a correct set of points
 	- [ ] Make villagers follow a path when commanding to move somewhere
 	- [ ] Same for enemies
+	- [ ] Update the navigational mesh when adding or removing buildings or resources
 - [ ] Keep investigating solutions for pathfinding (get tasks from dev-notes)
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.
