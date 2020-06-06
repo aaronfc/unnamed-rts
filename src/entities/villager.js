@@ -18,6 +18,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.resourceGatheringSpeed = 0.5; // Units per second
     this.latestGatheringTime = 0;
     this.target = null;
+    this.path = null;
     this.status = "idle";
     this.bagpack = {
       maxCapacity: 10,
@@ -53,10 +54,23 @@ export default class Villager extends Phaser.GameObjects.Arc {
   update() {
     // Movement
     if (this.status == "walking-to-destination") {
-      this.movement.moveTo(this, this.target, () => {
-        this.target = null;
-        this._setStatus("idle");
-      });
+      // TODO Remove this margin from here. Move it to movement.js and think on a solution for "getting as closest as possible to a building"
+      var margin = null;
+      if (this.path) {
+        margin = { x: 2, y: 2 };
+      }
+      this.movement.moveTo(
+        this,
+        this.target,
+        () => {
+          this.target = null;
+          this._setStatus("idle");
+          if (this.callback != null) {
+            this.callback();
+          }
+        },
+        margin
+      );
 
       // Collecting
     } else if (this.status == "collecting") {
@@ -161,6 +175,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
     this.events.on("map-right-clicked", this.moveToCameraPointer, this);
     this.events.once("new-building-selected", this.unselect, this);
     this.events.once("enemy-right-clicked", this.attackEnemy, this);
+    console.log(this);
   }
 
   unselect() {
@@ -179,12 +194,28 @@ export default class Villager extends Phaser.GameObjects.Arc {
   }
 
   moveToCameraPointer(pointer) {
-    this.moveToPosition({ x: pointer.worldX, y: pointer.worldY });
+    this.path = this.scene.navigation.findPath(
+      { x: this.x, y: this.y },
+      { x: pointer.worldX, y: pointer.worldY }
+    );
+    if (this.path) {
+      this.followPath();
+    }
   }
 
-  moveToPosition(position) {
+  followPath() {
+    let next = this.path.shift();
+    this.moveToPosition(next, () => {
+      if (this.path && this.path.length > 0) {
+        this.followPath();
+      }
+    });
+  }
+
+  moveToPosition(position, callback = null) {
     this.target = new Phaser.Math.Vector2(position);
     this._setStatus("walking-to-destination");
+    this.callback = callback;
   }
 
   startCollectingResource(resource) {

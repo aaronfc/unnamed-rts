@@ -1,5 +1,8 @@
 import Phaser from "phaser";
 
+// Set it to TRUE to skip the menu scene
+const AUTOSTART = true;
+
 export default class MenuScene extends Phaser.Scene {
   constructor() {
     super("MenuScene");
@@ -11,7 +14,7 @@ export default class MenuScene extends Phaser.Scene {
     this.input.mouse.disableContextMenu();
 
     this.gameNameTitleText = this.add
-      .text(0, 0, " Unname RTS... ", {
+      .text(0, 0, " Unnamed RTS... ", {
         color: "#FFFFFF",
         backgroundColor: "#000000",
         fontSize: 64,
@@ -34,8 +37,7 @@ export default class MenuScene extends Phaser.Scene {
       );
     this.startGameText.setInteractive({ useHandCursor: true });
     this.startGameText.on("pointerdown", (pointer) => {
-      this.scene.start("MainScene");
-      this.scene.start("UIScene");
+      this.goToGameScene();
     });
     this.startGameText.on("pointerover", (pointer) => {
       this.startGameText.setColor("#0000FF");
@@ -43,7 +45,16 @@ export default class MenuScene extends Phaser.Scene {
     this.startGameText.on("pointerout", (pointer) => {
       this.startGameText.setColor("#000000");
     });
+
+    if (AUTOSTART) {
+      this.goToGameScene();
+    }
   }
 
   update(time, delta) {}
+
+  goToGameScene() {
+    this.scene.start("MainScene");
+    this.scene.start("UIScene");
+  }
 }

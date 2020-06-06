@@ -1,3 +1,4 @@
+const EXPAND_MARGIN = 5;
 export default class Mesh {
   constructor(width, height) {
     this.width = width;
@@ -9,7 +10,12 @@ export default class Mesh {
 
   addEntity(entity) {
     let topleft = entity.getTopLeft();
-    this.addElement(topleft.x, topleft.y, entity.width, entity.height);
+    this.addElement(
+      topleft.x - EXPAND_MARGIN,
+      topleft.y - EXPAND_MARGIN,
+      entity.width + EXPAND_MARGIN * 2,
+      entity.height + EXPAND_MARGIN * 2
+    );
   }
 
   addElement(x, y, width, height) {
@@ -22,13 +28,23 @@ export default class Mesh {
     return this.polygons;
   }
 
-  debugDraw(graphics) {
-    let colors = [0xff0000, 0x00ff00, 0x0000ff, 0xff00ff];
+  debugDraw(scene) {
+    let graphics = scene.add.graphics();
+    graphics.setDepth(1000);
+    let colors = [0xff0000, 0x00ff00, 0x0000ff, 0xff00ff, 0xffff00, 0x00ffff];
     let i = 0;
     this.polygons.forEach((p) => {
-      graphics.fillStyle(colors[i], 0.3);
+      graphics.fillStyle(colors[i % colors.length], 0.3);
       graphics.fillRect(p[0].x, p[0].y, p[2].x - p[0].x, p[2].y - p[0].y);
-      i = (i + 1) % colors.length;
+      graphics.fillRect(p[0].x, p[0].y, p[2].x - p[0].x, p[2].y - p[0].y);
+      scene.add
+        .text(p[0].x, p[0].y, `${i}`, {
+          color: "#000000",
+          fontSize: 14,
+        })
+        .setOrigin(0)
+        .setDepth(1000);
+      i += 1;
     });
   }
 

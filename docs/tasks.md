@@ -12,13 +12,21 @@
 - [X] Try https://github.com/amaccann/phaser-navmesh-generation with an empty tilemap (empty collisions array also) - check example and use the addSprite method.
 	- ⚠️  We are having errors just by importing the plugin. - Need to check 
 	- Seems like not useful for us because it was implemented for phaser-ce
-- [o] Consider creating navmesh manually (or with an unknown plugin) and use: https://www.mikewesthad.com/navmesh/docs/#creating-a-navigation-mesh
+- [X] Consider creating navmesh manually (or with an unknown plugin) and use: https://www.mikewesthad.com/navmesh/docs/#creating-a-navigation-mesh
 	- [X] Generate the navmesh
 	- [X] Display the navmesh in some kind of debug
 	- [X] Test that findPath method returns a correct set of points
-	- [ ] Make villagers follow a path when commanding to move somewhere
+- [.] Integrating Pathfinding
+	- [X] Make villagers follow a path when commanding to move somewhere
+	- ⚠️  Path is not optimal at all for some cases. Seems like it might be related with the heuristic being used by the library we are using. It's calculating distance from centroids which, for some cases with really big squares it seems not to make sense.
+	- [ ] Make villagers use pathfinding for moving from and to a resource
 	- [ ] Same for enemies
-	- [ ] Update the navigational mesh when adding or removing buildings or resources
+	- [ ] Update the navigational mesh when adding new entities.
+	- [ ] Special case: removing buildings or resources
+	- [ ] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
+	- [ ] Special case: building overriding one or more quadrants
+- [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
+- [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
 - [ ] Keep investigating solutions for pathfinding (get tasks from dev-notes)
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.

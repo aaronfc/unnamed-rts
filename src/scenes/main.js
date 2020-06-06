@@ -9,16 +9,19 @@ import NavMesh from "navmesh/src";
 
 const MAP_WIDTH = 2 * 1080;
 const MAP_HEIGHT = 2 * 720;
+const INITIAL_VILLAGERS = 5;
 const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
-const ZOOM_LEVELS = [0.5, 1, 2];
+const ZOOM_LEVELS = [0.5, 1, 2, 4, 10];
 const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
 
 const TILE_SIZE = 16;
 const TILEMAP_WIDTH = 100;
 const TILEMAP_HEIGHT = 100;
+
+const DEBUG_NAVMESH = true;
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -47,7 +50,6 @@ export default class MainScene extends Phaser.Scene {
     this.zoomLevel = DEFAULT_ZOOM_LEVEL_INDEX;
 
     this.mesh = new Mesh(MAP_WIDTH, MAP_HEIGHT);
-    this.navMesh = new NavMesh(this.mesh.getData());
 
     // World boders
     this.matter.world.setBounds(
@@ -88,14 +90,15 @@ export default class MainScene extends Phaser.Scene {
     var townCenter = new TownCenter(this, 100, 50);
     this.buildings.push(townCenter);
 
-    // Create Adan and Eva
+    // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();
-    this.villagers.push(
-      new Villager(this, newPosition.x, newPosition.y, townCenter)
-    );
-    //this.villagers.push(new Villager(this, newPosition.x, newPosition.y, townCenter));
+    for (var i = 0; i < INITIAL_VILLAGERS; i++) {
+      this.villagers.push(
+        new Villager(this, newPosition.x, newPosition.y, townCenter)
+      );
+    }
 
-    // Create bad guy
+    // Create initial enemies
     let newBadGuyPosition = { x: 300, y: 300 };
     for (var i = 0; i < INITIAL_ENEMIES; i++) {
       this.enemies.push(new Enemy(this, newBadGuyPosition));
@@ -187,9 +190,9 @@ export default class MainScene extends Phaser.Scene {
     // Mesh
     this._regenerateMesh();
     // Debug for mesh
-    var graphics = this.add.graphics();
-    graphics.setDepth(1000);
-    this.mesh.debugDraw(graphics);
+    if (DEBUG_NAVMESH) {
+      this.mesh.debugDraw(this);
+    }
   }
 
   update(time, delta) {
@@ -318,5 +321,6 @@ export default class MainScene extends Phaser.Scene {
     this.mesh.clean();
     this.buildings.forEach((b) => this.mesh.addEntity(b));
     this.resources.forEach((r) => this.mesh.addEntity(r));
+    this.navigation = new NavMesh(this.mesh.getData(), 5); // TODO Update navmesh and not just override it
   }
 }

@@ -22,9 +22,9 @@ export default class Movement {
 
   // Public functions
 
-  moveTo(element, target, reachedCallback) {
-    let marginX = element.width / 2 + 2;
-    let marginY = element.height / 2 + 2;
+  moveTo(element, target, reachedCallback, margin = null) {
+    let marginX = margin ? margin.x : element.width / 2 + 2;
+    let marginY = margin ? margin.y : element.height / 2 + 2;
     if (typeof target.getBounds === "function") {
       // Checking if target is a point or has an actual body
       let bounds = target.getBounds();
