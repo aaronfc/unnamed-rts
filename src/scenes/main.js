@@ -321,6 +321,7 @@ export default class MainScene extends Phaser.Scene {
     this.mesh.clean();
     this.buildings.forEach((b) => this.mesh.addEntity(b));
     this.resources.forEach((r) => this.mesh.addEntity(r));
+    this.mesh.unoptimize();
     this.navigation = new NavMesh(this.mesh.getData(), 5); // TODO Update navmesh and not just override it
   }
 }

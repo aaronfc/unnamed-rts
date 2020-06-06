@@ -1,4 +1,5 @@
 const EXPAND_MARGIN = 5;
+const UNOPTIMIZE_SIZE = 500;
 export default class Mesh {
   constructor(width, height) {
     this.width = width;
@@ -24,14 +25,76 @@ export default class Mesh {
     subpolygons.forEach((sp) => this.polygons.push(sp));
   }
 
+  unoptimize() {
+    var result = [];
+    for (var i = 0; i < this.polygons.length; i++) {
+      let current = this.polygons[i];
+      let currentX = this._getX(current);
+      let currentY = this._getY(current);
+      let currentHeight = this._getHeight(current);
+      let currentWidth = this._getWidth(current);
+      let horizontalSubpolygons = Math.floor(currentWidth / UNOPTIMIZE_SIZE);
+      let restHorizontal = currentWidth % UNOPTIMIZE_SIZE;
+      let verticalSubpolygons = Math.floor(currentHeight / UNOPTIMIZE_SIZE);
+      let restVertical = currentHeight % UNOPTIMIZE_SIZE;
+
+      if (horizontalSubpolygons > 1 || verticalSubpolygons > 1) {
+        for (var j = 0; j < horizontalSubpolygons + 1; j++) {
+          for (var k = 0; k < verticalSubpolygons + 1; k++) {
+            let width =
+              j < horizontalSubpolygons ? UNOPTIMIZE_SIZE : restHorizontal;
+            let height =
+              k < verticalSubpolygons ? UNOPTIMIZE_SIZE : restVertical;
+            result.push(
+              this._generatePolygon(
+                currentX + j * UNOPTIMIZE_SIZE,
+                currentY + k * UNOPTIMIZE_SIZE,
+                width,
+                height
+              )
+            );
+          }
+        }
+      } else {
+        result.push(current);
+      }
+    }
+    this.polygons = result;
+  }
+
   getData() {
     return this.polygons;
   }
 
   debugDraw(scene) {
     let graphics = scene.add.graphics();
+    graphics.fillStyle(0x000000);
+    graphics.fillRect(0, 0, 25, 25);
     graphics.setDepth(1000);
-    let colors = [0xff0000, 0x00ff00, 0x0000ff, 0xff00ff, 0xffff00, 0x00ffff];
+    let colors = [
+      0xe6194b,
+      0x3cb44b,
+      0xffe119,
+      0x4363d8,
+      0xf58231,
+      0x911eb4,
+      0x46f0f0,
+      0xf032e6,
+      0xbcf60c,
+      0xfabebe,
+      0x008080,
+      0xe6beff,
+      0x9a6324,
+      0xfffac8,
+      0x800000,
+      0xaaffc3,
+      0x808000,
+      0xffd8b1,
+      0x000075,
+      0x808080,
+      0xffffff,
+      0x000000,
+    ];
     let i = 0;
     this.polygons.forEach((p) => {
       graphics.fillStyle(colors[i % colors.length], 0.3);
@@ -50,6 +113,19 @@ export default class Mesh {
 
   clean() {
     this.polygons = [this._generatePolygon(0, 0, this.width, this.height)];
+  }
+
+  _getX(polygon) {
+    return polygon[0].x;
+  }
+  _getY(polygon) {
+    return polygon[0].y;
+  }
+  _getWidth(polygon) {
+    return polygon[2].x - polygon[0].x;
+  }
+  _getHeight(polygon) {
+    return polygon[2].y - polygon[0].y;
   }
 
   _popPolygonForPosition(x, y) {
@@ -83,7 +159,7 @@ export default class Mesh {
       this._generatePolygon(
         x + width,
         y,
-        polygonX + polygonW - x + width,
+        polygonX + polygonW - x - width,
         polygonY + polygonH - y
       )
     );
@@ -92,7 +168,7 @@ export default class Mesh {
         polygonX,
         y + height,
         x + width - polygonX,
-        polygonY + polygonH - y + height
+        polygonY + polygonH - y - height
       )
     );
     subpolygons.push(
@@ -106,11 +182,4 @@ export default class Mesh {
 
     return subpolygons;
   }
-
-  // Pseudo-code to generate navmesh when adding a new element to the map
-  // ⚠️  Not taking into account if the element fits the polygon!
-  // element = new Element(x, y, width, height)
-  // polygon = mesh.popPolygonForXY(element.x, element.y)
-  // subpolygons = createSubpolygons(polygon, element)
-  // mesh.append(subpolygons)
 }
