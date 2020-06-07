@@ -16,11 +16,24 @@
 	- [X] Generate the navmesh
 	- [X] Display the navmesh in some kind of debug
 	- [X] Test that findPath method returns a correct set of points
-- [.] Integrating Pathfinding
+- [o] Integrating Pathfinding
 	- [X] Make villagers follow a path when commanding to move somewhere
-	- ⚠️  Path is not optimal at all for some cases. Seems like it might be related with the heuristic being used by the library we are using. It's calculating distance from centroids which, for some cases with really big squares it seems not to make sense.
-	- [ ] Make villagers use pathfinding for moving from and to a resource
-	- [ ] Same for enemies
+	- [X] ⚠️  Path is not optimal at all for some cases. Seems like it might be related with the heuristic being used by the library we are using. It's calculating distance from centroids which, for some cases with really big squares it seems not to make sense. - ✔️  Seems related to the heuristc being used, it's expected by the library itself and there's an open issue on Github for that waiting for an upcoming version. Workarounded by splitting big polygons into smaller ones with an `unoptimize()` method.
+	- [X] Make villagers use pathfinding for moving from and to a resource
+	- [ ] Same for enemies ⚠️  Currently it's broken:
+		```
+		movement.js?8395:65 Uncaught TypeError: Cannot read property 'navigation' of undefined
+    at Movement.moveTo (movement.js?8395:65)
+    at Fighting.moveIntoAttackRangeAndAttack (fighting.js?4610:15)
+    at Enemy.update (enemy.js?4efb:61)
+    at eval (main.js?1339:222)
+    at Array.forEach (<anonymous>)
+    at MainScene.update (main.js?1339:222)
+    at Systems.step (Systems.js?9339:381)
+    at SceneManager.update (SceneManager.js?cec0:565)
+    at Game.step (Game.js?22d5:475)
+    at TimeStep.step (TimeStep.js?fdd3:599)
+		```
 	- [ ] Update the navigational mesh when adding new entities.
 	- [ ] Special case: removing buildings or resources
 	- [ ] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
