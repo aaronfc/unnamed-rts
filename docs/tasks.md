@@ -16,11 +16,11 @@
 	- [X] Generate the navmesh
 	- [X] Display the navmesh in some kind of debug
 	- [X] Test that findPath method returns a correct set of points
-- [o] Integrating Pathfinding
+- [X] Integrating Pathfinding
 	- [X] Make villagers follow a path when commanding to move somewhere
 	- [X] ⚠️  Path is not optimal at all for some cases. Seems like it might be related with the heuristic being used by the library we are using. It's calculating distance from centroids which, for some cases with really big squares it seems not to make sense. - ✔️  Seems related to the heuristc being used, it's expected by the library itself and there's an open issue on Github for that waiting for an upcoming version. Workarounded by splitting big polygons into smaller ones with an `unoptimize()` method.
 	- [X] Make villagers use pathfinding for moving from and to a resource
-	- [ ] Same for enemies ⚠️  Currently it's broken:
+	- [X] Same for enemies ⚠️  Currently it's broken:
 		```
 		movement.js?8395:65 Uncaught TypeError: Cannot read property 'navigation' of undefined
     at Movement.moveTo (movement.js?8395:65)
@@ -39,8 +39,10 @@
 	- [ ] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
 	- [ ] Special case: building overriding one or more quadrants
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
+- [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
 - [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
 - [ ] Keep investigating solutions for pathfinding (get tasks from dev-notes)
+- [ ] 💡 Have some "debug menu" that we can use to: generate enemies, generate villagers, toggle debug mode for the navigation mesh, etc
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.
 		- [X] Identify assets that we really need:

@@ -23,7 +23,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     this.health = 100;
 
     // Behaviours
-    this.movement = new Movement(); // TODO Do not instantiate one of this for every enemy
+    this.movement = new Movement(this.scene);
     this.fighting = new Fighting(this.movement);
 
     // Subparts
