@@ -9,6 +9,8 @@ export default class Map extends Phaser.GameObjects.Rectangle {
 
     // Properties
     this.scene = scene;
+    this.buildings = [];
+    this.resources = [];
     this.selectingRectangle = scene.add
       .rectangle(0, 0, 0, 0, "0x0000FF", 0.1)
       .setOrigin(0, 0)
@@ -44,5 +46,22 @@ export default class Map extends Phaser.GameObjects.Rectangle {
     });
   }
 
-  update() {}
+  update() {
+    this.buildings.forEach((b) => b.update());
+    this.resources.forEach((r) => r.update());
+  }
+
+  addBuilding(building) {
+    this.buildings.push(building);
+  }
+
+  addResource(resource) {
+    this.resources.push(resource);
+  }
+
+  // Events
+
+  onResourceDestroyed(resource) {
+    this.resources = this.resources.filter((r) => r != resource);
+  }
 }

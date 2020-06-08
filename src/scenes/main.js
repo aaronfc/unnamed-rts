@@ -4,12 +4,11 @@ import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
 import Enemy from "../entities/enemy.js";
 import Map from "../entities/map.js";
-import Mesh from "../mesh.js";
-import NavMesh from "navmesh/src";
+import Navigation from "../navigation.js";
 
 const MAP_WIDTH = 2 * 1080;
 const MAP_HEIGHT = 2 * 720;
-const INITIAL_VILLAGERS = 5;
+const INITIAL_VILLAGERS = 1;
 const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
@@ -21,7 +20,7 @@ const TILE_SIZE = 16;
 const TILEMAP_WIDTH = 100;
 const TILEMAP_HEIGHT = 100;
 
-const DEBUG_NAVMESH = true;
+const DEBUG_NAVIGATION = false;
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -40,16 +39,12 @@ export default class MainScene extends Phaser.Scene {
       resource: 100,
     };
     this.villagers = [];
-    this.buildings = [];
-    this.resources = [];
     this.enemies = [];
     this.isGameOver = false;
     this.nextWaveTime = this._getNowTime() + ENEMY_WAVES_INTERVAL;
     this.isNextWaveAlerted = false;
     this.enemiesNextWave = 1;
     this.zoomLevel = DEFAULT_ZOOM_LEVEL_INDEX;
-
-    this.mesh = new Mesh(MAP_WIDTH, MAP_HEIGHT);
 
     // World boders
     this.matter.world.setBounds(
@@ -64,6 +59,9 @@ export default class MainScene extends Phaser.Scene {
       true
     );
     this.map = new Map(this, MAP_WIDTH, MAP_HEIGHT);
+
+    // Navigation
+    this.navigation = new Navigation(this, this.map);
 
     // Camera control
     var cursors = this.input.keyboard.addKeys("W,S,A,D");
@@ -88,7 +86,7 @@ export default class MainScene extends Phaser.Scene {
 
     // Create Town Center
     var townCenter = new TownCenter(this, 100, 50);
-    this.buildings.push(townCenter);
+    this.map.addBuilding(townCenter);
 
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();
@@ -106,11 +104,10 @@ export default class MainScene extends Phaser.Scene {
 
     // Resource
     var resource = new Resource(this, { x: 200, y: 200 }, 1000);
-    console.log(resource);
-    this.resources.push(resource);
+    this.map.addResource(resource);
     for (var i = 0; i < EXTRA_RESOURCES; i++) {
       let resource = new Resource(this, this._randomPosition(), 1000);
-      this.resources.push(resource);
+      this.map.addResource(resource);
     }
 
     // Input
@@ -147,7 +144,7 @@ export default class MainScene extends Phaser.Scene {
     this.events.on(
       "resource-destroyed",
       (resource) => {
-        this.resources = this.resources.filter((r) => r != resource);
+        this.map.onResourceDestroyed(resource);
       },
       this
     );
@@ -187,11 +184,12 @@ export default class MainScene extends Phaser.Scene {
     // Update camera
     this.cameras.main.setZoom(ZOOM_LEVELS[this.zoomLevel]);
 
-    // Mesh
-    this._regenerateMesh();
-    // Debug for mesh
-    if (DEBUG_NAVMESH) {
-      this.mesh.debugDraw(this);
+    // Update navigation
+    this.navigation.regenerate();
+
+    // Draw navigational mesh for debugging
+    if (DEBUG_NAVIGATION) {
+      this.navigation.drawDebug();
     }
   }
 
@@ -217,9 +215,8 @@ export default class MainScene extends Phaser.Scene {
       this.counters.gameTime = (this._getNowTime() - this.initialTime) / 1000; // TODO Implement this in a proper way
       this.counters.villagers = this.villagers.length;
       this.villagers.forEach((v) => v.update());
-      this.buildings.forEach((b) => b.update());
-      this.resources.forEach((r) => r.update());
       this.enemies.forEach((e) => e.update());
+      this.map.update();
 
       if (this.counters.villagers <= 0) {
         let currentSurvival = this.counters.gameTime;
@@ -315,13 +312,5 @@ export default class MainScene extends Phaser.Scene {
 
   _getNowTime() {
     return new Date().getTime();
-  }
-
-  _regenerateMesh() {
-    this.mesh.clean();
-    this.buildings.forEach((b) => this.mesh.addEntity(b));
-    this.resources.forEach((r) => this.mesh.addEntity(r));
-    this.mesh.unoptimize();
-    this.navigation = new NavMesh(this.mesh.getData(), 5); // TODO Update navmesh and not just override it
   }
 }

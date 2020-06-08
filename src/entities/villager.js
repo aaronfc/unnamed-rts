@@ -148,6 +148,7 @@ export default class Villager extends Phaser.GameObjects.Arc {
   // Public functions
 
   select() {
+    this.unselect(); // TODO We must ensure that we do not trigger new event listeners on every selection, so we first unselect as a workaround until new Events Management
     this.setStrokeStyle(1, "0xFF0000");
     this.selected = true;
     // Emit events
