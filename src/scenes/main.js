@@ -13,7 +13,7 @@ const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
-const ZOOM_LEVELS = [0.5, 1, 2, 4, 10];
+const ZOOM_LEVELS = [0.5, 1, 2, 5];
 const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
 
 const DEBUG_NAVIGATION = false;

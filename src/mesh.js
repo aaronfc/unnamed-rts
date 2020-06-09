@@ -58,15 +58,16 @@ export default class Mesh {
   unoptimize() {
     var result = [];
     for (var i = 0; i < this.polygons.length; i++) {
-      let current = this.polygons[i];
-      let currentX = this._getX(current);
-      let currentY = this._getY(current);
-      let currentHeight = this._getHeight(current);
-      let currentWidth = this._getWidth(current);
-      let horizontalSubpolygons = Math.floor(currentWidth / UNOPTIMIZE_SIZE);
-      let restHorizontal = currentWidth % UNOPTIMIZE_SIZE;
-      let verticalSubpolygons = Math.floor(currentHeight / UNOPTIMIZE_SIZE);
-      let restVertical = currentHeight % UNOPTIMIZE_SIZE;
+      let currentPolygon = this.polygons[i];
+      let currentRectangle = this._getAsRectangle(currentPolygon);
+      let horizontalSubpolygons = Math.floor(
+        currentRectangle.width / UNOPTIMIZE_SIZE
+      );
+      let restHorizontal = currentRectangle.width % UNOPTIMIZE_SIZE;
+      let verticalSubpolygons = Math.floor(
+        currentRectangle.height / UNOPTIMIZE_SIZE
+      );
+      let restVertical = currentRectangle.height % UNOPTIMIZE_SIZE;
 
       if (horizontalSubpolygons > 1 || verticalSubpolygons > 1) {
         for (var j = 0; j < horizontalSubpolygons + 1; j++) {
@@ -77,8 +78,8 @@ export default class Mesh {
               k < verticalSubpolygons ? UNOPTIMIZE_SIZE : restVertical;
             result.push(
               this._generatePolygon(
-                currentX + j * UNOPTIMIZE_SIZE,
-                currentY + k * UNOPTIMIZE_SIZE,
+                currentRectangle.x + j * UNOPTIMIZE_SIZE,
+                currentRectangle.y + k * UNOPTIMIZE_SIZE,
                 width,
                 height
               )
@@ -86,7 +87,7 @@ export default class Mesh {
           }
         }
       } else {
-        result.push(current);
+        result.push(currentPolygon);
       }
     }
     this.polygons = result;
@@ -149,6 +150,8 @@ export default class Mesh {
   clean() {
     this.polygons = [this._generatePolygon(0, 0, this.width, this.height)];
   }
+
+  // Private methods
 
   _popPolygonsInterestingPolygon(inputRectangle) {
     let matching = this.polygons.filter(
