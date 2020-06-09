@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+
 const EXPAND_MARGIN = 5;
 const UNOPTIMIZE_SIZE = 500;
 export default class Mesh {
@@ -19,10 +21,38 @@ export default class Mesh {
     );
   }
 
+  removeEntity(entity) {
+    let topleft = entity.getTopLeft();
+    this.removeElement(
+      topleft.x - EXPAND_MARGIN,
+      topleft.y - EXPAND_MARGIN,
+      entity.width + EXPAND_MARGIN * 2,
+      entity.height + EXPAND_MARGIN * 2
+    );
+  }
+
+  removeElement(x, y, width, height) {
+    let polygon = this._generatePolygon(x, y, width, height);
+    this.polygons.push(polygon);
+  }
+
   addElement(x, y, width, height) {
-    let polygon = this._popPolygonForPosition(x, y);
-    let subpolygons = this._getSubPolygons(polygon, x, y, width, height);
-    subpolygons.forEach((sp) => this.polygons.push(sp));
+    let inputRectangle = new Phaser.Geom.Rectangle(x, y, width, height);
+    let polygons = this._popPolygonsInterestingPolygon(inputRectangle);
+    polygons.forEach((polygon) => {
+      let intersection = this._getIntersection(
+        this._getAsRectangle(polygon),
+        inputRectangle
+      );
+      let subpolygons = this._getSubPolygons(
+        polygon,
+        intersection.x,
+        intersection.y,
+        intersection.width,
+        intersection.height
+      );
+      subpolygons.forEach((sp) => this.polygons.push(sp));
+    });
   }
 
   unoptimize() {
@@ -101,11 +131,16 @@ export default class Mesh {
       graphics.fillRect(p[0].x, p[0].y, p[2].x - p[0].x, p[2].y - p[0].y);
       graphics.fillRect(p[0].x, p[0].y, p[2].x - p[0].x, p[2].y - p[0].y);
       scene.add
-        .text(p[0].x, p[0].y, `${i}`, {
-          color: "#000000",
-          fontSize: 14,
-        })
-        .setOrigin(0)
+        .text(
+          p[0].x + (p[2].x - p[0].x) / 2,
+          p[0].y + (p[2].y - p[0].y) / 2,
+          `${i}`,
+          {
+            color: "#000000",
+            fontSize: 14,
+          }
+        )
+        .setOrigin(0.5)
         .setDepth(1000);
       i += 1;
     });
@@ -115,25 +150,28 @@ export default class Mesh {
     this.polygons = [this._generatePolygon(0, 0, this.width, this.height)];
   }
 
-  _getX(polygon) {
-    return polygon[0].x;
-  }
-  _getY(polygon) {
-    return polygon[0].y;
-  }
-  _getWidth(polygon) {
-    return polygon[2].x - polygon[0].x;
-  }
-  _getHeight(polygon) {
-    return polygon[2].y - polygon[0].y;
+  _popPolygonsInterestingPolygon(inputRectangle) {
+    let matching = this.polygons.filter(
+      (p) =>
+        !this._getIntersection(
+          inputRectangle,
+          this._getAsRectangle(p)
+        ).isEmpty()
+    );
+    this.polygons = this.polygons.filter((p) => !matching.includes(p));
+    return matching;
   }
 
-  _popPolygonForPosition(x, y) {
-    let polygon = this.polygons.find(
-      (p) => x >= p[0].x && x <= p[2].x && y >= p[0].y && y <= p[2].y
-    );
-    this.polygons = this.polygons.filter((p) => p != polygon);
-    return polygon;
+  _getAsRectangle(polygon) {
+    let x = polygon[0].x;
+    let y = polygon[0].y;
+    let width = polygon[2].x - polygon[0].x;
+    let height = polygon[2].y - polygon[0].y;
+    return new Phaser.Geom.Rectangle(x, y, width, height);
+  }
+
+  _getIntersection(rectangle1, rectangle2) {
+    return Phaser.Geom.Rectangle.Intersection(rectangle1, rectangle2);
   }
 
   _generatePolygon(x, y, width, height) {
@@ -152,33 +190,43 @@ export default class Mesh {
     let polygonW = polygon[2].x - polygon[0].x;
     let polygonH = polygon[2].y - polygon[0].y;
 
-    subpolygons.push(
-      this._generatePolygon(x, polygonY, polygonX + polygonW - x, y - polygonY)
+    let top = this._generatePolygon(
+      x,
+      polygonY,
+      polygonX + polygonW - x,
+      y - polygonY
     );
-    subpolygons.push(
-      this._generatePolygon(
-        x + width,
-        y,
-        polygonX + polygonW - x - width,
-        polygonY + polygonH - y
-      )
+    if (top[2].x - top[0].x > 0 && top[2].y - top[0].y > 0) {
+      subpolygons.push(top);
+    }
+
+    let right = this._generatePolygon(
+      x + width,
+      y,
+      polygonX + polygonW - x - width,
+      polygonY + polygonH - y
     );
-    subpolygons.push(
-      this._generatePolygon(
-        polygonX,
-        y + height,
-        x + width - polygonX,
-        polygonY + polygonH - y - height
-      )
+    if (right[2].x - right[0].x > 0 && right[2].y - right[0].y > 0) {
+      subpolygons.push(right);
+    }
+    let bottom = this._generatePolygon(
+      polygonX,
+      y + height,
+      x + width - polygonX,
+      polygonY + polygonH - y - height
     );
-    subpolygons.push(
-      this._generatePolygon(
-        polygonX,
-        polygonY,
-        x - polygonX,
-        y + height - polygonY
-      )
+    if (bottom[2].x - bottom[0].x > 0 && bottom[2].y - bottom[0].y > 0) {
+      subpolygons.push(bottom);
+    }
+    let left = this._generatePolygon(
+      polygonX,
+      polygonY,
+      x - polygonX,
+      y + height - polygonY
     );
+    if (left[2].x - left[0].x > 0 && left[2].y - left[0].y > 0) {
+      subpolygons.push(left);
+    }
 
     return subpolygons;
   }

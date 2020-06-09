@@ -16,19 +16,11 @@ const EXTRA_RESOURCES = 5;
 const ZOOM_LEVELS = [0.5, 1, 2, 4, 10];
 const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
 
-const TILE_SIZE = 16;
-const TILEMAP_WIDTH = 100;
-const TILEMAP_HEIGHT = 100;
-
 const DEBUG_NAVIGATION = false;
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
     super("MainScene");
-  }
-
-  preload() {
-    this.load.image("villager-icon", "assets/villager-icon.png");
   }
 
   create() {
@@ -145,6 +137,7 @@ export default class MainScene extends Phaser.Scene {
       "resource-destroyed",
       (resource) => {
         this.map.onResourceDestroyed(resource);
+        this.navigation.regenerate();
       },
       this
     );

@@ -34,10 +34,10 @@
     at Game.step (Game.js?22d5:475)
     at TimeStep.step (TimeStep.js?fdd3:599)
 		```
-	- [ ] Update the navigational mesh when adding new entities.
-	- [ ] Special case: removing buildings or resources
-	- [ ] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
-	- [ ] Special case: building overriding one or more quadrants
+	- [ ] Manage situation when a resource is exhausted
+	- [X] Special case: removing buildings or resources
+	- [X] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
+	- [X] Special case: building overriding one or more quadrants
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
 - [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
 - [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
