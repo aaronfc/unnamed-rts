@@ -1,48 +1,10 @@
 ## Tasks
 
 ## Pipeline
-- [X] Game Over scenes completion:
-	- Add best score. ✔️ 
-	- Add custom message based on result. ✔️ 
-	- Maybe some restyling? ✔️ 
-- [X] Menu scene completion:
-	- Add the game name ✔️ 
-- [X] 🎉 0.2 version completed! - Less annoying!
 - [ ] 🧠 Document what the 0.3 version (aka pathfinding) will be.
-- [X] Try https://github.com/amaccann/phaser-navmesh-generation with an empty tilemap (empty collisions array also) - check example and use the addSprite method.
-	- ⚠️  We are having errors just by importing the plugin. - Need to check 
-	- Seems like not useful for us because it was implemented for phaser-ce
-- [X] Consider creating navmesh manually (or with an unknown plugin) and use: https://www.mikewesthad.com/navmesh/docs/#creating-a-navigation-mesh
-	- [X] Generate the navmesh
-	- [X] Display the navmesh in some kind of debug
-	- [X] Test that findPath method returns a correct set of points
-- [X] Integrating Pathfinding
-	- [X] Make villagers follow a path when commanding to move somewhere
-	- [X] ⚠️  Path is not optimal at all for some cases. Seems like it might be related with the heuristic being used by the library we are using. It's calculating distance from centroids which, for some cases with really big squares it seems not to make sense. - ✔️  Seems related to the heuristc being used, it's expected by the library itself and there's an open issue on Github for that waiting for an upcoming version. Workarounded by splitting big polygons into smaller ones with an `unoptimize()` method.
-	- [X] Make villagers use pathfinding for moving from and to a resource
-	- [X] Same for enemies ⚠️  Currently it's broken:
-		```
-		movement.js?8395:65 Uncaught TypeError: Cannot read property 'navigation' of undefined
-    at Movement.moveTo (movement.js?8395:65)
-    at Fighting.moveIntoAttackRangeAndAttack (fighting.js?4610:15)
-    at Enemy.update (enemy.js?4efb:61)
-    at eval (main.js?1339:222)
-    at Array.forEach (<anonymous>)
-    at MainScene.update (main.js?1339:222)
-    at Systems.step (Systems.js?9339:381)
-    at SceneManager.update (SceneManager.js?cec0:565)
-    at Game.step (Game.js?22d5:475)
-    at TimeStep.step (TimeStep.js?fdd3:599)
-		```
-	- [ ] Manage situation when a resource is exhausted
-	- [X] Special case: removing buildings or resources
-	- [X] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
-	- [X] Special case: building overriding one or more quadrants
-- [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
-- [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
-- [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
-- [ ] Keep investigating solutions for pathfinding (get tasks from dev-notes)
-- [ ] 💡 Have some "debug menu" that we can use to: generate enemies, generate villagers, toggle debug mode for the navigation mesh, etc
+- [ ] 🎉 O.3 version completed!
+- [ ] 🧠 Document what will the 0.4 verison include.
+- [ ] Start 0.4 version development.
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.
 		- [X] Identify assets that we really need:
@@ -53,6 +15,11 @@
 		- [ ] What size should the assets be? Tilemap sizing?
 		- [ ] Get some assets
 	- [ ] Check on fonts and buttons/icons.
+- [ ] 🐛 After moving a villager around the map. An enemy appeared and attacked the villager even though it was really far from the villager. Seems like "villager position" was ghosting somewhere else and the enemy could attack the "ghost".
+- [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
+- [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
+- [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
+- [ ] 💡 Have some "debug menu" that we can use to: generate enemies, generate villagers, toggle debug mode for the navigation mesh, etc
 - [ ] Revamp game-over screen style
 - [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] 🐛 Zooming / blurry on Firefox
@@ -134,6 +101,43 @@
 - [X] 🧠 Document Alerts behaviour.
 - [X] Look up information about pathfinding on Phaser3.
 - [X] Prepare 0.3 version tasks - focused on pathfinding
+- [X] Game Over scenes completion:
+	- Add best score. ✔️ 
+	- Add custom message based on result. ✔️ 
+	- Maybe some restyling? ✔️ 
+- [X] Menu scene completion:
+	- Add the game name ✔️ 
+- [X] 🎉 0.2 version completed! - Less annoying!
+- [X] Try https://github.com/amaccann/phaser-navmesh-generation with an empty tilemap (empty collisions array also) - check example and use the addSprite method.
+	- ⚠️  We are having errors just by importing the plugin. - Need to check 
+	- Seems like not useful for us because it was implemented for phaser-ce
+- [X] Keep investigating solutions for pathfinding (get tasks from dev-notes)
+- [X] Consider creating navmesh manually (or with an unknown plugin) and use: https://www.mikewesthad.com/navmesh/docs/#creating-a-navigation-mesh
+	- [X] Generate the navmesh
+	- [X] Display the navmesh in some kind of debug
+	- [X] Test that findPath method returns a correct set of points
+- [X] Integrating Pathfinding
+	- [X] Make villagers follow a path when commanding to move somewhere
+	- [X] ⚠️  Path is not optimal at all for some cases. Seems like it might be related with the heuristic being used by the library we are using. It's calculating distance from centroids which, for some cases with really big squares it seems not to make sense. - ✔️  Seems related to the heuristc being used, it's expected by the library itself and there's an open issue on Github for that waiting for an upcoming version. Workarounded by splitting big polygons into smaller ones with an `unoptimize()` method.
+	- [X] Make villagers use pathfinding for moving from and to a resource
+	- [X] Same for enemies ⚠️  Currently it's broken:
+		```
+		movement.js?8395:65 Uncaught TypeError: Cannot read property 'navigation' of undefined
+    at Movement.moveTo (movement.js?8395:65)
+    at Fighting.moveIntoAttackRangeAndAttack (fighting.js?4610:15)
+    at Enemy.update (enemy.js?4efb:61)
+    at eval (main.js?1339:222)
+    at Array.forEach (<anonymous>)
+    at MainScene.update (main.js?1339:222)
+    at Systems.step (Systems.js?9339:381)
+    at SceneManager.update (SceneManager.js?cec0:565)
+    at Game.step (Game.js?22d5:475)
+    at TimeStep.step (TimeStep.js?fdd3:599)
+		```
+	- [X] Manage situation when a resource is exhausted
+	- [X] Special case: removing buildings or resources
+	- [X] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
+	- [X] Special case: building overriding one or more quadrants
 
 # References
 
