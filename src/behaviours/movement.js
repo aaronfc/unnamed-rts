@@ -69,7 +69,9 @@ export default class Movement {
       ) {
         this.to = targetPosition;
         this.route = this.scene.navigation.findPath(element, targetPosition);
-        this.route.shift(); // Drop first element because it's the starting point
+        if (this.route != null) {
+          this.route.shift(); // Drop first element because it's the starting point
+        }
       }
       this.target = target;
     }
