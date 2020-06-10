@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
 // Set it to TRUE to skip the menu scene
-const AUTOSTART = true;
+const AUTOSTART = false;
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
