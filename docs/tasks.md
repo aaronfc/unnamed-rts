@@ -1,22 +1,25 @@
 ## Tasks
 
 ## Pipeline
-- [ ] 🧠 Document what the 0.3 version (aka pathfinding) will be.
-- [ ] 🎉 O.3 version completed!
+- [X] 🧠 Document what the 0.3 version (aka pathfinding) will be.
+- [X] 🐛 After moving a villager around the map. An enemy appeared and attacked the villager even though it was really far from the villager. Seems like "villager position" was ghosting somewhere else and the enemy could attack the "ghost".
+- [X] 🎉 O.3 version completed!
 - [ ] 🧠 Document what will the 0.4 verison include.
 - [ ] Start 0.4 version development.
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.
-		- [X] Identify assets that we really need:
-			- Grass
-			- Town center (big house / castle / camp)
-			- Resource (rocks tinted to pink or something similar?)
-			- Houses (for 0.4)
-		- [ ] What size should the assets be? Tilemap sizing?
-		- [ ] Get some assets
+	    - [X] Identify assets that we really need:
+		    - Grass
+		    - Town center (big house / castle / camp)
+		    - Resource (rocks tinted to pink or something similar?)
+		    - Houses (for 0.4)
+	    - [ ] What size should the assets be? Tilemap sizing?
+	    - [ ] Get some assets
+	    - [ ] ℹ️  Check on "Realm of the mad god" suggested by @BuccaneerDev
+	    - [ ] ℹ️  Check twitch's https://www.twitch.tv/LumpyTouch suggested by @BuccaneerDev
 	- [ ] Check on fonts and buttons/icons.
-- [ ] 🐛 After moving a villager around the map. An enemy appeared and attacked the villager even though it was really far from the villager. Seems like "villager position" was ghosting somewhere else and the enemy could attack the "ghost".
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
+- [ ] ⚠️  We are not taking into account attack range when attacking (or receiving damage) - look into this when we start implementing the tower defense buildings
 - [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
 - [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
 - [ ] 💡 Have some "debug menu" that we can use to: generate enemies, generate villagers, toggle debug mode for the navigation mesh, etc

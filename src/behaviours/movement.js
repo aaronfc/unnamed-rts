@@ -2,6 +2,7 @@ export default class Movement {
   constructor(scene) {
     this.scene = scene;
     this.target = null;
+    this.targetInitialPosition = null;
     this.to = null;
     this.route = null;
   }
@@ -29,8 +30,13 @@ export default class Movement {
 
   moveTo(element, target, reachedCallback, margin = null) {
     // TODO Check if margin can be removed
-    if (this.target != target) {
-      let targetPosition = { x: target.x, y: target.y };
+    if (
+      this.targetInitialPosition == null ||
+      this.targetInitialPosition.x != target.x ||
+      this.targetInitialPosition.y != target.y
+    ) {
+      this.targetInitialPosition = { x: target.x, y: target.y };
+      let targetPosition = this.targetInitialPosition;
       // Calculate the closest point for the target
       if (typeof target.getTopLeft === "function") {
         targetPosition = {
@@ -63,6 +69,7 @@ export default class Movement {
       ) {
         this.to = targetPosition;
         this.route = this.scene.navigation.findPath(element, targetPosition);
+        this.route.shift(); // Drop first element because it's the starting point
       }
       this.target = target;
     }
