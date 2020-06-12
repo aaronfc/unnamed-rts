@@ -105,3 +105,8 @@ https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html See `now` desc
     	```
 	**Probably this has to do with the plugin being implemented for phaser-ce and not phaser3**
 	
+
+## Adding assets
+- Create GameObject from images ✔️ 
+- Create GameObject from combined tiles from a tileset ❓
+- Create map (without a tilemap) ❓

@@ -24,6 +24,7 @@ const config = {
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   backgroundColor: "#FFFFFF",
+  pixelArt: true,
 };
 
 const game = new Phaser.Game(config);

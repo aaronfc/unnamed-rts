@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Villager from "../entities/villager.js";
 import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
+import House from "../entities/house.js";
 import Enemy from "../entities/enemy.js";
 import Map from "../entities/map.js";
 import Navigation from "../navigation.js";
@@ -79,6 +80,9 @@ export default class MainScene extends Phaser.Scene {
     // Create Town Center
     var townCenter = new TownCenter(this, 100, 50);
     this.map.addBuilding(townCenter);
+
+    var house = new House(this, 300, 50);
+    this.map.addBuilding(house);
 
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();

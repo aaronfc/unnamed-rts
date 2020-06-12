@@ -12,22 +12,24 @@ export default class Mesh {
   }
 
   addEntity(entity) {
-    let topleft = entity.getTopLeft();
+    let bounds = entity.getBounds();
+    let topleft = { x: bounds.left, y: bounds.top };
     this.addElement(
       topleft.x - EXPAND_MARGIN,
       topleft.y - EXPAND_MARGIN,
-      entity.width + EXPAND_MARGIN * 2,
-      entity.height + EXPAND_MARGIN * 2
+      bounds.width + EXPAND_MARGIN * 2,
+      bounds.height + EXPAND_MARGIN * 2
     );
   }
 
   removeEntity(entity) {
-    let topleft = entity.getTopLeft();
+    let bounds = entity.getBounds();
+    let topleft = { x: bounds.left, y: bounds.top };
     this.removeElement(
       topleft.x - EXPAND_MARGIN,
       topleft.y - EXPAND_MARGIN,
-      entity.width + EXPAND_MARGIN * 2,
-      entity.height + EXPAND_MARGIN * 2
+      bounds.width + EXPAND_MARGIN * 2,
+      bounds.height + EXPAND_MARGIN * 2
     );
   }
 
