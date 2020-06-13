@@ -1,13 +1,22 @@
 import Phaser from "phaser";
 
 export default class Map extends Phaser.GameObjects.Rectangle {
-  constructor(scene, width, height) {
+  constructor(scene, widthTiles, heightTiles, tileSize) {
     // Create the backgroun (map)
-    super(scene, 0, 0, width, height, "0xDDFFDD");
+    super(
+      scene,
+      0,
+      0,
+      widthTiles * tileSize,
+      heightTiles * tileSize,
+      "0x00000000"
+    );
     scene.add.existing(this);
-    this.setOrigin(0, 0);
 
     // Properties
+    this.widthTiles = widthTiles;
+    this.heightTiles = heightTiles;
+    this.tileSize = tileSize;
     this.scene = scene;
     this.buildings = [];
     this.resources = [];
@@ -44,6 +53,27 @@ export default class Map extends Phaser.GameObjects.Rectangle {
     this.on("dragend", (pointer, dragX, dragY) => {
       this.selectingRectangle.visible = false;
     });
+
+    this.tilemap = scene.make.tilemap({
+      key: "map",
+      tileWidth: this.tileSize,
+      tileHeight: this.tileSize,
+      width: this.widthTiles,
+      height: this.heightTiles,
+    });
+    var tiles = this.tilemap.addTilesetImage(
+      "spritesheet1",
+      "spritesheet1",
+      this.tileSize,
+      this.tileSize,
+      0,
+      1
+    );
+    var layer = this.tilemap.createBlankDynamicLayer(
+      "ground-background",
+      tiles
+    );
+    layer.randomize(0, 0, this.tilemap.width, this.tilemap.height, [5, 62]);
   }
 
   update() {

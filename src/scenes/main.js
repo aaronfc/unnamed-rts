@@ -7,14 +7,17 @@ import Enemy from "../entities/enemy.js";
 import Map from "../entities/map.js";
 import Navigation from "../navigation.js";
 
-const MAP_WIDTH = 2 * 1080;
-const MAP_HEIGHT = 2 * 720;
+const TILE_SIZE = 16;
+const MAP_WIDTH_TILES = 150;
+const MAP_HEIGHT_TILES = 100;
+const MAP_WIDTH = MAP_WIDTH_TILES * TILE_SIZE;
+const MAP_HEIGHT = MAP_HEIGHT_TILES * TILE_SIZE;
 const INITIAL_VILLAGERS = 1;
 const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
-const ZOOM_LEVELS = [0.5, 1, 2, 3];
+const ZOOM_LEVELS = [1, 2, 3];
 const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
 
 const DEBUG_NAVIGATION = false;
@@ -51,7 +54,7 @@ export default class MainScene extends Phaser.Scene {
       true,
       true
     );
-    this.map = new Map(this, MAP_WIDTH, MAP_HEIGHT);
+    this.map = new Map(this, MAP_WIDTH_TILES, MAP_HEIGHT_TILES, TILE_SIZE);
 
     // Navigation
     this.navigation = new Navigation(this, this.map);

@@ -6,6 +6,7 @@
 - [X] 🎉 O.3 version completed!
 - [.] Play around with assets and game-object generation
     - [X] Generate a simple game object by composing the image from a spritesheet
+    - [X] Base map generation (tilemap)
     - [ ] Move all House logic to a generic class
     - [ ] Generate map floow from spritesheet
     - [ ] Spend some time figuring out how to choose the spritesheet frames more easily
