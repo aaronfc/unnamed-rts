@@ -1,3 +1,4 @@
+const SWING_AMOUNT = 0.4;
 export default class Movement {
   constructor(scene) {
     this.scene = scene;
@@ -5,16 +6,21 @@ export default class Movement {
     this.targetInitialPosition = null;
     this.to = null;
     this.route = null;
+    this.swing = SWING_AMOUNT / 2;
   }
 
   // Private functions
 
-  _moveCloserTo(element, x, y) {
+  _moveCloserTo(element, x, y, shouldSwing) {
     let vector = new Phaser.Math.Vector2(
       x - element.x,
       y - element.y
     ).normalize();
     element.setVelocity(vector.x, vector.y);
+    if (shouldSwing) {
+      this.swing = (this.swing + 0.05) % SWING_AMOUNT;
+      element.setRotation(this.swing - SWING_AMOUNT / 2);
+    }
   }
 
   _isAsClosestAsPossibleTo(element, destination, marginX, marginY) {
@@ -28,7 +34,7 @@ export default class Movement {
 
   // Public functions
 
-  moveTo(element, target, reachedCallback, margin = null) {
+  moveTo(element, target, reachedCallback, margin = null, shouldSwing = true) {
     // TODO Check if margin can be removed
     if (
       this.targetInitialPosition == null ||
@@ -84,6 +90,7 @@ export default class Movement {
       // Set high friction and stop velocity
       element.setFrictionAir(0.5);
       element.setVelocity(0);
+      element.setRotation(0);
       // Run the actual callback
       reachedCallback();
       return;
@@ -98,13 +105,14 @@ export default class Movement {
         // Set high friction and stop velocity
         element.setFrictionAir(0.5);
         element.setVelocity(0);
+        element.setRotation(0);
         // Run the actual callback
         reachedCallback();
       }
     } else {
       // Set low friction
       element.setFrictionAir(0.01);
-      this._moveCloserTo(element, anchor.x, anchor.y);
+      this._moveCloserTo(element, anchor.x, anchor.y, shouldSwing);
     }
   }
 }

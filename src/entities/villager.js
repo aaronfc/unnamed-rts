@@ -3,10 +3,12 @@ import Movement from "../behaviours/movement.js";
 import Fighting from "../behaviours/fighting.js";
 import HealthBar from "../components/health-bar.js";
 
-export default class Villager extends Phaser.GameObjects.Arc {
+//export default class Villager extends Phaser.GameObjects.Arc {
+export default class Villager extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, townCenter) {
     // Circle
-    super(scene, x, y, 5, 0, 360, false, "0x0000FF", 1);
+    super(scene, x, y, Math.random() > 0.5 ? "boy" : "girl");
+    //super(scene, x, y, 5, 0, 180, false, "0x0000FF", 1);
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setCircle(5);
@@ -149,7 +151,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
 
   select() {
     this.unselect(); // TODO We must ensure that we do not trigger new event listeners on every selection, so we first unselect as a workaround until new Events Management
-    this.setStrokeStyle(1, "0xFF0000");
+    //this.setStrokeStyle(1, "0xFF0000");
+    this.setTint("0xFF5555");
     this.selected = true;
     // Emit events
     this.events.emit("new-villager-selected");
@@ -167,7 +170,8 @@ export default class Villager extends Phaser.GameObjects.Arc {
   }
 
   unselect() {
-    this.setStrokeStyle(0);
+    //this.setStrokeStyle(0);
+    this.clearTint();
     this.selected = false;
     // Stop listening for events
     this.events.off(
