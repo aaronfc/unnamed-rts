@@ -27,7 +27,9 @@ export default class Resource extends Phaser.GameObjects.Rectangle {
     this.setAlpha(this.amount / this.initialAmount);
 
     if (this.amount == 0) {
-      this.scene.scene.get('UIScene').events.emit('alert-message', "Resource exhausted ...");
+      this.scene.scene
+        .get("UIScene")
+        .events.emit("alert-message", "Resource exhausted ...");
       this.events.emit("resource-destroyed", this);
       this.destroy();
     }

@@ -4,16 +4,15 @@
 - [X] 🧠 Document what the 0.3 version (aka pathfinding) will be.
 - [X] 🐛 After moving a villager around the map. An enemy appeared and attacked the villager even though it was really far from the villager. Seems like "villager position" was ghosting somewhere else and the enemy could attack the "ghost".
 - [X] 🎉 O.3 version completed!
-- [.] Play around with assets and game-object generation
+- [o] Play around with assets and game-object generation
     - [X] Generate a simple game object by composing the image from a spritesheet
     - [X] Base map generation (tilemap)
-    - [ ] Move all House logic to a generic class
-    - [ ] Generate map floow from spritesheet
-    - [ ] Spend some time figuring out how to choose the spritesheet frames more easily
+    - [X] Move all House logic to a generic class
+    - [X] Spend some time figuring out how to choose the spritesheet frames more easily - Use Tiled
+    - [ ] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
     - [ ] Support multi-layer composition (aka generate a camp with tents, campfire, floor, etc)
 	- ⚠️  Supporting this might mean having to mess around with how the mesh is generated if we want to have collisions set to indivual parts and not the full camp as a whole. For example, colliding only with the base of the tents or the campfire.
     - [ ] Replace towncenter with equivalent composed object - camp or big house?
-    - [ ] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
 - [ ] 🐛 When enabling `pixelArt` we get weird-looking shapes and texts
 - [ ] 🧠 Document what will the 0.4 verison include.
 - [ ] Start 0.4 version development.
@@ -29,6 +28,8 @@
 	    - [ ] ℹ️  Check on "Realm of the mad god" suggested by @BuccaneerDev
 	    - [ ] ℹ️  Check twitch's https://www.twitch.tv/LumpyTouch suggested by @BuccaneerDev
 	- [ ] Check on fonts and buttons/icons.
+	- [ ] Check on assets for characters
+	    - [ ] https://opengameart.org/content/roguelike-character-pack
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
 - [ ] ⚠️  We are not taking into account attack range when attacking (or receiving damage) - look into this when we start implementing the tower defense buildings
 - [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
