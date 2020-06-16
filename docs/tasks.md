@@ -9,7 +9,9 @@
     - [X] Base map generation (tilemap)
     - [X] Move all House logic to a generic class
     - [X] Spend some time figuring out how to choose the spritesheet frames more easily - Use Tiled
-    - [ ] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
+    - [o] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
+	- [X] ⚠️  It is not interactive anymore. `setInteractive` doesn't seem to work even though we pass the hitbox and a hitboxcallback method. **No idea how to progress here**.
+	- [ ] ⚠️  We had to manually add an empty `destroy()` function to the TiledGameObject. Maybe we will be leaking some memory? We need to double check that.
     - [ ] Support multi-layer composition (aka generate a camp with tents, campfire, floor, etc)
 	- ⚠️  Supporting this might mean having to mess around with how the mesh is generated if we want to have collisions set to indivual parts and not the full camp as a whole. For example, colliding only with the base of the tents or the campfire.
     - [ ] Replace towncenter with equivalent composed object - camp or big house?

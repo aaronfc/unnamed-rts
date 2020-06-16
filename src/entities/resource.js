@@ -1,26 +1,34 @@
 import Phaser from "phaser";
+import TiledGameObject from "../tiled-game-object.js";
 
-export default class Resource extends Phaser.GameObjects.Rectangle {
+export default class Resource extends TiledGameObject {
   constructor(scene, position, initialAmount) {
-    // Create resource mine
-    super(scene, position.x, position.y, 30, 30, "0xFF00FF");
-    scene.add.existing(this);
-    scene.matter.add.gameObject(this);
-    this.setStatic(true);
+    let config = {
+      layers: [
+        {
+          // Ground
+          data: [[{ id: 1409, collide: true, depth: 0 }]],
+        },
+      ],
+    };
+    super(scene, position.x, position.y, config);
 
     // Properties
-    this.scene = scene;
     this.initialAmount = initialAmount;
     this.amount = initialAmount;
     this.events = scene.events;
 
     // Events
-    this.setInteractive();
+    this.setInteractive(
+      new Phaser.Geom.Rectangle(0, 0, 16, 16),
+      Phaser.Geom.Rectangle.Contains
+    );
     this.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.rightButtonDown()) {
         this.events.emit("resource-right-clicked", this);
       }
     });
+    console.log(this);
   }
 
   update() {

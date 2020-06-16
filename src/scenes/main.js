@@ -13,7 +13,7 @@ const MAP_HEIGHT_TILES = 100;
 const MAP_WIDTH = MAP_WIDTH_TILES * TILE_SIZE;
 const MAP_HEIGHT = MAP_HEIGHT_TILES * TILE_SIZE;
 const INITIAL_VILLAGERS = 1;
-const INITIAL_ENEMIES = 0;
+const INITIAL_ENEMIES = 2;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 5;
@@ -101,9 +101,13 @@ export default class MainScene extends Phaser.Scene {
       this.enemies.push(new Enemy(this, newBadGuyPosition));
     }
 
-    // Resource
-    var resource = new Resource(this, { x: 200, y: 200 }, 1000);
-    this.map.addResource(resource);
+    // Resources
+    this.map.addResource(new Resource(this, { x: 200, y: 200 }, 100));
+    this.map.addResource(new Resource(this, { x: 216, y: 200 }, 100));
+    this.map.addResource(new Resource(this, { x: 232, y: 200 }, 100));
+    this.map.addResource(new Resource(this, { x: 200, y: 216 }, 100));
+    this.map.addResource(new Resource(this, { x: 216, y: 216 }, 100));
+    this.map.addResource(new Resource(this, { x: 232, y: 216 }, 100));
     for (var i = 0; i < EXTRA_RESOURCES; i++) {
       let resource = new Resource(this, this._randomPosition(), 1000);
       this.map.addResource(resource);
