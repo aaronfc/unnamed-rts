@@ -152,7 +152,7 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   select() {
     this.unselect(); // TODO We must ensure that we do not trigger new event listeners on every selection, so we first unselect as a workaround until new Events Management
     //this.setStrokeStyle(1, "0xFF0000");
-    this.setTint("0xFF5555");
+    this.setTint("0xFFBBBB");
     this.selected = true;
     // Emit events
     this.events.emit("new-villager-selected");

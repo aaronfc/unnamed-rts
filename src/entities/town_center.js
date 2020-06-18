@@ -1,19 +1,138 @@
 import Phaser from "phaser";
 import Villager from "./villager.js";
+import TiledGameObject from "../tiled-game-object.js";
 
-export default class TownCenter extends Phaser.GameObjects.Rectangle {
+export default class TownCenter extends TiledGameObject {
   constructor(scene, x, y) {
-    // Create resource mine
-    super(scene, x, y, 100, 50, "0x0000FF");
-    scene.add.existing(this);
-    scene.matter.add.gameObject(this);
-    this.setStatic(true);
+    let config = {
+      layers: [
+        {
+          // Ground
+          data: [
+            [
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+            ],
+            [
+              { id: 520, collide: true, depth: 0 },
+              { id: 521, collide: true, depth: 0 },
+              { id: 521, collide: true, depth: 0 },
+              { id: 521, collide: true, depth: 0 },
+              { id: 521, collide: true, depth: 0 },
+              { id: 521, collide: true, depth: 0 },
+              { id: 522, collide: true, depth: 0 },
+            ],
+            [
+              { id: 577, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 579, collide: true, depth: 0 },
+            ],
+            [
+              { id: 577, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 579, collide: true, depth: 0 },
+            ],
+            [
+              { id: 577, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 578, collide: true, depth: 0 },
+              { id: 579, collide: true, depth: 0 },
+            ],
+            [
+              { id: 634, collide: true, depth: 0 },
+              { id: 635, collide: true, depth: 0 },
+              { id: 635, collide: true, depth: 0 },
+              { id: 635, collide: true, depth: 0 },
+              { id: 635, collide: true, depth: 0 },
+              { id: 635, collide: true, depth: 0 },
+              { id: 636, collide: true, depth: 0 },
+            ],
+          ],
+        },
+        {
+          // Over-ground
+          data: [
+            [
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: 616, collide: false, depth: 0 },
+              { id: 617, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+            ],
+            [
+              { id: 616, collide: false, depth: 0 },
+              { id: 617, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: 673, collide: false, depth: 0 },
+              { id: 674, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+            ],
+            [
+              { id: 673, collide: false, depth: 0 },
+              { id: 674, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+            ],
+            [
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: 470, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: 616, collide: false, depth: 0 },
+              { id: 617, collide: false, depth: 0 },
+            ],
+            [
+              { id: 616, collide: false, depth: 0 },
+              { id: 617, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: 425, collide: false, depth: 0 },
+              { id: 673, collide: false, depth: 0 },
+              { id: 674, collide: false, depth: 0 },
+            ],
+            [
+              { id: 673, collide: false, depth: 0 },
+              { id: 674, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+            ],
+          ],
+        },
+      ],
+    };
+    super(scene, x, y, config);
 
     // Properties
     this.scene = scene;
     this.events = scene.events;
     this.selected = false;
-    this.menu = new TownCenterMenu(scene, x - 50, y + 25, this);
+    this.menu = new TownCenterMenu(scene, this);
     this.enqueuedOrders = [];
     this.runningOrder = null;
     this.ORDERS = {
@@ -78,9 +197,10 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
   }
 
   getNewVillagerPosition() {
+    let bounds = this.getBounds();
     return new Phaser.Math.Vector2(
-      this.x + this.width / 2 + 10,
-      this.y + this.height / 2 + 10
+      bounds.centerX + bounds.width / 2 + 10,
+      bounds.centerY + bounds.height / 2 + 10
     );
   }
 
@@ -129,7 +249,11 @@ export default class TownCenter extends Phaser.GameObjects.Rectangle {
 }
 
 class TownCenterMenu extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, townCenter) {
+  constructor(scene, townCenter) {
+    let bounds = townCenter.getBounds();
+    let x = bounds.left;
+    let y = bounds.bottom;
+    let width = bounds.width;
     // Rectangle
     super(scene, x, y, []);
     scene.add.existing(this);
@@ -144,7 +268,7 @@ class TownCenterMenu extends Phaser.GameObjects.Container {
 
     // Background (rectangle)
     this.backgroundRectangle = scene.add
-      .rectangle(0, 0, 100, 34, "0xa0beff")
+      .rectangle(0, 0, width, 34, "0xa0beff")
       .setOrigin(0)
       .setAlpha(0.5);
     this.add(this.backgroundRectangle);

@@ -4,17 +4,25 @@
 - [X] 🧠 Document what the 0.3 version (aka pathfinding) will be.
 - [X] 🐛 After moving a villager around the map. An enemy appeared and attacked the villager even though it was really far from the villager. Seems like "villager position" was ghosting somewhere else and the enemy could attack the "ghost".
 - [X] 🎉 O.3 version completed!
-- [o] Play around with assets and game-object generation
+- [X] Play around with assets and game-object generation
     - [X] Generate a simple game object by composing the image from a spritesheet
     - [X] Base map generation (tilemap)
     - [X] Move all House logic to a generic class
     - [X] Spend some time figuring out how to choose the spritesheet frames more easily - Use Tiled
-    - [o] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
+    - [X] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
 	- [X] ⚠️  It is not interactive anymore. `setInteractive` doesn't seem to work even though we pass the hitbox and a hitboxcallback method. **No idea how to progress here**.
-	- [ ] ⚠️  We had to manually add an empty `destroy()` function to the TiledGameObject. Maybe we will be leaking some memory? We need to double check that.
-    - [ ] Support multi-layer composition (aka generate a camp with tents, campfire, floor, etc)
+    - [X] Support multi-layer composition (aka generate a camp with tents, campfire, floor,the  etc)
 	- ⚠️  Supporting this might mean having to mess around with how the mesh is generated if we want to have collisions set to indivual parts and not the full camp as a whole. For example, colliding only with the base of the tents or the campfire.
-    - [ ] Replace towncenter with equivalent composed object - camp or big house?
+    - [X] Replace towncenter with equivalent composed object - camp or big house?
+- [X] 🐛 When trying to collect resources from a resource which is surrounded by other resources the "closest" point to the villager will be out of the navigation mesh. So we don't have a way to get there. 💡 Maybe we should make this "closest" point smarter or the navigation mesh less strict (allow to get to a point out of the map).
+- [ ] Get back to the documentation:
+    - [ ] Update it
+    - [ ] Plan next steps
+- [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
+- [ ] 💎 Make the composed gameobjects animated? 🔥
+- [ ] ⚠️  We are able to click on the upper row of the TownCenter object, which probably we don't want.
+- [ ] ⚠️  We had to manually add an empty `destroy()` function to the TiledGameObject. Maybe we will be leaking some memory? We need to double check that.
+- [ ] 💡 Make TiledGameObject to understand Tiled output (should be easy to do, check [dev-notes](dev-notes))
 - [ ] 🐛 When enabling `pixelArt` we get weird-looking shapes and texts
 - [ ] 🧠 Document what will the 0.4 verison include.
 - [ ] Start 0.4 version development.

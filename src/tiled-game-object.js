@@ -4,54 +4,11 @@ const TILE_SIZE = 16;
 
 export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
   constructor(scene, x, y, config) {
-    //this.config = {
-    //  layers: [
-    //    {
-    //      // Ground
-    //      data: [
-    //        [
-    //          { id: 0, collide: true, depth: 30 },
-    //          { id: 0, collide: true, depth: 30 },
-    //          { id: 0, collide: true, depth: 30 },
-    //        ],
-    //        [
-    //          { id: 0, collide: true, depth: 30 },
-    //          { id: 0, collide: true, depth: 30 },
-    //          { id: 0, collide: true, depth: 30 },
-    //        ],
-    //        [
-    //          { id: 0, collide: true, depth: 30 },
-    //          { id: 0, collide: true, depth: 30 },
-    //          { id: 0, collide: true, depth: 30 },
-    //        ],
-    //      ],
-    //    },
-    //    {
-    //      // Above
-    //      data: [
-    //        [
-    //          { id: null, collide: true, depth: 30 },
-    //          { id: null, collide: true, depth: 30 },
-    //          { id: null, collide: true, depth: 30 },
-    //        ],
-    //        [
-    //          { id: null, collide: true, depth: 30 },
-    //          { id: 1422, collide: true, depth: 30 },
-    //          { id: null, collide: true, depth: 30 },
-    //        ],
-    //        [
-    //          { id: null, collide: true, depth: 30 },
-    //          { id: null, collide: true, depth: 30 },
-    //          { id: null, collide: true, depth: 30 },
-    //        ],
-    //      ],
-    //    },
-    //  ],
-    //};
     let data = config.layers[0].data;
     let width = data[0].length * TILE_SIZE;
     let height = data.length * TILE_SIZE;
     super(scene, x, y, width, height, 0x000000, 0);
+    this.setOrigin(0, 0);
     this.config = config;
     this.position = { x: x, y: y };
     this.scene.add.existing(this);
@@ -74,8 +31,8 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
     let width = this.data[0].length * TILE_SIZE;
     let height = (this.data.length - skipAmount) * TILE_SIZE;
     let output = new Phaser.Geom.Rectangle(
-      this.position.x - TILE_SIZE / 2,
-      this.position.y - TILE_SIZE / 2 + skipAmount * TILE_SIZE,
+      this.position.x,
+      this.position.y + skipAmount * TILE_SIZE,
       width,
       height
     );
@@ -90,8 +47,8 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
         if (spriteData.id !== null) {
           let sprite = this.scene.add
             .image(
-              this.position.x + x * TILE_SIZE,
-              this.position.y + y * TILE_SIZE,
+              this.position.x + x * TILE_SIZE + TILE_SIZE / 2,
+              this.position.y + y * TILE_SIZE + TILE_SIZE / 2,
               "spritesheet1",
               spriteData.id
             )

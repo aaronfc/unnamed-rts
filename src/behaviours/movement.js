@@ -58,13 +58,19 @@ export default class Movement {
             target.getBounds(),
             i
           );
-          let newDistance = Phaser.Math.Distance.BetweenPoints(
+          let temporaryRoute = this.scene.navigation.findPath(
             element,
             newPosition
           );
-          if (newDistance < distance) {
-            targetPosition = newPosition;
-            distance = newDistance;
+          if (temporaryRoute != null) {
+            let newDistance = Phaser.Math.Distance.BetweenPoints(
+              element,
+              newPosition
+            );
+            if (newDistance < distance) {
+              targetPosition = newPosition;
+              distance = newDistance;
+            }
           }
         }
       }
