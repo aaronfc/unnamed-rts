@@ -15,9 +15,20 @@
 	- ⚠️  Supporting this might mean having to mess around with how the mesh is generated if we want to have collisions set to indivual parts and not the full camp as a whole. For example, colliding only with the base of the tents or the campfire.
     - [X] Replace towncenter with equivalent composed object - camp or big house?
 - [X] 🐛 When trying to collect resources from a resource which is surrounded by other resources the "closest" point to the villager will be out of the navigation mesh. So we don't have a way to get there. 💡 Maybe we should make this "closest" point smarter or the navigation mesh less strict (allow to get to a point out of the map).
-- [ ] Get back to the documentation:
+- [ ] Get back to the documentation - offcamera
     - [ ] Update it
     - [ ] Plan next steps
+- [.] Buildings!
+    - [X] Villager building action
+    - [X] Building being constructed progress ~
+    - [ ] Menu
+	- [ ] Display menu for building
+	- [ ] Mark unavailable buildings (not enough resource case)
+	- [ ] ⚠️  Building over villagers.
+	    - Maybe we can first put the physics body, so that villagers will be expelled. Or maybe we do that properly and when we detect villagers under the physics body we command them to move out.
+	    - The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)
+    - [ ] Improve building "progress" display (progress bar)
+    - [ ] Think about relationship between the "building cost" and "building health"
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] 💎 Make the composed gameobjects animated? 🔥
 - [ ] ⚠️  We are able to click on the upper row of the TownCenter object, which probably we don't want.

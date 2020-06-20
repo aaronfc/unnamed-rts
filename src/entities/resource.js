@@ -19,10 +19,7 @@ export default class Resource extends TiledGameObject {
     this.events = scene.events;
 
     // Events
-    this.setInteractive(
-      new Phaser.Geom.Rectangle(0, 0, 16, 16),
-      Phaser.Geom.Rectangle.Contains
-    );
+    this.setInteractive();
     this.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.rightButtonDown()) {
         this.events.emit("resource-right-clicked", this);

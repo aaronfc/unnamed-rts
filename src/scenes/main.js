@@ -12,7 +12,7 @@ const MAP_WIDTH_TILES = 150;
 const MAP_HEIGHT_TILES = 100;
 const MAP_WIDTH = MAP_WIDTH_TILES * TILE_SIZE;
 const MAP_HEIGHT = MAP_HEIGHT_TILES * TILE_SIZE;
-const INITIAL_VILLAGERS = 1;
+const INITIAL_VILLAGERS = 5;
 const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
@@ -86,6 +86,12 @@ export default class MainScene extends Phaser.Scene {
 
     var house = new House(this, 300, 50);
     this.map.addBuilding(house);
+    this.input.on("pointerdown", (pointer) => {
+      if (pointer.middleButtonDown()) {
+        console.log("Fake building call!");
+        house.build();
+      }
+    });
 
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();

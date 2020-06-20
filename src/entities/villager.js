@@ -19,6 +19,8 @@ export default class Villager extends Phaser.GameObjects.Sprite {
     this.closestDeposit = townCenter; // TODO Calculate this somewhere else
     this.resourceGatheringSpeed = 0.5; // Units per second
     this.latestGatheringTime = 0;
+    this.buildingSpeed = 5; // Units per second
+    this.latestBuildingTime = 0;
     this.target = null;
     this.status = "idle";
     this.bagpack = {
@@ -113,6 +115,22 @@ export default class Villager extends Phaser.GameObjects.Sprite {
       } else {
         this._setStatus("idle");
       }
+    } else if (this.status == "building") {
+      this.movement.moveTo(this, this.target, () => {
+        // Stop movement
+        this.setVelocity(0);
+        // Collect resource
+        let nowTime = new Date().getTime() / 1000;
+        let timeSinceLatestBuild = nowTime - this.latestBuildingTime;
+        if (timeSinceLatestBuild >= 1) {
+          var isComplete = this.target.build(this.buildingSpeed); // TODO Take into account "building speed"
+          if (isComplete) {
+            this._setStatus("idle");
+            this.target = null; // TODO Calculate next resource
+          }
+          this.latestBuildingTime = nowTime;
+        }
+      });
     }
 
     // Update subparts
@@ -162,6 +180,11 @@ export default class Villager extends Phaser.GameObjects.Sprite {
       this.startCollectingResource,
       this
     );
+    this.events.once(
+      "building-in-progress-right-clicked",
+      this.startBuilding,
+      this
+    );
     this.events.once("map-left-or-middle-clicked", this.unselect, this);
     this.events.on("map-right-clicked", this.moveToCameraPointer, this);
     this.events.once("new-building-selected", this.unselect, this);
@@ -197,6 +220,12 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   startCollectingResource(resource) {
     this._setStatus("collecting");
     this.target = resource;
+    this.unselect();
+  }
+
+  startBuilding(building) {
+    this._setStatus("building");
+    this.target = building;
     this.unselect();
   }
 
