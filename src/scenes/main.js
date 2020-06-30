@@ -36,6 +36,7 @@ export default class MainScene extends Phaser.Scene {
     };
     this.villagers = [];
     this.enemies = [];
+    this.selectedVillagers = [];
     this.isGameOver = false;
     this.nextWaveTime = this._getNowTime() + ENEMY_WAVES_INTERVAL;
     this.isNextWaveAlerted = false;
@@ -176,7 +177,6 @@ export default class MainScene extends Phaser.Scene {
       "villager-died",
       (villager) => {
         this.villagers = this.villagers.filter((v) => v != villager);
-        console.log("Villager died!");
       },
       this
     );
@@ -184,6 +184,22 @@ export default class MainScene extends Phaser.Scene {
       "enemy-died",
       (enemy) => {
         this.enemies = this.enemies.filter((e) => e != enemy);
+      },
+      this
+    );
+    this.events.on(
+      "new-villager-selected",
+      (villager) => {
+        this.selectedVillagers.push(villager); // TODO Beware we might add duplicated villagers
+      },
+      this
+    );
+    this.events.on(
+      "villager-unselected",
+      (villager) => {
+        this.selectedVillagers = this.selectedVillagers.filter(
+          (v) => v != villager
+        );
       },
       this
     );
@@ -314,6 +330,7 @@ export default class MainScene extends Phaser.Scene {
       "new-building-selected",
       "map-left-or-middle-clicked",
       "new-villager-selected",
+      "villager-unselected",
       "resource-right-clicked",
       "enemy-right-clicked",
     ];

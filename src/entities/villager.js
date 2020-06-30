@@ -173,7 +173,7 @@ export default class Villager extends Phaser.GameObjects.Sprite {
     this.setTint("0xFFBBBB");
     this.selected = true;
     // Emit events
-    this.events.emit("new-villager-selected");
+    this.events.emit("new-villager-selected", this);
     // Start listening for events
     this.events.once(
       "resource-right-clicked",
@@ -193,9 +193,10 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   }
 
   unselect() {
-    //this.setStrokeStyle(0);
     this.clearTint();
     this.selected = false;
+    // Emit events
+    this.events.emit("villager-unselected", this);
     // Stop listening for events
     this.events.off(
       "resource-right-clicked",

@@ -18,17 +18,20 @@
 - [ ] Get back to the documentation - offcamera
     - [ ] Update it
     - [ ] Plan next steps
-- [.] Buildings!
+- [o] Buildings!
     - [X] Villager building action
     - [X] Building being constructed progress ~
-    - [ ] Menu
-	- [ ] Display menu for building
+    - [.] Menu
+	- [X] Display menu for building when villagers selected
+	- [ ] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
+	- [ ] Update icons / assets for the menu (make it a little better looking)
 	- [ ] Mark unavailable buildings (not enough resource case)
 	- [ ] ⚠️  Building over villagers.
 	    - Maybe we can first put the physics body, so that villagers will be expelled. Or maybe we do that properly and when we detect villagers under the physics body we command them to move out.
 	    - The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)
     - [ ] Improve building "progress" display (progress bar)
     - [ ] Think about relationship between the "building cost" and "building health"
+- [ ] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] 💎 Make the composed gameobjects animated? 🔥
 - [ ] ⚠️  We are able to click on the upper row of the TownCenter object, which probably we don't want.
@@ -51,6 +54,7 @@
 	- [ ] Check on fonts and buttons/icons.
 	- [ ] Check on assets for characters
 	    - [ ] https://opengameart.org/content/roguelike-character-pack
+- [ ] ⚠️  STOP CONSUMING INFORMATION FROM OTHER SCENES. WE MUST USE THE REGISTRY. EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
 - [ ] ⚠️  We are not taking into account attack range when attacking (or receiving damage) - look into this when we start implementing the tower defense buildings
 - [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
