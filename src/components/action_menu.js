@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import House from "../entities/house.js";
 
 export default class ActionMenu extends Phaser.GameObjects.Container {
   constructor(scene) {
@@ -36,6 +37,21 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
     // Adding action to the buildTentIcon
     this.buildTentIcon.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.leftButtonDown()) {
+        let house = new House(this.scene.scene.get("MainScene"), 0, 0);
+        let mainScene = this.scene.scene.get("MainScene");
+        let moveFunction = house.move.bind(house);
+        let placeFunction = () => {
+          house.place.bind(house);
+          mainScene.events.off("mouse-moving-over-map", moveFunction);
+          mainScene.selectedVillagers.forEach((v) => v.build(house));
+        };
+        mainScene.events.on("mouse-moving-over-map", moveFunction);
+        mainScene.input.keyboard.once("keydown-ESC", () => {
+          mainScene.events.off("mouse-moving-over-map", moveFunction);
+          mainScene.events.off("map-right-clicked", placeFunction);
+          house.destroy();
+        });
+        mainScene.events.once("map-right-clicked", placeFunction);
         event.stopPropagation();
       }
     });

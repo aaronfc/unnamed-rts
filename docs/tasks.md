@@ -23,9 +23,10 @@
     - [X] Building being constructed progress ~
     - [.] Menu
 	- [X] Display menu for building when villagers selected
-	- [ ] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
+	- [X] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
+	- [ ] If building can't be placed, we need to inform the user
 	- [ ] Update icons / assets for the menu (make it a little better looking)
-	- [ ] Mark unavailable buildings (not enough resource case)
+	- [ ] Mark unavailable buildings (not enough resource case) - Make construction consume resources!
 	- [ ] ⚠️  Building over villagers.
 	    - Maybe we can first put the physics body, so that villagers will be expelled. Or maybe we do that properly and when we detect villagers under the physics body we command them to move out.
 	    - The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)

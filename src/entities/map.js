@@ -53,6 +53,12 @@ export default class Map extends Phaser.GameObjects.Rectangle {
     this.on("dragend", (pointer, dragX, dragY) => {
       this.selectingRectangle.visible = false;
     });
+    this.on("pointermove", (pointer) => {
+      this.scene.events.emit("mouse-moving-over-map", {
+        x: pointer.worldX,
+        y: pointer.worldY,
+      });
+    });
 
     this.tilemap = scene.make.tilemap({
       key: "map",
@@ -93,5 +99,9 @@ export default class Map extends Phaser.GameObjects.Rectangle {
 
   onResourceDestroyed(resource) {
     this.resources = this.resources.filter((r) => r != resource);
+  }
+
+  onBuildingDestroyed(building) {
+    this.buildings = this.buildings.filter((b) => b != building);
   }
 }

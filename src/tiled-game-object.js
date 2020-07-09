@@ -10,7 +10,8 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
     super(scene, x, y, width, height, 0x000000, 0);
     this.setOrigin(0, 0);
     this.config = config;
-    this.position = { x: x, y: y };
+    this.x = x;
+    this.y = y;
     this.scene.add.existing(this);
 
     // Properties
@@ -31,8 +32,8 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
     let width = this.data[0].length * TILE_SIZE;
     let height = (this.data.length - skipAmount) * TILE_SIZE;
     let output = new Phaser.Geom.Rectangle(
-      this.position.x,
-      this.position.y + skipAmount * TILE_SIZE,
+      this.x,
+      this.y + skipAmount * TILE_SIZE,
       width,
       height
     );
@@ -47,8 +48,8 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
         if (spriteData.id !== null) {
           let sprite = this.scene.add
             .image(
-              this.position.x + x * TILE_SIZE + TILE_SIZE / 2,
-              this.position.y + y * TILE_SIZE + TILE_SIZE / 2,
+              this.x + x * TILE_SIZE + TILE_SIZE / 2,
+              this.y + y * TILE_SIZE + TILE_SIZE / 2,
               "spritesheet1",
               spriteData.id
             )
@@ -76,5 +77,29 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
   clearTint() {
     this.tiles.forEach((t) => t.clearTint());
   }
-  destroy() {}
+
+  destroy() {
+    this.tiles.forEach((t) => {
+      t.destroy();
+    });
+  }
+
+  setPosition(position) {
+    if (this.tiles) {
+      // We only move the tiles if we already had a position
+      console.log(this.position);
+      console.log("->");
+      console.log(position);
+      let dx = position.x - this.x;
+      let dy = position.y - this.y;
+      this.tiles.forEach((t) => {
+        console.log(`Moving tile ${dx} ${dy})`);
+        t.x += dx;
+        t.y += dy;
+      });
+    }
+    // TODO Calling setPosition (from Rectangle > Transform) does not work
+    this.x = position.x;
+    this.y = position.y;
+  }
 }

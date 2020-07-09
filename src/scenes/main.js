@@ -160,6 +160,14 @@ export default class MainScene extends Phaser.Scene {
       this
     );
     this.events.on(
+      "building-destroyed",
+      (building) => {
+        this.map.onBuildingDestroyed(building);
+        this.navigation.regenerate();
+      },
+      this
+    );
+    this.events.on(
       "new-villager-created",
       (villager) => {
         this.villagers.push(villager);

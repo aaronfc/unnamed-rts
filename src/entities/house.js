@@ -25,10 +25,9 @@ export default class House extends TiledGameObject {
 
     // Properties
     this.events = scene.events;
-    this.status = "building"; // building | built
+    this.status = "placing"; // placing | building | built
     this.buildingCost = 50;
     this.buildingAmount = 0;
-    this.setTint(0xcccccc);
     this.setAlpha(0.5);
 
     // Events
@@ -52,5 +51,33 @@ export default class House extends TiledGameObject {
     return this.status == "built"; // return true when the building is done
   }
 
+  place() {
+    // Check if construction is possible
+    if (this._canBeBuilt()) {
+      this.status = "building";
+      this.setTint(0xcccccc);
+    } else {
+      // TODO Send message saying "you cant build here"
+    }
+  }
+
+  destroy() {
+    this.events.emit("building-destroyed", this);
+    super.destroy(this);
+  }
+
+  move(position) {
+    this.setPosition(position);
+    if (this._canBeBuilt(position)) {
+      this.setTint(0xaaffaa);
+    } else {
+      this.setTint(0xffaaaa);
+    }
+  }
+
   update() {}
+
+  _canBeBuilt() {
+    return Math.random() > 0.5;
+  }
 }
