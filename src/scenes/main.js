@@ -86,13 +86,8 @@ export default class MainScene extends Phaser.Scene {
     this.map.addBuilding(townCenter);
 
     var house = new House(this, 300, 50);
+    house.status = "building";
     this.map.addBuilding(house);
-    this.input.on("pointerdown", (pointer) => {
-      if (pointer.middleButtonDown()) {
-        console.log("Fake building call!");
-        house.build();
-      }
-    });
 
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();

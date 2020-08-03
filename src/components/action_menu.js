@@ -41,9 +41,15 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
         let mainScene = this.scene.scene.get("MainScene");
         let moveFunction = house.move.bind(house);
         let placeFunction = () => {
-          house.place.bind(house);
-          mainScene.events.off("mouse-moving-over-map", moveFunction);
-          mainScene.selectedVillagers.forEach((v) => v.build(house));
+          if (house.place()) {
+            console.log("Placing");
+            mainScene.events.off("mouse-moving-over-map", moveFunction);
+            mainScene.selectedVillagers.forEach((v) => v.startBuilding(house));
+          } else {
+            console.log("Not placing");
+            // ⚠️  We need to keep listening to map-right-clicked. Using "on" instead of playing with "once" didn't work out of the box. Maybe we can make it work with giving a second thought to the events management.
+            mainScene.events.once("map-right-clicked", placeFunction);
+          }
         };
         mainScene.events.on("mouse-moving-over-map", moveFunction);
         mainScene.input.keyboard.once("keydown-ESC", () => {

@@ -18,20 +18,30 @@
 - [ ] Get back to the documentation - offcamera
     - [ ] Update it
     - [ ] Plan next steps
-- [o] Buildings!
+- [X] Get up to date with current situation.
+- [ ] Plan next streams
+- [ ] Next projects?
+    - Improving skills
+    - ...
+- [.] Buildings!
     - [X] Villager building action
     - [X] Building being constructed progress ~
-    - [.] Menu
+    - [o] Menu
 	- [X] Display menu for building when villagers selected
 	- [X] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
+	- [X] Do not allow for buildings to be constructed over resources or other buildings.
 	- [ ] If building can't be placed, we need to inform the user
 	- [ ] Update icons / assets for the menu (make it a little better looking)
-	- [ ] Mark unavailable buildings (not enough resource case) - Make construction consume resources!
-	- [ ] ⚠️  Building over villagers.
-	    - Maybe we can first put the physics body, so that villagers will be expelled. Or maybe we do that properly and when we detect villagers under the physics body we command them to move out.
-	    - The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)
+	- [ ] Display building cost per building
+	- [ ] Mark unavailable buildings (not enough resource case)
+	- [ ] Make the menu generic so that new building buttons appear automatically
+    - [ ] Make construction consume resources
+    - [ ] ⚠️  Building over villagers.
+	- Maybe we can first put the physics body, so that villagers will be expelled. Or maybe we do that properly and when we detect villagers under the physics body we command them to move out.
+	- The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)
     - [ ] Improve building "progress" display (progress bar)
     - [ ] Think about relationship between the "building cost" and "building health"
+    - [ ] 🐛 When placing a building (to construct) we lose the "move" event when mouse is over anything different from the map (for example, entities like villagers or other buildings)
 - [ ] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] 💎 Make the composed gameobjects animated? 🔥

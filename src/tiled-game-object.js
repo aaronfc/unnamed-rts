@@ -87,13 +87,9 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
   setPosition(position) {
     if (this.tiles) {
       // We only move the tiles if we already had a position
-      console.log(this.position);
-      console.log("->");
-      console.log(position);
       let dx = position.x - this.x;
       let dy = position.y - this.y;
       this.tiles.forEach((t) => {
-        console.log(`Moving tile ${dx} ${dy})`);
         t.x += dx;
         t.y += dy;
       });

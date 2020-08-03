@@ -33,7 +33,7 @@ export default class House extends TiledGameObject {
     // Events
     this.setInteractive();
     this.on("pointerdown", (pointer, localX, localY, event) => {
-      if (pointer.rightButtonDown()) {
+      if (this.status == "building" && pointer.rightButtonDown()) {
         this.events.emit("building-in-progress-right-clicked", this);
       }
     });
@@ -56,8 +56,10 @@ export default class House extends TiledGameObject {
     if (this._canBeBuilt()) {
       this.status = "building";
       this.setTint(0xcccccc);
+      return true;
     } else {
       // TODO Send message saying "you cant build here"
+      return false;
     }
   }
 
@@ -78,6 +80,24 @@ export default class House extends TiledGameObject {
   update() {}
 
   _canBeBuilt() {
-    return Math.random() > 0.5;
+    let hasEnoughResource = this.scene.counters.resource > this.buildingCost;
+    // TODO Maybe moving this "isFree" logic to the map object?
+    let intersectingBuildings = this.scene.map.buildings.filter(
+      (b) =>
+        !Phaser.Geom.Rectangle.Intersection(
+          b.getBounds(),
+          this.getBounds()
+        ).isEmpty()
+    );
+    let intersectingResources = this.scene.map.resources.filter(
+      (r) =>
+        !Phaser.Geom.Rectangle.Intersection(
+          r.getBounds(),
+          this.getBounds()
+        ).isEmpty()
+    );
+    let positionIsFree =
+      intersectingBuildings.length == 0 && intersectingResources.length == 0;
+    return hasEnoughResource && positionIsFree;
   }
 }

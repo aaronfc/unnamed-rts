@@ -27,8 +27,6 @@ export default class MeshTesting extends Phaser.Scene {
 
     // Draw navigational mesh for debugging
     this.mesh.debugDraw(this);
-
-    console.log(this.mesh.getData());
   }
 
   update(time, delta) {}

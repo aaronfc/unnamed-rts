@@ -25,7 +25,6 @@ export default class Resource extends TiledGameObject {
         this.events.emit("resource-right-clicked", this);
       }
     });
-    console.log(this);
   }
 
   update() {
