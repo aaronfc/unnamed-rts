@@ -23,7 +23,7 @@
 - [ ] Next projects?
     - Improving skills
     - ...
-- [.] Buildings!
+- [o] Buildings!
     - [X] Villager building action
     - [X] Building being constructed progress ~
     - [O] Menu
@@ -35,7 +35,7 @@
 	- [X] Display building cost per building
 	- [ ] 💎 Mark unavailable buildings (not enough resource case)
 	- [ ] Make the menu generic so that new building buttons appear automatically
-    - [ ] Make construction consume resources
+    - [X] Make construction consume resources
     - [ ] ⚠️  Building over villagers.
 	- Maybe we can first put the physics body, so that villagers will be expelled. Or maybe we do that properly and when we detect villagers under the physics body we command them to move out.
 	- The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)

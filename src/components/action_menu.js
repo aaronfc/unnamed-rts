@@ -6,6 +6,9 @@ const ICONS_PADDING = 10;
 const PRICE_SUBICON_SIZE = 16;
 const SUBICON_PADDING = 5;
 
+// TODO ⚠️  Move this to a proper place
+const HOUSE_BUILDING_COST = 50;
+
 export default class ActionMenu extends Phaser.GameObjects.Container {
   constructor(scene) {
     let width = 300;
@@ -49,34 +52,43 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
     // Adding action to the buildTentIcon
     this.buildTentIcon.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.leftButtonDown()) {
-        let house = new House(this.scene.scene.get("MainScene"), 0, 0);
-        let mainScene = this.scene.scene.get("MainScene");
-        let moveFunction = house.move.bind(house);
-        let placeFunction = () => {
-          if (house.place()) {
-            console.log("Placing");
+        if (this.scene.counters.resource >= HOUSE_BUILDING_COST) {
+          let house = new House(this.scene.scene.get("MainScene"), 0, 0);
+          let mainScene = this.scene.scene.get("MainScene");
+          let moveFunction = house.move.bind(house);
+          let placeFunction = () => {
+            if (house.place()) {
+              this.scene.counters.resource -= HOUSE_BUILDING_COST;
+              console.log("Placing");
+              mainScene.events.off("mouse-moving-over-map", moveFunction);
+              mainScene.selectedVillagers.forEach((v) =>
+                v.startBuilding(house)
+              );
+              mainScene.map.addBuilding(house);
+            } else {
+              console.log("Not placing");
+              this.scene.scene
+                .get("UIScene")
+                .events.emit("alert-message", "You can't build here!");
+              // ⚠️  We need to keep listening to map-right-clicked. Using "on" instead of playing with "once" didn't work out of the box. Maybe we can make it work with giving a second thought to the events management.
+              mainScene.events.once("map-right-clicked", placeFunction);
+            }
+          };
+          mainScene.events.on("mouse-moving-over-map", moveFunction);
+          mainScene.input.keyboard.once("keydown-ESC", () => {
             mainScene.events.off("mouse-moving-over-map", moveFunction);
-            mainScene.selectedVillagers.forEach((v) => v.startBuilding(house));
-            mainScene.map.addBuilding(house);
-          } else {
-            console.log("Not placing");
-            this.scene.scene
-              .get("UIScene")
-              .events.emit("alert-message", "You can't build here!");
-            // ⚠️  We need to keep listening to map-right-clicked. Using "on" instead of playing with "once" didn't work out of the box. Maybe we can make it work with giving a second thought to the events management.
-            mainScene.events.once("map-right-clicked", placeFunction);
-          }
-        };
-        mainScene.events.on("mouse-moving-over-map", moveFunction);
-        mainScene.input.keyboard.once("keydown-ESC", () => {
-          mainScene.events.off("mouse-moving-over-map", moveFunction);
-          mainScene.events.off("map-right-clicked", placeFunction);
-          if (house.status == "placing") {
-            house.destroy();
-          }
-        });
-        mainScene.events.once("map-right-clicked", placeFunction);
-        event.stopPropagation();
+            mainScene.events.off("map-right-clicked", placeFunction);
+            if (house.status == "placing") {
+              house.destroy();
+            }
+          });
+          mainScene.events.once("map-right-clicked", placeFunction);
+          event.stopPropagation();
+        } else {
+          this.scene.scene
+            .get("UIScene")
+            .events.emit("alert-message", "Not enough resource!");
+        }
       }
     });
     this.add(this.buildTentIcon);

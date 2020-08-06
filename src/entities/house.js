@@ -80,7 +80,7 @@ export default class House extends TiledGameObject {
   update() {}
 
   _canBeBuilt() {
-    let hasEnoughResource = this.scene.counters.resource > this.buildingCost;
+    let hasEnoughResource = this.scene.counters.resource >= this.buildingCost;
     // TODO Maybe moving this "isFree" logic to the map object?
     let intersectingBuildings = this.scene.map.buildings.filter(
       (b) =>
