@@ -26,14 +26,14 @@
 - [.] Buildings!
     - [X] Villager building action
     - [X] Building being constructed progress ~
-    - [o] Menu
+    - [O] Menu
 	- [X] Display menu for building when villagers selected
 	- [X] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
 	- [X] Do not allow for buildings to be constructed over resources or other buildings.
 	- [X] If building can't be placed, we need to inform the user
-	- [ ] Update icons / assets for the menu (make it a little better looking)
-	- [ ] Display building cost per building
-	- [ ] Mark unavailable buildings (not enough resource case)
+	- [X] Update icons / assets for the menu (make it a little better looking)
+	- [X] Display building cost per building
+	- [ ] 💎 Mark unavailable buildings (not enough resource case)
 	- [ ] Make the menu generic so that new building buttons appear automatically
     - [ ] Make construction consume resources
     - [ ] ⚠️  Building over villagers.

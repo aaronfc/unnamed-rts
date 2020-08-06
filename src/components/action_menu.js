@@ -1,10 +1,16 @@
 import Phaser from "phaser";
 import House from "../entities/house.js";
 
+const ICON_SIZE = 32;
+const ICONS_PADDING = 10;
+const PRICE_SUBICON_SIZE = 16;
+const SUBICON_PADDING = 5;
+
 export default class ActionMenu extends Phaser.GameObjects.Container {
   constructor(scene) {
     let width = 300;
-    let height = 200;
+    let height =
+      ICON_SIZE + ICONS_PADDING * 2 + PRICE_SUBICON_SIZE + SUBICON_PADDING;
     let x = scene.sys.game.canvas.width - width / 2;
     let y = scene.sys.game.canvas.height - height / 2;
     // Rectangle
@@ -25,12 +31,18 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
       .setOrigin(0.5);
     this.add(this.backgroundRectangle);
 
-    // Villagers info
+    // Build house icon
     this.buildTentIcon = scene.add
       .image(
-        this.backgroundRectangle.x - this.backgroundRectangle.width / 2 + 20,
-        this.backgroundRectangle.y - this.backgroundRectangle.height / 2 + 20,
-        "villager-icon" // TODO Change the asset to a "tent" or a house
+        this.backgroundRectangle.x -
+          this.backgroundRectangle.width / 2 +
+          ICON_SIZE / 2 +
+          ICONS_PADDING,
+        this.backgroundRectangle.y -
+          this.backgroundRectangle.height / 2 +
+          ICON_SIZE / 2 +
+          ICONS_PADDING,
+        "house-icon"
       )
       .setOrigin(0.5)
       .setInteractive({ cursor: "pointer" });
@@ -68,6 +80,33 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
       }
     });
     this.add(this.buildTentIcon);
+
+    this.costIcon = scene.add
+      .image(
+        this.backgroundRectangle.x -
+          this.backgroundRectangle.width / 2 +
+          PRICE_SUBICON_SIZE / 2 +
+          SUBICON_PADDING,
+        this.backgroundRectangle.y -
+          this.backgroundRectangle.height / 2 +
+          ICON_SIZE +
+          ICONS_PADDING +
+          PRICE_SUBICON_SIZE / 2 +
+          SUBICON_PADDING,
+        "resource-icon"
+      )
+      .setScale(0.5)
+      .setOrigin(0.5)
+      .setInteractive({ cursor: "pointer" });
+    this.add(this.costIcon);
+
+    this.costText = scene.add.text(
+      this.costIcon.x + PRICE_SUBICON_SIZE / 2 + SUBICON_PADDING,
+      this.costIcon.y - PRICE_SUBICON_SIZE / 2,
+      "50",
+      { color: "#000", fontSize: 14 }
+    );
+    this.add(this.costText);
   }
 
   update() {
