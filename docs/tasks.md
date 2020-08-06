@@ -42,6 +42,8 @@
     - [ ] Improve building "progress" display (progress bar)
     - [ ] Think about relationship between the "building cost" and "building health"
     - [ ] 🐛 When placing a building (to construct) we lose the "move" event when mouse is over anything different from the map (for example, entities like villagers or other buildings)
+    - [ ] 🐛 When we left-click while building, the next right-click will not work. Solution: left-click should stop the building process.
+    - [ ] 🐛 When houses are `.destroy()`ed something is not being correctly removed, since the input over the place that occupied the house doesn't work anymore. Reproduce: Click the build a house button, and then move over the map to somewhere. Click escape and the house will disappear. Now input on that same place will not work (try to use the multi-selection box)
 - [ ] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] 💎 Make the composed gameobjects animated? 🔥
