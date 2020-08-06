@@ -30,7 +30,7 @@
 	- [X] Display menu for building when villagers selected
 	- [X] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
 	- [X] Do not allow for buildings to be constructed over resources or other buildings.
-	- [ ] If building can't be placed, we need to inform the user
+	- [X] If building can't be placed, we need to inform the user
 	- [ ] Update icons / assets for the menu (make it a little better looking)
 	- [ ] Display building cost per building
 	- [ ] Mark unavailable buildings (not enough resource case)
@@ -45,6 +45,7 @@
     - [ ] 🐛 When we left-click while building, the next right-click will not work. Solution: left-click should stop the building process.
     - [ ] 🐛 When houses are `.destroy()`ed something is not being correctly removed, since the input over the place that occupied the house doesn't work anymore. Reproduce: Click the build a house button, and then move over the map to somewhere. Click escape and the house will disappear. Now input on that same place will not work (try to use the multi-selection box)
 - [ ] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
+- [ ] ⚠️  Add attribution to the house icon author: `Iconos diseñados por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>`
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] 💎 Make the composed gameobjects animated? 🔥
 - [ ] ⚠️  We are able to click on the upper row of the TownCenter object, which probably we don't want.

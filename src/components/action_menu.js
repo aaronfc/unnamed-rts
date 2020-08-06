@@ -48,6 +48,9 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
             mainScene.map.addBuilding(house);
           } else {
             console.log("Not placing");
+            this.scene.scene
+              .get("UIScene")
+              .events.emit("alert-message", "You can't build here!");
             // ⚠️  We need to keep listening to map-right-clicked. Using "on" instead of playing with "once" didn't work out of the box. Maybe we can make it work with giving a second thought to the events management.
             mainScene.events.once("map-right-clicked", placeFunction);
           }
