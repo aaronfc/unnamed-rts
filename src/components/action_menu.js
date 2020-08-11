@@ -75,7 +75,6 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
             if (house.place()) {
               this.scene.counters.resource -= item.cost;
               console.log("Placing");
-              //mainScene.events.off("mouse-moving-over-map", moveFunction);
               mainScene.input.off("pointermove", moveFunction);
               mainScene.selectedVillagers.forEach((v) =>
                 v.startBuilding(house)
@@ -91,10 +90,17 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
               mainScene.events.once("map-right-clicked", placeFunction);
             }
           };
-          //mainScene.events.on("mouse-moving-over-map", moveFunction);
+          mainScene.input.on("pointerdown", (pointer) => {
+            if (pointer.leftButtonDown()) {
+              mainScene.input.off("pointermove", moveFunction);
+              mainScene.events.off("map-right-clicked", placeFunction);
+              if (house.status == "placing") {
+                house.destroy();
+              }
+            }
+          });
           mainScene.input.on("pointermove", moveFunction);
           mainScene.input.keyboard.once("keydown-ESC", () => {
-            //mainScene.events.off("mouse-moving-over-map", moveFunction);
             mainScene.input.off("pointermove", moveFunction);
             mainScene.events.off("map-right-clicked", placeFunction);
             if (house.status == "placing") {
