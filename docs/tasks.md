@@ -25,7 +25,7 @@
     - [X] 🐛 When placing a building (to construct) we lose the "move" event when mouse is over anything different from the map (for example, entities like villagers or other buildings)
     - [X] 🐛 When we left-click while building, the next right-click will not work. Solution: left-click should stop the building process.
     - [X] 🐛 When houses are `.destroy()`ed something is not being correctly removed, since the input over the place that occupied the house doesn't work anymore. Reproduce: Click the build a house button, and then move over the map to somewhere. Click escape and the house will disappear. Now input on that same place will not work (try to use the multi-selection box)
-    - [ ] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
+    - [X] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
     - [ ] ❓ When a villager dies what happens with an ongoing action to start a building? (action menu open and the house being placed)
     - [ ] 💎 Improve building "progress" display (progress bar)
     - [ ] 💎 Mark unavailable buildings (not enough resource case) in the menu

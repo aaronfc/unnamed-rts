@@ -202,6 +202,11 @@ export default class Villager extends Phaser.GameObjects.Sprite {
       this.startCollectingResource,
       this
     );
+    this.events.off(
+      "building-in-progress-right-clicked",
+      this.startBuilding,
+      this
+    );
     this.events.off("map-left-or-middle-clicked", this.unselect, this);
     this.events.off("map-right-clicked", this.moveToCameraPointer, this);
     this.events.off("new-building-selected", this.unselect, this);
