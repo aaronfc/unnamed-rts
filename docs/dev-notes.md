@@ -178,3 +178,25 @@ https://photonstorm.github.io/phaser3-docs/Phaser.Time.Clock.html See `now` desc
  "width":7
 }
 ```
+
+## Action Menu (building) generic
+
+Current:
+[ HOUSE ]
+
+Ideally:
+[ HOUSE ] [ DEPOSIT ] [ TOWER ]
+
+- All these three are buildings.
+- All of them will cost some resource to be built.
+- All of them will be built following the same mechanic.
+
+Things we will need to have:
+- List of things that can be built. For every one of them:
+    - How much resource does it cost? For example: 50 for a House.
+    - What entity represent this building. For example: House class for a house.
+
+Generic Menu:
+- Read list of things that can be built. For each of them:
+    - Draw a button and the cost of building this item.
+    - Actually trigger the right building mechanic depending on the item chosen.

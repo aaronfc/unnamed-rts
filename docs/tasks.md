@@ -1,20 +1,6 @@
 ## Tasks
 
 ## Pipeline
-- [X] 🧠 Document what the 0.3 version (aka pathfinding) will be.
-- [X] 🐛 After moving a villager around the map. An enemy appeared and attacked the villager even though it was really far from the villager. Seems like "villager position" was ghosting somewhere else and the enemy could attack the "ghost".
-- [X] 🎉 O.3 version completed!
-- [X] Play around with assets and game-object generation
-    - [X] Generate a simple game object by composing the image from a spritesheet
-    - [X] Base map generation (tilemap)
-    - [X] Move all House logic to a generic class
-    - [X] Spend some time figuring out how to choose the spritesheet frames more easily - Use Tiled
-    - [X] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
-	- [X] ⚠️  It is not interactive anymore. `setInteractive` doesn't seem to work even though we pass the hitbox and a hitboxcallback method. **No idea how to progress here**.
-    - [X] Support multi-layer composition (aka generate a camp with tents, campfire, floor,the  etc)
-	- ⚠️  Supporting this might mean having to mess around with how the mesh is generated if we want to have collisions set to indivual parts and not the full camp as a whole. For example, colliding only with the base of the tents or the campfire.
-    - [X] Replace towncenter with equivalent composed object - camp or big house?
-- [X] 🐛 When trying to collect resources from a resource which is surrounded by other resources the "closest" point to the villager will be out of the navigation mesh. So we don't have a way to get there. 💡 Maybe we should make this "closest" point smarter or the navigation mesh less strict (allow to get to a point out of the map).
 - [ ] Get back to the documentation - offcamera
     - [ ] Update it
     - [ ] Plan next steps
@@ -26,25 +12,23 @@
 - [o] Buildings!
     - [X] Villager building action
     - [X] Building being constructed progress ~
-    - [O] Menu
+    - [X] Menu
 	- [X] Display menu for building when villagers selected
 	- [X] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
 	- [X] Do not allow for buildings to be constructed over resources or other buildings.
 	- [X] If building can't be placed, we need to inform the user
 	- [X] Update icons / assets for the menu (make it a little better looking)
 	- [X] Display building cost per building
-	- [ ] 💎 Mark unavailable buildings (not enough resource case)
-	- [ ] Make the menu generic so that new building buttons appear automatically
+	- [X] Make the menu generic so that new building buttons appear automatically
     - [X] Make construction consume resources
-    - [ ] ⚠️  Building over villagers.
-	- Maybe we can first put the physics body, so that villagers will be expelled. Or maybe we do that properly and when we detect villagers under the physics body we command them to move out.
 	- The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)
-    - [ ] Improve building "progress" display (progress bar)
-    - [ ] Think about relationship between the "building cost" and "building health"
-    - [ ] 🐛 When placing a building (to construct) we lose the "move" event when mouse is over anything different from the map (for example, entities like villagers or other buildings)
+    - [X] 🐛 When placing a building (to construct) we lose the "move" event when mouse is over anything different from the map (for example, entities like villagers or other buildings)
     - [ ] 🐛 When we left-click while building, the next right-click will not work. Solution: left-click should stop the building process.
     - [ ] 🐛 When houses are `.destroy()`ed something is not being correctly removed, since the input over the place that occupied the house doesn't work anymore. Reproduce: Click the build a house button, and then move over the map to somewhere. Click escape and the house will disappear. Now input on that same place will not work (try to use the multi-selection box)
-- [ ] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
+    - [ ] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
+    - [ ] 💎 Improve building "progress" display (progress bar)
+    - [ ] 💎 Mark unavailable buildings (not enough resource case) in the menu
+- [ ] Think about relationship between the "building cost" and "building health"
 - [ ] ⚠️  Add attribution to the house icon author: `Iconos diseñados por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>`
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] 💎 Make the composed gameobjects animated? 🔥
@@ -192,6 +176,20 @@
 	- [X] Special case: removing buildings or resources
 	- [X] Special case: buildings or resources in multiple quadrants (2, 3, 4?)
 	- [X] Special case: building overriding one or more quadrants
+- [X] 🧠 Document what the 0.3 version (aka pathfinding) will be.
+- [X] 🐛 After moving a villager around the map. An enemy appeared and attacked the villager even though it was really far from the villager. Seems like "villager position" was ghosting somewhere else and the enemy could attack the "ghost".
+- [X] 🎉 O.3 version completed!
+- [X] Play around with assets and game-object generation
+    - [X] Generate a simple game object by composing the image from a spritesheet
+    - [X] Base map generation (tilemap)
+    - [X] Move all House logic to a generic class
+    - [X] Spend some time figuring out how to choose the spritesheet frames more easily - Use Tiled
+    - [X] Replace resource with equivalent composed object - we have some pink/purple crystals in the spritesheet
+	- [X] ⚠️  It is not interactive anymore. `setInteractive` doesn't seem to work even though we pass the hitbox and a hitboxcallback method. **No idea how to progress here**.
+    - [X] Support multi-layer composition (aka generate a camp with tents, campfire, floor,the  etc)
+	- ⚠️  Supporting this might mean having to mess around with how the mesh is generated if we want to have collisions set to indivual parts and not the full camp as a whole. For example, colliding only with the base of the tents or the campfire.
+    - [X] Replace towncenter with equivalent composed object - camp or big house?
+- [X] 🐛 When trying to collect resources from a resource which is surrounded by other resources the "closest" point to the villager will be out of the navigation mesh. So we don't have a way to get there. 💡 Maybe we should make this "closest" point smarter or the navigation mesh less strict (allow to get to a point out of the map).
 
 # References
 

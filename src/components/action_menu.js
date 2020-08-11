@@ -4,10 +4,14 @@ import House from "../entities/house.js";
 const ICON_SIZE = 32;
 const ICONS_PADDING = 10;
 const PRICE_SUBICON_SIZE = 16;
-const SUBICON_PADDING = 5;
+const SUBICON_PADDING = 2;
 
 // TODO ⚠️  Move this to a proper place
 const HOUSE_BUILDING_COST = 50;
+
+const BUILDABLE_ITEMS = [
+  { name: "House", icon: "house-icon", clazz: House, cost: 50 },
+];
 
 export default class ActionMenu extends Phaser.GameObjects.Container {
   constructor(scene) {
@@ -34,37 +38,50 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
       .setOrigin(0.5);
     this.add(this.backgroundRectangle);
 
-    // Build house icon
-    this.buildTentIcon = scene.add
+    BUILDABLE_ITEMS.forEach((item, index) => {
+      let icon = this.createIcon(this.backgroundRectangle, index, item);
+    });
+  }
+
+  update() {
+    let selectedVillagers = this.scene.scene.get("MainScene").selectedVillagers;
+    this.visible = selectedVillagers.length > 0;
+  }
+
+  createIcon(background, index, item) {
+    // Create visual icon
+    let icon = this.scene.add
       .image(
-        this.backgroundRectangle.x -
-          this.backgroundRectangle.width / 2 +
+        background.x -
+          background.width / 2 +
+          index * (ICON_SIZE + ICONS_PADDING * 2) +
           ICON_SIZE / 2 +
           ICONS_PADDING,
-        this.backgroundRectangle.y -
-          this.backgroundRectangle.height / 2 +
-          ICON_SIZE / 2 +
-          ICONS_PADDING,
+        background.y - background.height / 2 + ICON_SIZE / 2 + ICONS_PADDING,
         "house-icon"
       )
       .setOrigin(0.5)
       .setInteractive({ cursor: "pointer" });
-    // Adding action to the buildTentIcon
-    this.buildTentIcon.on("pointerdown", (pointer, localX, localY, event) => {
+    // Adding action
+    icon.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.leftButtonDown()) {
-        if (this.scene.counters.resource >= HOUSE_BUILDING_COST) {
-          let house = new House(this.scene.scene.get("MainScene"), 0, 0);
+        if (this.scene.counters.resource >= item.cost) {
+          let house = new item.clazz(this.scene.scene.get("MainScene"), 0, 0);
           let mainScene = this.scene.scene.get("MainScene");
-          let moveFunction = house.move.bind(house);
+          let moveFunction = (pointer) => {
+            house.move({ x: pointer.worldX, y: pointer.worldY });
+          };
           let placeFunction = () => {
             if (house.place()) {
-              this.scene.counters.resource -= HOUSE_BUILDING_COST;
+              this.scene.counters.resource -= item.cost;
               console.log("Placing");
-              mainScene.events.off("mouse-moving-over-map", moveFunction);
+              //mainScene.events.off("mouse-moving-over-map", moveFunction);
+              mainScene.input.off("pointermove", moveFunction);
               mainScene.selectedVillagers.forEach((v) =>
                 v.startBuilding(house)
               );
               mainScene.map.addBuilding(house);
+              mainScene.navigation.regenerate();
             } else {
               console.log("Not placing");
               this.scene.scene
@@ -74,9 +91,11 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
               mainScene.events.once("map-right-clicked", placeFunction);
             }
           };
-          mainScene.events.on("mouse-moving-over-map", moveFunction);
+          //mainScene.events.on("mouse-moving-over-map", moveFunction);
+          mainScene.input.on("pointermove", moveFunction);
           mainScene.input.keyboard.once("keydown-ESC", () => {
-            mainScene.events.off("mouse-moving-over-map", moveFunction);
+            //mainScene.events.off("mouse-moving-over-map", moveFunction);
+            mainScene.input.off("pointermove", moveFunction);
             mainScene.events.off("map-right-clicked", placeFunction);
             if (house.status == "placing") {
               house.destroy();
@@ -91,38 +110,24 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
         }
       }
     });
-    this.add(this.buildTentIcon);
+    this.add(icon);
 
-    this.costIcon = scene.add
+    let costIcon = this.scene.add
       .image(
-        this.backgroundRectangle.x -
-          this.backgroundRectangle.width / 2 +
-          PRICE_SUBICON_SIZE / 2 +
-          SUBICON_PADDING,
-        this.backgroundRectangle.y -
-          this.backgroundRectangle.height / 2 +
-          ICON_SIZE +
-          ICONS_PADDING +
-          PRICE_SUBICON_SIZE / 2 +
-          SUBICON_PADDING,
+        icon.x - ICON_SIZE / 2 + PRICE_SUBICON_SIZE / 2,
+        icon.y + ICON_SIZE / 2 + PRICE_SUBICON_SIZE / 2 + SUBICON_PADDING,
         "resource-icon"
       )
       .setScale(0.5)
-      .setOrigin(0.5)
-      .setInteractive({ cursor: "pointer" });
-    this.add(this.costIcon);
+      .setOrigin(0.5);
+    this.add(costIcon);
 
-    this.costText = scene.add.text(
-      this.costIcon.x + PRICE_SUBICON_SIZE / 2 + SUBICON_PADDING,
-      this.costIcon.y - PRICE_SUBICON_SIZE / 2,
-      "50",
-      { color: "#000", fontSize: 14 }
+    let costText = this.scene.add.text(
+      costIcon.x + PRICE_SUBICON_SIZE / 2 + SUBICON_PADDING,
+      costIcon.y - PRICE_SUBICON_SIZE / 2,
+      item.cost,
+      { color: "#000", fontSize: 12 }
     );
-    this.add(this.costText);
-  }
-
-  update() {
-    let selectedVillagers = this.scene.scene.get("MainScene").selectedVillagers;
-    this.visible = selectedVillagers.length > 0;
+    this.add(costText);
   }
 }
