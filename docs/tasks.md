@@ -1,14 +1,13 @@
 ## Tasks
 
 ## Pipeline
+- [ ] Next projects?
+    - Improving skills
+    - ...
 - [ ] Get back to the documentation - offcamera
     - [ ] Update it
     - [ ] Plan next steps
 - [X] Get up to date with current situation.
-- [ ] Plan next streams
-- [ ] Next projects?
-    - Improving skills
-    - ...
 - [o] Buildings!
     - [X] Villager building action
     - [X] Building being constructed progress ~
@@ -30,6 +29,13 @@
     - [ ] 💎 Improve building "progress" display (progress bar)
     - [ ] 💎 Mark unavailable buildings (not enough resource case) in the menu
     - [ ] 💎 Make `action_menu.js` generic so that we can have not only `building` actions but also any other actions - extract building logic to a separate `building_action.js` or sth like that.
+- [ ] Population control
+    - Create maximum population counter
+    - Display maximum counter in the GUI
+    - Accept new orders but do not execute them until we have free space for the new villagers.
+    - New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
+- [ ] New building: deposit
+    - ?
 - [ ] Think about relationship between the "building cost" and "building health"
 - [ ] ⚠️  Add attribution to the house icon author: `Iconos diseñados por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>`
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
