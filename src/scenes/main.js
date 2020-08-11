@@ -21,6 +21,7 @@ const ZOOM_LEVELS = [1, 2, 3];
 const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
 
 const DEBUG_NAVIGATION = false;
+const DEBUG_INPUT = false;
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -219,6 +220,12 @@ export default class MainScene extends Phaser.Scene {
     // Draw navigational mesh for debugging
     if (DEBUG_NAVIGATION) {
       this.navigation.drawDebug();
+    }
+
+    if (DEBUG_INPUT) {
+      this.input.on("pointermove", (pointer, object) => {
+        console.log(pointer, object);
+      });
     }
   }
 

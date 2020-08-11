@@ -16,7 +16,6 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
 
     // Properties
     this.scene = scene;
-    this.data = data;
     this.tiles = [];
 
     config.layers.forEach((layer) => {
@@ -29,8 +28,8 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
     // Also, this will get more complicated if we support multi-layer object composition.
     let data = this.config.layers[0].data;
     let skipAmount = data.filter((data) => !data[0].collide).length;
-    let width = this.data[0].length * TILE_SIZE;
-    let height = (this.data.length - skipAmount) * TILE_SIZE;
+    let width = data[0].length * TILE_SIZE;
+    let height = (data.length - skipAmount) * TILE_SIZE;
     let output = new Phaser.Geom.Rectangle(
       this.x,
       this.y + skipAmount * TILE_SIZE,
@@ -82,6 +81,7 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
     this.tiles.forEach((t) => {
       t.destroy();
     });
+    super.destroy(this);
   }
 
   setPosition(position) {
