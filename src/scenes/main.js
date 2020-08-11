@@ -330,19 +330,23 @@ export default class MainScene extends Phaser.Scene {
 
   _removeAllListeners(scene) {
     let events = [
-      "villager-died",
-      "enemy-died",
-      "map-right-clicked",
-      "resource-destroyed",
-      "new-villager-created",
-      "resource-deposit-increased",
       "alert-message",
-      "new-building-selected",
-      "map-left-or-middle-clicked",
-      "new-villager-selected",
-      "villager-unselected",
-      "resource-right-clicked",
+      "building-destroyed",
+      "building-in-progress-right-clicked",
+      "enemy-died",
       "enemy-right-clicked",
+      "map-left-or-middle-clicked",
+      "map-right-clicked",
+      "mouse-moving-over-map",
+      "new-building-selected",
+      "new-enemy-selected",
+      "new-villager-created",
+      "new-villager-selected",
+      "resource-deposit-increased",
+      "resource-destroyed",
+      "resource-right-clicked",
+      "villager-died",
+      "villager-unselected",
     ];
     events.forEach((e) => scene.events.off(e));
   }
