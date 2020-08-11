@@ -32,5 +32,5 @@ npm run start
 
 ```
 npm run build
-./publishing/butler push dist/ arogigante/unnamed-rts:web
+npm run deploy
 ```
