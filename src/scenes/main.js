@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import Villager from "../entities/villager.js";
 import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
-import House from "../entities/house.js";
 import Enemy from "../entities/enemy.js";
 import Map from "../entities/map.js";
 import Navigation from "../navigation.js";
@@ -16,9 +15,11 @@ const INITIAL_VILLAGERS = 5;
 const INITIAL_ENEMIES = 0;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
-const EXTRA_RESOURCES = 5;
+const EXTRA_RESOURCES = 50;
 const ZOOM_LEVELS = [1, 2, 3];
 const DEFAULT_ZOOM_LEVEL_INDEX = 1; // Second position
+const INITIAL_MAXIMUM_POPULATION = 20;
+const INITIAL_RESOURCE = 100;
 
 const DEBUG_NAVIGATION = false;
 const DEBUG_INPUT = false;
@@ -32,8 +33,9 @@ export default class MainScene extends Phaser.Scene {
     this.initialTime = this._getNowTime();
     this.counters = {
       villagers: 0,
+      maximumPopulation: INITIAL_MAXIMUM_POPULATION,
       gameTime: 0,
-      resource: 100,
+      resource: INITIAL_RESOURCE,
     };
     this.villagers = [];
     this.enemies = [];
@@ -86,9 +88,10 @@ export default class MainScene extends Phaser.Scene {
     var townCenter = new TownCenter(this, 100, 50);
     this.map.addBuilding(townCenter);
 
-    var house = new House(this, 300, 50);
-    house.status = "building";
-    this.map.addBuilding(house);
+    // Semi-built house
+    //var house = new House(this, 300, 50);
+    //house.status = "building";
+    //this.map.addBuilding(house);
 
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();
@@ -167,6 +170,7 @@ export default class MainScene extends Phaser.Scene {
       "new-villager-created",
       (villager) => {
         this.villagers.push(villager);
+        this.counters.villagers = this.villagers.length;
       },
       this
     );

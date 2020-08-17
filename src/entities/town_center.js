@@ -139,6 +139,7 @@ export default class TownCenter extends TiledGameObject {
       "create-villager": {
         action: this.createVillager.bind(this),
         cost: { resource: 20 },
+        populationSlots: 1,
         time: 10,
       },
     };
@@ -171,8 +172,14 @@ export default class TownCenter extends TiledGameObject {
 
     // If not running any order and there are orders pending: start the next one
     if (this.runningOrder == null && this.getEnqueuedOrdersAmount() > 0) {
-      let order = this.enqueuedOrders.shift();
-      this.runningOrder = { order: order, startTime: new Date().getTime() };
+      let nextOrder = this.enqueuedOrders[0];
+      let nextOrderData = this.ORDERS[nextOrder];
+      let villagersFreeSlots =
+        this.scene.counters.maximumPopulation - this.scene.counters.villagers;
+      if (nextOrderData.populationSlots <= villagersFreeSlots) {
+        let order = this.enqueuedOrders.shift();
+        this.runningOrder = { order: order, startTime: new Date().getTime() };
+      }
     }
 
     // Update menu if visible

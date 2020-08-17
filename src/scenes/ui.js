@@ -19,7 +19,7 @@ export default class UIScene extends Phaser.Scene {
     this.counters = this.scene.get("MainScene").counters;
     this.gui = new GUI(
       this,
-      this.sys.game.canvas.width - 270,
+      this.sys.game.canvas.width - 310,
       10,
       this.counters
     );

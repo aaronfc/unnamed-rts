@@ -16,7 +16,7 @@ export default class GUI extends Phaser.GameObjects.Container {
 
     // Background (rectangle)
     this.backgroundRectangle = scene.add
-      .rectangle(0, 0, 250, 34, "0x2F3337")
+      .rectangle(0, 0, 300, 34, "0x2F3337")
       .setOrigin(0)
       .setAlpha(0.5);
     this.add(this.backgroundRectangle);
@@ -30,7 +30,7 @@ export default class GUI extends Phaser.GameObjects.Container {
     this.villagersText = scene.add.text(
       this.villagersIcon.x + this.villagersIcon.displayWidth + 5,
       10,
-      "???",
+      "???/???",
       { color: "#FFFFFF", fontSize: 14 }
     );
     this.add(this.villagersText);
@@ -74,6 +74,11 @@ export default class GUI extends Phaser.GameObjects.Container {
 
   update() {
     this.villagersText.setText(this._formatVillagersCount());
+    if (this.counters.villagers >= this.counters.maximumPopulation) {
+      this.villagersText.setColor("#FF0000");
+    } else {
+      this.villagersText.setColor("#FFFFFF");
+    }
     this.resourceText.setText(this._formatResourceCount());
     this.gameTimeText.setText(this._formatGameTime());
   }
@@ -81,7 +86,11 @@ export default class GUI extends Phaser.GameObjects.Container {
   // Private methods
 
   _formatVillagersCount() {
-    return this.counters.villagers.toString().padStart(3, "0");
+    return (
+      this.counters.villagers.toString().padStart(3, " ") +
+      "/" +
+      this.counters.maximumPopulation.toString().padEnd(3, " ")
+    );
   }
 
   _formatResourceCount() {

@@ -29,11 +29,11 @@
     - [ ] 💎 Improve building "progress" display (progress bar)
     - [ ] 💎 Mark unavailable buildings (not enough resource case) in the menu
     - [ ] 💎 Make `action_menu.js` generic so that we can have not only `building` actions but also any other actions - extract building logic to a separate `building_action.js` or sth like that.
-- [ ] Population control
-    - Create maximum population counter
-    - Display maximum counter in the GUI
-    - Accept new orders but do not execute them until we have free space for the new villagers.
-    - New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
+- [X] Population control
+    - [X] Create maximum population counter
+    - [X] Display maximum counter in the GUI
+    - [X] Accept new orders but do not execute them until we have free space for the new villagers.
+    - [X] New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
 - [ ] New building: deposit
     - ?
 - [ ] Think about relationship between the "building cost" and "building health"

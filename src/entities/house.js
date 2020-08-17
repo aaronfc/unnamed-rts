@@ -28,6 +28,7 @@ export default class House extends TiledGameObject {
     this.status = "placing"; // placing | building | built
     this.buildingCost = 50;
     this.buildingAmount = 0;
+    this.populationIncrease = 5;
     this.setAlpha(0.5);
 
     // Events
@@ -40,6 +41,9 @@ export default class House extends TiledGameObject {
   }
 
   build(units) {
+    if (this.buildingAmount >= this.buildingCost) {
+      return true; // Already built
+    }
     // Increase buildingProgress
     this.buildingAmount += units;
     let progress = this.buildingAmount / this.buildingCost;
@@ -47,6 +51,7 @@ export default class House extends TiledGameObject {
     if (progress >= 1) {
       this.status = "built";
       this.clearTint();
+      this.scene.counters.maximumPopulation += this.populationIncrease;
     }
     return this.status == "built"; // return true when the building is done
   }
