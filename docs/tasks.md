@@ -34,17 +34,19 @@
     - [X] Display maximum counter in the GUI
     - [X] Accept new orders but do not execute them until we have free space for the new villagers.
     - [X] New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
-- [ ] New building: deposit
-    - ?
+- [ ] New building: storage
+    - [ ] Create some asset for this building
+    - [ ] Create new entity
+    - [ ] Add this entity to the `action_menu.js`
+    - [ ] Make villagers go to "closest" storage (and not only the towncenter)
+- [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
+- [ ] 🧠 Document what will the 0.4 verison include - Tower Defense!!
 - [ ] Think about relationship between the "building cost" and "building health"
 - [ ] ⚠️  Add attribution to the house icon author: `Iconos diseñados por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>`
-- [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] 💎 Make the composed gameobjects animated? 🔥
-- [ ] ⚠️  We are able to click on the upper row of the TownCenter object, which probably we don't want.
 - [ ] ⚠️  We had to manually add an empty `destroy()` function to the TiledGameObject. Maybe we will be leaking some memory? We need to double check that.
 - [ ] 💡 Make TiledGameObject to understand Tiled output (should be easy to do, check [dev-notes](dev-notes))
 - [ ] 🐛 When enabling `pixelArt` we get weird-looking shapes and texts
-- [ ] 🧠 Document what will the 0.4 verison include.
 - [ ] Start 0.4 version development.
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.
