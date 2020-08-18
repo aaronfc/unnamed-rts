@@ -105,7 +105,10 @@ export default class Villager extends Phaser.GameObjects.Sprite {
         });
 
         if (this.bagpack.amount == 0 && this.target.amount == 0) {
-          this.moveToPosition(this.closestDeposit.getNewVillagerPosition());
+          this.target = this.scene.map.getClosestEntity(
+            this,
+            this.scene.map.resources
+          );
         }
       }
     } else if (this.status == "attacking") {

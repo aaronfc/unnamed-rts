@@ -1,49 +1,32 @@
 ## Tasks
 
-## Pipeline
+## Stream related
 - [ ] Next projects?
     - Improving skills
     - ...
-- [ ] Get back to the documentation - offcamera
-    - [ ] Update it
-    - [ ] Plan next steps
-- [X] Get up to date with current situation.
-- [o] Buildings!
-    - [X] Villager building action
-    - [X] Building being constructed progress ~
-    - [X] Menu
-	- [X] Display menu for building when villagers selected
-	- [X] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
-	- [X] Do not allow for buildings to be constructed over resources or other buildings.
-	- [X] If building can't be placed, we need to inform the user
-	- [X] Update icons / assets for the menu (make it a little better looking)
-	- [X] Display building cost per building
-	- [X] Make the menu generic so that new building buttons appear automatically
-    - [X] Make construction consume resources
-	- The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)
-    - [X] 🐛 When placing a building (to construct) we lose the "move" event when mouse is over anything different from the map (for example, entities like villagers or other buildings)
-    - [X] 🐛 When we left-click while building, the next right-click will not work. Solution: left-click should stop the building process.
-    - [X] 🐛 When houses are `.destroy()`ed something is not being correctly removed, since the input over the place that occupied the house doesn't work anymore. Reproduce: Click the build a house button, and then move over the map to somewhere. Click escape and the house will disappear. Now input on that same place will not work (try to use the multi-selection box)
-    - [X] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
-    - [ ] ❓ When a villager dies what happens with an ongoing action to start a building? (action menu open and the house being placed)
-    - [ ] 💎 Improve building "progress" display (progress bar)
-    - [ ] 💎 Mark unavailable buildings (not enough resource case) in the menu
-    - [ ] 💎 Make `action_menu.js` generic so that we can have not only `building` actions but also any other actions - extract building logic to a separate `building_action.js` or sth like that.
-- [X] Population control
-    - [X] Create maximum population counter
-    - [X] Display maximum counter in the GUI
-    - [X] Accept new orders but do not execute them until we have free space for the new villagers.
-    - [X] New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
+    - Game jams (itch.io, suggested by @KadinsGameLounge)
+    - Testing new frameworks / tools / libraries:
+	- GameMaker
+
+## Pipeline
 - [X] New building: storage
     - [X] Decide on asset for this building: Wooden cabin
     - [X] Create new entity
     - [X] Add this entity to the `action_menu.js`
     - [X] Make villagers go to "closest" storage (and not only the towncenter)
-- [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
+- [X] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [ ] Refactor all building-related logic duplicated on `House` and `Storage`
 - [ ] Refactor all storage-related logic duplicated on `TownCenter` and `Storage`
-- [ ] 🐛 When fighting villagers push other villagers (and the enemy) so they keep walking/while fighting and pushing the enemies in a straight linejj
+- [ ] Get back to the documentation - offcamera, maybe?
+    - [ ] Update it - we have now assets 🎉
+    - [ ] Plan next steps
 - [ ] 🧠 Document what will the 0.4 verison include - Tower Defense!!
+- [ ] Buildings 2
+    - [ ] ❓ When a villager dies what happens with an ongoing action to start a building? (action menu open and the house being placed)
+    - [ ] 💎 Improve building "progress" display (progress bar)
+    - [ ] 💎 Mark unavailable buildings (not enough resource case) in the menu
+    - [ ] 💎 Make `action_menu.js` generic so that we can have not only `building` actions but also any other actions - extract building logic to a separate `building_action.js` or sth like that.
+- [ ] 🐛 When fighting villagers push other villagers (and the enemy) so they keep walking/while fighting and pushing the enemies in a straight linejj
 - [ ] Think about relationship between the "building cost" and "building health"
 - [ ] ⚠️  Add attribution to the house icon author: `Iconos diseñados por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>`
 - [ ] 💎 Make the composed gameobjects animated? 🔥
@@ -205,6 +188,29 @@
 	- ⚠️  Supporting this might mean having to mess around with how the mesh is generated if we want to have collisions set to indivual parts and not the full camp as a whole. For example, colliding only with the base of the tents or the campfire.
     - [X] Replace towncenter with equivalent composed object - camp or big house?
 - [X] 🐛 When trying to collect resources from a resource which is surrounded by other resources the "closest" point to the villager will be out of the navigation mesh. So we don't have a way to get there. 💡 Maybe we should make this "closest" point smarter or the navigation mesh less strict (allow to get to a point out of the map).
+- [X] Get up to date with current situation.
+- [X] Buildings!
+    - [X] Villager building action
+    - [X] Building being constructed progress ~
+    - [X] Menu
+	- [X] Display menu for building when villagers selected
+	- [X] Enable placing building and starting a construction when clicked on the map. Make villagers build it.
+	- [X] Do not allow for buildings to be constructed over resources or other buildings.
+	- [X] If building can't be placed, we need to inform the user
+	- [X] Update icons / assets for the menu (make it a little better looking)
+	- [X] Display building cost per building
+	- [X] Make the menu generic so that new building buttons appear automatically
+    - [X] Make construction consume resources
+	- The easiest way would be to not allow building over entities (in the end we won't allow to build over enemies)
+    - [X] 🐛 When placing a building (to construct) we lose the "move" event when mouse is over anything different from the map (for example, entities like villagers or other buildings)
+    - [X] 🐛 When we left-click while building, the next right-click will not work. Solution: left-click should stop the building process.
+    - [X] 🐛 When houses are `.destroy()`ed something is not being correctly removed, since the input over the place that occupied the house doesn't work anymore. Reproduce: Click the build a house button, and then move over the map to somewhere. Click escape and the house will disappear. Now input on that same place will not work (try to use the multi-selection box)
+    - [X] 🐛 When commanding a single unit to complete a construction the full group moves instead of only the selected one. Reproduce: Command all the entities to gather resource and then select a single unit and command to complete the construction of a started house.
+- [X] Population control
+    - [X] Create maximum population counter
+    - [X] Display maximum counter in the GUI
+    - [X] Accept new orders but do not execute them until we have free space for the new villagers.
+    - [X] New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
 
 # References
 
