@@ -2,7 +2,7 @@ import TiledGameObject from "../tiled-game-object.js";
 
 const TILE_SIZE = 16;
 
-export default class House extends TiledGameObject {
+export default class Storage extends TiledGameObject {
   constructor(scene, x, y) {
     let config = {
       layers: [
@@ -10,12 +10,51 @@ export default class House extends TiledGameObject {
           // Ground
           data: [
             [
-              { id: 10 * 57 + 46, collide: false, depth: 10 },
-              { id: 10 * 57 + 47, collide: false, depth: 10 },
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
             ],
             [
-              { id: 11 * 57 + 46, collide: true, depth: 0 },
-              { id: 11 * 57 + 47, collide: true, depth: 0 },
+              { id: 1293, collide: true, depth: 0 },
+              { id: 1293, collide: true, depth: 0 },
+            ],
+            [
+              { id: 1293, collide: true, depth: 0 },
+              { id: 1293, collide: true, depth: 0 },
+            ],
+          ],
+        },
+        {
+          // Roof
+          data: [
+            [
+              { id: 1233, collide: false, depth: 10 },
+              { id: 1234, collide: false, depth: 10 },
+            ],
+            [
+              { id: 1347, collide: true, depth: 0 },
+              { id: 1348, collide: true, depth: 0 },
+            ],
+            [
+              { id: 1349, collide: true, depth: 0 },
+              { id: 1351, collide: true, depth: 0 },
+            ],
+          ],
+        },
+        {
+          // Decoration
+          data: [
+            [
+              { id: null, collide: false, depth: 0 },
+              { id: null, collide: false, depth: 0 },
+            ],
+            [
+              { id: null, collide: true, depth: 0 },
+              { id: null, collide: true, depth: 0 },
+            ],
+            [
+              // Door
+              { id: 315, collide: true, depth: 0 },
+              { id: 316, collide: true, depth: 0 },
             ],
           ],
         },
@@ -28,9 +67,8 @@ export default class House extends TiledGameObject {
     this.status = "placing"; // placing | building | built
     this.buildingCost = 50;
     this.buildingAmount = 0;
-    this.populationIncrease = 5;
     this.setAlpha(0.5);
-    this.characteristics = [];
+    this.characteristics = ["STORAGE"];
 
     // Events
     this.setInteractive();
@@ -52,7 +90,6 @@ export default class House extends TiledGameObject {
     if (progress >= 1) {
       this.status = "built";
       this.clearTint();
-      this.scene.counters.maximumPopulation += this.populationIncrease;
     }
     return this.status == "built"; // return true when the building is done
   }
@@ -81,6 +118,10 @@ export default class House extends TiledGameObject {
     } else {
       this.setTint(0xffaaaa);
     }
+  }
+
+  deposit(amount) {
+    this.events.emit("resource-deposit-increased", amount, this);
   }
 
   update() {}

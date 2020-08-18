@@ -50,7 +50,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
 
   update() {
     if (this.status == "attacking") {
-      let closestVictim = this.fighting.getClosestEntity(
+      let closestVictim = this.scene.map.getClosestEntity(
         this,
         this.scene.villagers
       ); // TODO ⚠️  Non-optimal approach. We are calculating the closest enemy for every tick of the game!

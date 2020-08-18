@@ -20,27 +20,4 @@ export default class Fighting {
       }
     });
   }
-
-  /**
-   * Given a specific entity and a list of other entities returns the closest one to the first.
-   */
-  getClosestEntity(element, entities) {
-    if (entities.length > 0) {
-      let closestEntity = entities[0];
-      let closestEntityDistance = Phaser.Math.Distance.BetweenPoints(
-        element,
-        closestEntity
-      );
-      for (var i = 1; i < entities.length; i++) {
-        let entity = entities[i];
-        let distance = Phaser.Math.Distance.BetweenPoints(element, entity);
-        if (distance < closestEntityDistance) {
-          closestEntity = entity;
-          closestEntityDistance = distance;
-        }
-      }
-      return closestEntity;
-    }
-    return null;
-  }
 }

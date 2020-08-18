@@ -86,6 +86,7 @@ export default class MainScene extends Phaser.Scene {
 
     // Create Town Center
     var townCenter = new TownCenter(this, 100, 50);
+    townCenter.status = "built";
     this.map.addBuilding(townCenter);
 
     // Semi-built house

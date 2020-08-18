@@ -130,6 +130,7 @@ export default class TownCenter extends TiledGameObject {
 
     // Properties
     this.scene = scene;
+    this.status = "placing"; // placing | building | built
     this.events = scene.events;
     this.selected = false;
     this.menu = new TownCenterMenu(scene, this);
@@ -143,6 +144,7 @@ export default class TownCenter extends TiledGameObject {
         time: 10,
       },
     };
+    this.characteristics = ["STORAGE"];
 
     // Events
     this.setInteractive();

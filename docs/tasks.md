@@ -34,12 +34,15 @@
     - [X] Display maximum counter in the GUI
     - [X] Accept new orders but do not execute them until we have free space for the new villagers.
     - [X] New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
-- [ ] New building: storage
-    - [ ] Create some asset for this building
-    - [ ] Create new entity
-    - [ ] Add this entity to the `action_menu.js`
-    - [ ] Make villagers go to "closest" storage (and not only the towncenter)
+- [X] New building: storage
+    - [X] Decide on asset for this building: Wooden cabin
+    - [X] Create new entity
+    - [X] Add this entity to the `action_menu.js`
+    - [X] Make villagers go to "closest" storage (and not only the towncenter)
 - [ ] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
+- [ ] Refactor all building-related logic duplicated on `House` and `Storage`
+- [ ] Refactor all storage-related logic duplicated on `TownCenter` and `Storage`
+- [ ] 🐛 When fighting villagers push other villagers (and the enemy) so they keep walking/while fighting and pushing the enemies in a straight linejj
 - [ ] 🧠 Document what will the 0.4 verison include - Tower Defense!!
 - [ ] Think about relationship between the "building cost" and "building health"
 - [ ] ⚠️  Add attribution to the house icon author: `Iconos diseñados por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>`
@@ -62,6 +65,8 @@
 	- [ ] Check on fonts and buttons/icons.
 	- [ ] Check on assets for characters
 	    - [ ] https://opengameart.org/content/roguelike-character-pack
+	- [ ] Check on other assets
+	    - [ ] https://opengameart.org/content/medieval-rts-120
 - [ ] ⚠️  STOP CONSUMING INFORMATION FROM OTHER SCENES. WE MUST USE THE REGISTRY. EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
 - [ ] ⚠️  We are not taking into account attack range when attacking (or receiving damage) - look into this when we start implementing the tower defense buildings

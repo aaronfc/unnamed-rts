@@ -16,7 +16,7 @@ export default class Villager extends Phaser.GameObjects.Sprite {
 
     // Properties
     this.selected = false;
-    this.closestDeposit = townCenter; // TODO Calculate this somewhere else
+    this.closestDeposit = townCenter; // Assuming towncenter is the closest one at firts
     this.resourceGatheringSpeed = 0.5; // Units per second
     this.latestGatheringTime = 0;
     this.buildingSpeed = 5; // Units per second
@@ -55,6 +55,12 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   }
 
   update() {
+    this.closestDeposit = this.scene.map.getClosestEntity(
+      this,
+      this.scene.map.buildings.filter(
+        (b) => b.status == "built" && b.characteristics.includes("STORAGE")
+      )
+    );
     // Movement
     if (this.status == "walking-to-destination") {
       // TODO Remove this margin from here. Move it to movement.js and think on a solution for "getting as closest as possible to a building"
@@ -105,7 +111,7 @@ export default class Villager extends Phaser.GameObjects.Sprite {
     } else if (this.status == "attacking") {
       this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 5, 1);
     } else if (this.status == "looking-for-enemy") {
-      let closestEnemy = this.fighting.getClosestEntity(
+      let closestEnemy = this.scene.map.getClosestEntity(
         this,
         this.scene.enemies
       );

@@ -200,3 +200,12 @@ Generic Menu:
 - Read list of things that can be built. For each of them:
     - Draw a button and the cost of building this item.
     - Actually trigger the right building mechanic depending on the item chosen.
+
+
+## Asset for storages
+- Tent with different color:
+- Wooden cabin:
+    - don't like the idea of having better houses for resource than for people
+- Reuse Tents as storage also
+    - we don't need to create a new entity, we can just reimplement the current one
+Winner: Wooden cabin.
