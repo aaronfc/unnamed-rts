@@ -12,7 +12,7 @@ const HOUSE_BUILDING_COST = 50;
 
 const BUILDABLE_ITEMS = [
   { name: "House", icon: "house-icon", clazz: House, cost: 50 },
-  { name: "Storage", icon: "house-icon", clazz: Storage, cost: 50 },
+  { name: "Storage", icon: "barn-icon", clazz: Storage, cost: 50 },
 ];
 
 export default class ActionMenu extends Phaser.GameObjects.Container {
@@ -60,7 +60,7 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
           ICON_SIZE / 2 +
           ICONS_PADDING,
         background.y - background.height / 2 + ICON_SIZE / 2 + ICONS_PADDING,
-        "house-icon"
+        item.icon
       )
       .setOrigin(0.5)
       .setInteractive({ cursor: "pointer" });

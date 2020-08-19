@@ -15,6 +15,7 @@
     - [X] Add this entity to the `action_menu.js`
     - [X] Make villagers go to "closest" storage (and not only the towncenter)
 - [X] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
+- [X] Search for icon for Storage building
 - [ ] Refactor all building-related logic duplicated on `House` and `Storage`
 - [ ] Refactor all storage-related logic duplicated on `TownCenter` and `Storage`
 - [ ] Get back to the documentation - offcamera, maybe?
