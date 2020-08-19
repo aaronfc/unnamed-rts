@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Villager from "./villager.js";
 import TiledGameObject from "../tiled-game-object.js";
+import Storing from "../behaviours/storing.js";
 
 export default class TownCenter extends TiledGameObject {
   constructor(scene, x, y) {
@@ -145,6 +146,7 @@ export default class TownCenter extends TiledGameObject {
       },
     };
     this.characteristics = ["STORAGE"];
+    this.storing = new Storing(scene);
 
     // Events
     this.setInteractive();
@@ -238,7 +240,7 @@ export default class TownCenter extends TiledGameObject {
   }
 
   deposit(amount) {
-    this.events.emit("resource-deposit-increased", amount, this);
+    this.storing.deposit(amount);
   }
 
   getRunningOrder() {

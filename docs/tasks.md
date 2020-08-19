@@ -16,12 +16,13 @@
     - [X] Make villagers go to "closest" storage (and not only the towncenter)
 - [X] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
 - [X] Search for icon for Storage building
-- [ ] Refactor all building-related logic duplicated on `House` and `Storage`
-- [ ] Refactor all storage-related logic duplicated on `TownCenter` and `Storage`
+- [X] Refactor all storage-related logic duplicated on `TownCenter` and `Storage`
+- [X] Refactor all building-related logic duplicated on `House` and `Storage`
 - [ ] Get back to the documentation - offcamera, maybe?
     - [ ] Update it - we have now assets 🎉
     - [ ] Plan next steps
 - [ ] 🧠 Document what will the 0.4 verison include - Tower Defense!!
+- [ ] Think on how to extend entities with some functionality. Currently we have "behaviours" that were ok for things that entities can do, but it doesn't really fit for things that entity "suffer" or that can be done to some entities - example: being built, being used as storage, ...
 - [ ] Buildings 2
     - [ ] ❓ When a villager dies what happens with an ongoing action to start a building? (action menu open and the house being placed)
     - [ ] 💎 Improve building "progress" display (progress bar)

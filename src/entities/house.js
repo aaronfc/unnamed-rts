@@ -1,4 +1,5 @@
 import TiledGameObject from "../tiled-game-object.js";
+import Building from "../behaviours/building.js";
 
 const TILE_SIZE = 16;
 
@@ -31,6 +32,7 @@ export default class House extends TiledGameObject {
     this.populationIncrease = 5;
     this.setAlpha(0.5);
     this.characteristics = [];
+    this.building = new Building(scene);
 
     // Events
     this.setInteractive();
@@ -42,45 +44,24 @@ export default class House extends TiledGameObject {
   }
 
   build(units) {
-    if (this.buildingAmount >= this.buildingCost) {
-      return true; // Already built
-    }
-    // Increase buildingProgress
-    this.buildingAmount += units;
-    let progress = this.buildingAmount / this.buildingCost;
-    this.setAlpha(0.5 + progress * 0.5);
-    if (progress >= 1) {
-      this.status = "built";
-      this.clearTint();
+    let isDone = this.building.build(this, units);
+    if (isDone) {
       this.scene.counters.maximumPopulation += this.populationIncrease;
     }
-    return this.status == "built"; // return true when the building is done
+    return isDone;
   }
 
   place() {
-    // Check if construction is possible
-    if (this._canBeBuilt()) {
-      this.status = "building";
-      this.setTint(0xcccccc);
-      return true;
-    } else {
-      // TODO Send message saying "you cant build here"
-      return false;
-    }
+    return this.building.place(this);
   }
 
   destroy() {
-    this.events.emit("building-destroyed", this);
+    this.building.destroy(this);
     super.destroy(this);
   }
 
   move(position) {
-    this.setPosition(position);
-    if (this._canBeBuilt(position)) {
-      this.setTint(0xaaffaa);
-    } else {
-      this.setTint(0xffaaaa);
-    }
+    this.building.move(this, position);
   }
 
   update() {}
