@@ -21,7 +21,8 @@
 - [ ] Get back to the documentation - offcamera, maybe?
     - [ ] Update it - we have now assets 🎉
     - [ ] Plan next steps
-- [ ] 🧠 Document what will the 0.4 verison include - Tower Defense!!
+- [ ] 🐛 Corner case when villager can not find any resource available after exhausting one of them - he should go to the closest storage, store whatever he has, and go into idle status next to the building.
+- [ ] 🧠 Document what will the 0.4 version include - Tower Defense!!
 - [ ] Think on how to extend entities with some functionality. Currently we have "behaviours" that were ok for things that entities can do, but it doesn't really fit for things that entity "suffer" or that can be done to some entities - example: being built, being used as storage, ...
 - [ ] Buildings 2
     - [ ] ❓ When a villager dies what happens with an ongoing action to start a building? (action menu open and the house being placed)
