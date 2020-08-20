@@ -18,11 +18,15 @@
 - [X] Search for icon for Storage building
 - [X] Refactor all storage-related logic duplicated on `TownCenter` and `Storage`
 - [X] Refactor all building-related logic duplicated on `House` and `Storage`
-- [ ] Get back to the documentation - offcamera, maybe?
-    - [ ] Update it - we have now assets 🎉
-    - [ ] Plan next steps
+- [X] Get back to the documentation - offcamera, maybe?
+    - [X] Update it - we have now assets 🎉
+    - [X] Plan next steps
+- [o] 🧠 Document what will the 0.5 version include - Tower Defense!!
+    - [X] Decide on features: Basic Tower that shoots enemies
+    - [ ] Document them
 - [ ] 🐛 Corner case when villager can not find any resource available after exhausting one of them - he should go to the closest storage, store whatever he has, and go into idle status next to the building.
-- [ ] 🧠 Document what will the 0.4 version include - Tower Defense!!
+- [ ] Display best score in Menu.
+- [ ] Display information about controlls in Menu -> 💡 Maybe it is better to show a random TIP.
 - [ ] Think on how to extend entities with some functionality. Currently we have "behaviours" that were ok for things that entities can do, but it doesn't really fit for things that entity "suffer" or that can be done to some entities - example: being built, being used as storage, ...
 - [ ] Buildings 2
     - [ ] ❓ When a villager dies what happens with an ongoing action to start a building? (action menu open and the house being placed)
