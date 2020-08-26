@@ -21,9 +21,11 @@
 - [X] Get back to the documentation - offcamera, maybe?
     - [X] Update it - we have now assets 🎉
     - [X] Plan next steps
-- [o] 🧠 Document what will the 0.5 version include - Tower Defense!!
+- [.] 🧠 Document what will the 0.5 version include - Tower Defense!!
     - [X] Decide on features: Basic Tower that shoots enemies
     - [ ] Document them
+- [ ] 💎 Check on Rex plugins
+    - [ ] Toast for example https://rexrainbow.github.io/phaser3-rex-notes/docs/site/ui-toast/
 - [ ] 🐛 Corner case when villager can not find any resource available after exhausting one of them - he should go to the closest storage, store whatever he has, and go into idle status next to the building.
 - [ ] Display best score in Menu.
 - [ ] Display information about controlls in Menu -> 💡 Maybe it is better to show a random TIP.
