@@ -118,7 +118,7 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   hit(attacker, damage) {
     // Process damage
     this.health -= damage;
-    if (this.health < 0) {
+    if (this.health <= 0) {
       this._onDie();
       return true;
     }

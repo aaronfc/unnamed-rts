@@ -21,9 +21,16 @@
 - [X] Get back to the documentation - offcamera, maybe?
     - [X] Update it - we have now assets 🎉
     - [X] Plan next steps
-- [.] 🧠 Document what will the 0.5 version include - Tower Defense!!
+- [X] 🧠 Document what will the 0.5 version include - Tower Defense!!
     - [X] Decide on features: Basic Tower that shoots enemies
-    - [ ] Document them
+    - [X] Document them - started
+- [.] Tower Defense
+    - [X] Proof of concept
+    - [ ] Projectiles support
+    - [ ] Finetune cadence / cost / damage based on feedback after playing 20min: increase coset and reduce damage
+    - [ ] Assets for the tower. Ideas: tower / bunker / mini-camp with archer 
+- [ ] 🐛 Multi-selection is not working on the bottom / right of the map
+- [ ] 💎 Change initialization position for camp now that we can move far away easier while playing
 - [ ] 💎 Check on Rex plugins
     - [ ] Toast for example https://rexrainbow.github.io/phaser3-rex-notes/docs/site/ui-toast/
 - [ ] 🐛 Corner case when villager can not find any resource available after exhausting one of them - he should go to the closest storage, store whatever he has, and go into idle status next to the building.

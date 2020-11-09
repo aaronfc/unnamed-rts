@@ -3,6 +3,7 @@ import Villager from "../entities/villager.js";
 import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
 import Enemy from "../entities/enemy.js";
+import Tower from "../entities/tower.js";
 import Map from "../entities/map.js";
 import Navigation from "../navigation.js";
 
@@ -12,7 +13,7 @@ const MAP_HEIGHT_TILES = 100;
 const MAP_WIDTH = MAP_WIDTH_TILES * TILE_SIZE;
 const MAP_HEIGHT = MAP_HEIGHT_TILES * TILE_SIZE;
 const INITIAL_VILLAGERS = 5;
-const INITIAL_ENEMIES = 0;
+const INITIAL_ENEMIES = 1;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 50;
@@ -93,6 +94,11 @@ export default class MainScene extends Phaser.Scene {
     //var house = new House(this, 300, 50);
     //house.status = "building";
     //this.map.addBuilding(house);
+
+    // Built tower
+    var tower = new Tower(this, 300, 50);
+    tower.build(50); // Build to 100% by passing the total units needed
+    this.map.addBuilding(tower);
 
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();

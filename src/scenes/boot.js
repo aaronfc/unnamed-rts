@@ -28,6 +28,7 @@ export default class BootScene extends Phaser.Scene {
     this.load.image("time-icon", "assets/time-icon.png");
     this.load.image("house-icon", "assets/house-icon.png");
     this.load.image("barn-icon", "assets/barn-icon.png");
+    this.load.image("tower-icon", "assets/tower-icon.png");
     this.load.image("boy", "assets/boy.png");
     this.load.image("girl", "assets/girl.png");
     this.load.spritesheet("spritesheet1", "assets/rogelike-spritesheet.png", {

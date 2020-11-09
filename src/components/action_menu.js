@@ -1,18 +1,17 @@
 import Phaser from "phaser";
 import House from "../entities/house.js";
 import Storage from "../entities/storage.js";
+import Tower from "../entities/tower.js";
 
 const ICON_SIZE = 32;
 const ICONS_PADDING = 10;
 const PRICE_SUBICON_SIZE = 16;
 const SUBICON_PADDING = 2;
 
-// TODO ⚠️  Move this to a proper place
-const HOUSE_BUILDING_COST = 50;
-
 const BUILDABLE_ITEMS = [
   { name: "House", icon: "house-icon", clazz: House, cost: 50 },
   { name: "Storage", icon: "barn-icon", clazz: Storage, cost: 50 },
+  { name: "Tower", icon: "tower-icon", clazz: Tower, cost: 150 },
 ];
 
 export default class ActionMenu extends Phaser.GameObjects.Container {
