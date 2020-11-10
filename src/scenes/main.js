@@ -4,6 +4,7 @@ import Resource from "../entities/resource.js";
 import TownCenter from "../entities/town_center.js";
 import Enemy from "../entities/enemy.js";
 import Tower from "../entities/tower.js";
+import Projectile from "../entities/projectile.js";
 import Map from "../entities/map.js";
 import Navigation from "../navigation.js";
 
@@ -40,6 +41,7 @@ export default class MainScene extends Phaser.Scene {
     };
     this.villagers = [];
     this.enemies = [];
+    this.projectiles = [];
     this.selectedVillagers = [];
     this.isGameOver = false;
     this.nextWaveTime = this._getNowTime() + ENEMY_WAVES_INTERVAL;
@@ -99,6 +101,17 @@ export default class MainScene extends Phaser.Scene {
     var tower = new Tower(this, 300, 50);
     tower.build(50); // Build to 100% by passing the total units needed
     this.map.addBuilding(tower);
+
+    // Shoot a projectile
+    //var projectile = new Projectile(
+    //  this,
+    //  new Phaser.Math.Vector2(300, 50),
+    //  5,
+    //  new Phaser.Math.Vector2(500, 500),
+    //  200,
+    //  10
+    //);
+    //this.projectiles.push(projectile);
 
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();
@@ -218,6 +231,13 @@ export default class MainScene extends Phaser.Scene {
       },
       this
     );
+    this.events.on(
+      "projectile-died",
+      (projectile) => {
+        this.projectiles = this.projectiles.filter((p) => p != projectile);
+      },
+      this
+    );
 
     // Update counters so that they are consistent
     this.counters.villagers = this.villagers.length;
@@ -263,6 +283,7 @@ export default class MainScene extends Phaser.Scene {
       this.counters.villagers = this.villagers.length;
       this.villagers.forEach((v) => v.update());
       this.enemies.forEach((e) => e.update());
+      this.projectiles.forEach((p) => p.update());
       this.map.update();
 
       if (this.counters.villagers <= 0) {
@@ -353,6 +374,7 @@ export default class MainScene extends Phaser.Scene {
       "new-enemy-selected",
       "new-villager-created",
       "new-villager-selected",
+      "projectile-died",
       "resource-deposit-increased",
       "resource-destroyed",
       "resource-right-clicked",

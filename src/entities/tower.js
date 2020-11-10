@@ -1,7 +1,6 @@
 import TiledGameObject from "../tiled-game-object.js";
 import Building from "../behaviours/building.js";
-
-const TILE_SIZE = 16;
+import Projectile from "./projectile.js";
 
 export default class Tower extends TiledGameObject {
   constructor(scene, x, y) {
@@ -103,18 +102,20 @@ export default class Tower extends TiledGameObject {
       }
     }
     if (this.target != null) {
-      // Reduce target's health by hitDamage and update the latestShootTime
       //console.log("Enemy hit!");
-      this.target.hit(this, this.hitDamage);
+      this.scene.projectiles.push(
+        new Projectile(
+          this.scene,
+          new Phaser.Math.Vector2(this.x, this.y),
+          1,
+          new Phaser.Math.Vector2(this.target.x, this.target.y),
+          this.attackRange,
+          this.hitDamage
+        )
+      );
       this.latestShootTime = now;
+      // Probably we should predict the new position of the enemy for optimal direction
     }
-    // Get closest enemy in range
-    // While its in range
-    // Option 1:
-    // - Reduce its life by a specific amount
-    // Option 2:
-    // - Calculate future position for the enemy / aim
-    // - Shoot
   }
 
   // TODO Probably all this "canBeBuilt" check, must be moved to the building behaviour.

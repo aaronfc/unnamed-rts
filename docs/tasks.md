@@ -24,11 +24,14 @@
 - [X] 🧠 Document what will the 0.5 version include - Tower Defense!!
     - [X] Decide on features: Basic Tower that shoots enemies
     - [X] Document them - started
-- [.] Tower Defense
+- [o] Tower Defense
     - [X] Proof of concept
-    - [ ] Projectiles support
+    - [X] Add actual projectiles
     - [ ] Finetune cadence / cost / damage based on feedback after playing 20min: increase coset and reduce damage
-    - [ ] Assets for the tower. Ideas: tower / bunker / mini-camp with archer 
+    - [ ] Assets:
+	- [ ] Tower - Ideas: tower / bunker / mini-camp with archer
+	- [ ] Projectile - Currently it's a boy... but we neeed to change this
+    - [ ] 💎 Predict new position for improving accuracy when enemies are moving
 - [ ] 🐛 Multi-selection is not working on the bottom / right of the map
 - [ ] 💎 Change initialization position for camp now that we can move far away easier while playing
 - [ ] 💎 Check on Rex plugins

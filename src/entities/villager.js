@@ -3,12 +3,10 @@ import Movement from "../behaviours/movement.js";
 import Fighting from "../behaviours/fighting.js";
 import HealthBar from "../components/health-bar.js";
 
-//export default class Villager extends Phaser.GameObjects.Arc {
 export default class Villager extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, townCenter) {
     // Circle
     super(scene, x, y, Math.random() > 0.5 ? "boy" : "girl");
-    //super(scene, x, y, 5, 0, 180, false, "0x0000FF", 1);
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
     this.setCircle(5);
