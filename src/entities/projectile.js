@@ -4,7 +4,7 @@ import Fighting from "../behaviours/fighting.js";
 
 export default class Projectile extends Phaser.GameObjects.Sprite {
   constructor(scene, initialPosition, speed, finalPosition, range, damage) {
-    super(scene, initialPosition.x, initialPosition.y, "boy");
+    super(scene, initialPosition.x, initialPosition.y, "arrow");
     scene.add.existing(this);
     scene.matter.add.gameObject(this);
 
@@ -14,7 +14,11 @@ export default class Projectile extends Phaser.GameObjects.Sprite {
     this.speed = speed;
     this.initialPosition = initialPosition;
     this.finalPosition = finalPosition;
-    this.directionVector = finalPosition.subtract(initialPosition).normalize();
+    this.directionVector = finalPosition
+      .clone()
+      .subtract(initialPosition)
+      .normalize();
+    this.setOrigin(0.5, 0);
     this.setCollisionCategory(null);
     this.setFriction(0);
     this.setFrictionAir(0);
@@ -22,14 +26,13 @@ export default class Projectile extends Phaser.GameObjects.Sprite {
       this.directionVector.x * speed,
       this.directionVector.y * speed
     );
-    this.rotation = Phaser.Math.Angle.Between(
-      this.initialPosition.x,
-      this.initialPosition.y,
-      this.finalPosition.x,
-      this.finalPosition.y
-    );
     this.range = range;
     this.damage = damage;
+    this.depth = 99;
+    this.rotation =
+      Phaser.Math.Angle.BetweenPoints(this.getCenter(), this.finalPosition) +
+      Math.PI / 2;
+    console.log(this.getCenter(), this.finalPosition, this.rotation);
 
     // Behaviours
     this.movement = new Movement(this.scene);

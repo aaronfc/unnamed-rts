@@ -5,17 +5,25 @@ import Projectile from "./projectile.js";
 export default class Tower extends TiledGameObject {
   constructor(scene, x, y) {
     let config = {
+      spritesheet: "tower-spritesheet",
       layers: [
         {
-          // Ground
           data: [
             [
-              { id: 618, collide: false, depth: 10 },
-              { id: 619, collide: false, depth: 10 },
+              { id: 0, collide: false, depth: 10 },
+              { id: 1, collide: false, depth: 10 },
             ],
             [
-              { id: 675, collide: true, depth: 0 },
-              { id: 676, collide: true, depth: 0 },
+              { id: 2, collide: false, depth: 10 },
+              { id: 3, collide: false, depth: 10 },
+            ],
+            [
+              { id: 4, collide: false, depth: 10 },
+              { id: 5, collide: false, depth: 10 },
+            ],
+            [
+              { id: 6, collide: true, depth: 0 },
+              { id: 7, collide: true, depth: 0 },
             ],
           ],
         },
@@ -103,18 +111,9 @@ export default class Tower extends TiledGameObject {
     }
     if (this.target != null) {
       //console.log("Enemy hit!");
-      this.scene.projectiles.push(
-        new Projectile(
-          this.scene,
-          new Phaser.Math.Vector2(this.x, this.y),
-          1,
-          new Phaser.Math.Vector2(this.target.x, this.target.y),
-          this.attackRange,
-          this.hitDamage
-        )
-      );
-      this.latestShootTime = now;
       // Probably we should predict the new position of the enemy for optimal direction
+      this._shootProjectile(this.target.getCenter());
+      this.latestShootTime = now;
     }
   }
 
@@ -139,5 +138,21 @@ export default class Tower extends TiledGameObject {
     let positionIsFree =
       intersectingBuildings.length == 0 && intersectingResources.length == 0;
     return hasEnoughResource && positionIsFree;
+  }
+
+  _shootProjectile(destination) {
+    this.scene.projectiles.push(
+      new Projectile(
+        this.scene,
+        new Phaser.Math.Vector2(
+          this.x + this.width / 2,
+          this.y + this.height / 3
+        ),
+        1,
+        destination,
+        this.attackRange,
+        this.hitDamage
+      )
+    );
   }
 }

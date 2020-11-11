@@ -146,6 +146,9 @@ export default class MainScene extends Phaser.Scene {
         this.events.emit("map-right-clicked", pointer);
       } else {
         this.events.emit("map-left-or-middle-clicked", pointer);
+        //tower._shootProjectile(
+        //  new Phaser.Math.Vector2(pointer.worldX, pointer.worldY)
+        //);
       }
     });
 

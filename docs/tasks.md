@@ -32,6 +32,7 @@
 	- [ ] Tower - Ideas: tower / bunker / mini-camp with archer
 	- [ ] Projectile - Currently it's a boy... but we neeed to change this
     - [ ] 💎 Predict new position for improving accuracy when enemies are moving
+- [ ] Document different depth values used in the game - grep for `.depth`
 - [ ] 🐛 Multi-selection is not working on the bottom / right of the map
 - [ ] 💎 Change initialization position for camp now that we can move far away easier while playing
 - [ ] 💎 Check on Rex plugins

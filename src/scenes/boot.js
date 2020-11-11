@@ -31,10 +31,16 @@ export default class BootScene extends Phaser.Scene {
     this.load.image("tower-icon", "assets/tower-icon.png");
     this.load.image("boy", "assets/boy.png");
     this.load.image("girl", "assets/girl.png");
+    this.load.image("arrow", "assets/arrow.png");
     this.load.spritesheet("spritesheet1", "assets/rogelike-spritesheet.png", {
       frameWidth: 16,
       frameHeight: 16,
       spacing: 1,
+    });
+    this.load.spritesheet("tower-spritesheet", "assets/tower-spritesheet.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      spacing: 0,
     });
     this.load.once("complete", this._onLoadCompleted.bind(this));
     this.load.start();

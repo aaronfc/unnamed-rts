@@ -10,6 +10,7 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
     super(scene, x, y, width, height, 0x000000, 0);
     this.setOrigin(0, 0);
     this.config = config;
+    this.spritesheet = config.spritesheet || "spritesheet1";
     this.x = x;
     this.y = y;
     this.scene.add.existing(this);
@@ -49,7 +50,7 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
             .image(
               this.x + x * TILE_SIZE + TILE_SIZE / 2,
               this.y + y * TILE_SIZE + TILE_SIZE / 2,
-              "spritesheet1",
+              this.spritesheet,
               spriteData.id
             )
             .setDepth(spriteData.depth);
