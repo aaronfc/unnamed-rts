@@ -66,6 +66,10 @@ export default class TiledGameObject extends Phaser.GameObjects.Rectangle {
 
   update() {}
 
+  setVisible(value) {
+    this.tiles.forEach((t) => (t.visible = value));
+  }
+
   setAlpha(amount) {
     this.tiles.forEach((t) => t.setAlpha(amount));
   }

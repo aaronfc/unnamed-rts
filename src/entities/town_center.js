@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Villager from "./villager.js";
 import TiledGameObject from "../tiled-game-object.js";
 import Storing from "../behaviours/storing.js";
+import Flag from "./flag.js";
 
 export default class TownCenter extends TiledGameObject {
   constructor(scene, x, y) {
@@ -148,6 +149,18 @@ export default class TownCenter extends TiledGameObject {
     this.characteristics = ["STORAGE"];
     this.storing = new Storing(scene);
 
+    // Set new villager initial position
+    let bounds = this.getBounds();
+    this.newEntityInitialPosition = new Phaser.Math.Vector2(
+      bounds.centerX + bounds.width / 2 + 10,
+      bounds.centerY + bounds.height / 2 + 10
+    );
+    this.newEntityInitialPositionFlag = new Flag(
+      this.scene,
+      this.newEntityInitialPosition
+    );
+    this.newEntityInitialPositionFlag.setVisible(false); // By default it's not shown
+
     // Events
     this.setInteractive();
     this.on("pointerdown", (pointer, localX, localY, event) => {
@@ -197,32 +210,48 @@ export default class TownCenter extends TiledGameObject {
     this.selected = true;
     this.menu.visible = true;
     // Listen for any map click to unselect
+    this.events.on("map-right-clicked", this.updateInitialPosition, this);
     this.events.once("map-left-or-middle-clicked", this.unselect, this);
     this.events.once("new-villager-selected", this.unselect, this);
+    this.newEntityInitialPositionFlag.setVisible(true);
   }
 
   unselect() {
     this.setStrokeStyle(0);
     this.selected = false;
     this.menu.visible = false;
+    this.newEntityInitialPositionFlag.setVisible(false);
+    // Stop listening events
+    this.events.off("map-right-clicked", this.updateInitialPosition, this);
+    this.events.off("map-left-or-middle-clicked", this.unselect, this);
+    this.events.off("new-villager-selected", this.unselect, this);
+  }
+
+  updateInitialPosition(pointer) {
+    this.newEntityInitialPositionFlag.setPosition({
+      x: pointer.worldX,
+      y: pointer.worldY,
+    });
   }
 
   getNewVillagerPosition() {
-    let bounds = this.getBounds();
     return new Phaser.Math.Vector2(
-      bounds.centerX + bounds.width / 2 + 10,
-      bounds.centerY + bounds.height / 2 + 10
+      this.newEntityInitialPositionFlag.x,
+      this.newEntityInitialPositionFlag.y
     );
   }
 
   createVillager() {
-    var newPosition = this.getNewVillagerPosition();
+    // Create new villager in initial position
     let newVillager = new Villager(
       this.scene,
-      newPosition.x,
-      newPosition.y,
+      this.newEntityInitialPosition.x,
+      this.newEntityInitialPosition.y,
       this
     );
+    // Make new villager move to proper destination
+    var newEntityDestination = this.getNewVillagerPosition();
+    newVillager.moveToPosition(newEntityDestination);
     this.events.emit("new-villager-created", newVillager);
   }
 

@@ -27,14 +27,19 @@
 - [o] Tower Defense
     - [X] Proof of concept
     - [X] Add actual projectiles
-    - [ ] Finetune cadence / cost / damage based on feedback after playing 20min: increase coset and reduce damage
-    - [ ] Assets:
-	- [ ] Tower - Ideas: tower / bunker / mini-camp with archer
-	- [ ] Projectile - Currently it's a boy... but we neeed to change this
+    - [X] Assets:
+	- [X] Tower - Ideas: tower / bunker / mini-camp with archer
+	- [X] Projectile - Currently it's a boy... but we neeed to change this
     - [ ] 💎 Predict new position for improving accuracy when enemies are moving
+- [X] 🐛 Multi-selection is not working on the bottom / right of the map
+- [X] 💎 Change initialization position for camp now that we can move far away easier while playing
+- [ ] Make the Town Center (camp) shoot
+- [ ] Display range for Tower/Town Center when selected
+- [ ] Cleanup doc
+    - [ ] Document tower
+    - [ ] Document Town Center: shooting and initial position selection
+- [ ] Think on buildings being attacked / destroyed / repaired.
 - [ ] Document different depth values used in the game - grep for `.depth`
-- [ ] 🐛 Multi-selection is not working on the bottom / right of the map
-- [ ] 💎 Change initialization position for camp now that we can move far away easier while playing
 - [ ] 💎 Check on Rex plugins
     - [ ] Toast for example https://rexrainbow.github.io/phaser3-rex-notes/docs/site/ui-toast/
 - [ ] 🐛 Corner case when villager can not find any resource available after exhausting one of them - he should go to the closest storage, store whatever he has, and go into idle status next to the building.

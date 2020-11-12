@@ -87,7 +87,7 @@ export default class Tower extends TiledGameObject {
         //console.log("Removing lock because dead");
       } else {
         let distance = Phaser.Math.Distance.BetweenPoints(this, this.target);
-        console.log("Closest enemy distance: ", distance);
+        //console.log("Closest enemy distance: ", distance);
         if (distance > this.attackRange) {
           this.target = null;
           //console.log("Removing lock because out of range");

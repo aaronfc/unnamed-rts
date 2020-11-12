@@ -32,7 +32,6 @@ export default class Projectile extends Phaser.GameObjects.Sprite {
     this.rotation =
       Phaser.Math.Angle.BetweenPoints(this.getCenter(), this.finalPosition) +
       Math.PI / 2;
-    console.log(this.getCenter(), this.finalPosition, this.rotation);
 
     // Behaviours
     this.movement = new Movement(this.scene);

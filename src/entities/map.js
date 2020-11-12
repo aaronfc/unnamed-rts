@@ -11,6 +11,7 @@ export default class Map extends Phaser.GameObjects.Rectangle {
       heightTiles * tileSize,
       "0x00000000"
     );
+    this.setOrigin(0, 0); // Origin must be top left corner
     scene.add.existing(this);
 
     // Properties
