@@ -42,6 +42,10 @@ export default class BootScene extends Phaser.Scene {
       frameHeight: 16,
       spacing: 0,
     });
+    var url = "https://tmi.twitch.tv/group/user/arogigante/chatters";
+    var output =
+      "https://thingproxy.freeboard.io/fetch/" + encodeURIComponent(url);
+    this.load.json("stream-channel-info", output);
     this.load.once("complete", this._onLoadCompleted.bind(this));
     this.load.start();
   }

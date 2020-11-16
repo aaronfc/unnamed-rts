@@ -33,6 +33,12 @@
     - [ ] 💎 Predict new position for improving accuracy when enemies are moving
 - [X] 🐛 Multi-selection is not working on the bottom / right of the map
 - [X] 💎 Change initialization position for camp now that we can move far away easier while playing
+- [X] Extra villagers for every viewer on the stream
+- [ ] Extra villager improvements:
+    - [ ] Pink coloring -> random colors? or random based on the nametag.
+    - [ ] Font sizing - 8px seems big, and less seems small ...
+    - [ ] Idea: show only the N older viewers? Or maybe randomly?
+    - [ ] Idea: Make the nametags fade whenever we move the mouse close to them - mouseover or mouseout is not valid because we trigger the out whenever we hide the nametag (while being over it)
 - [ ] Make the Town Center (camp) shoot
 - [ ] Display range for Tower/Town Center when selected
 - [ ] Cleanup doc

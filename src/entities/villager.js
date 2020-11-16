@@ -4,7 +4,7 @@ import Fighting from "../behaviours/fighting.js";
 import HealthBar from "../components/health-bar.js";
 
 export default class Villager extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, townCenter) {
+  constructor(scene, x, y, townCenter, name) {
     // Circle
     super(scene, x, y, Math.random() > 0.5 ? "boy" : "girl");
     scene.add.existing(this);
@@ -32,6 +32,20 @@ export default class Villager extends Phaser.GameObjects.Sprite {
 
     // Subparts
     this.healthBar = new HealthBar(this.scene, this);
+    if (name != null) {
+      this.nameTag = this.scene.add.text(x, y, name, {
+        fontFamily: "Arial Black",
+        fontStyle: "bold",
+        color: "#000",
+        fontSize: 8,
+      });
+      this.nameTag.setStroke("#de77ae", 2);
+      //  Apply the shadow to neither stroke nor fill, if you don't need a shadow then don't call setShadow at all :)
+      this.nameTag.setShadow(1, 1, "#333333", 2, false, false);
+      this.nameTag.setResolution(10);
+      this.nameTag.setAlpha(0.8);
+      this.nameTag.setDepth(100);
+    }
 
     // Behaviours
     this.movement = new Movement(this.scene);
@@ -53,6 +67,10 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   }
 
   update() {
+    if (this.nameTag != null) {
+      this.nameTag.x = this.x - this.nameTag.width / 2;
+      this.nameTag.y = this.y + this.nameTag.height;
+    }
     this.closestDeposit = this.scene.map.getClosestEntity(
       this,
       this.scene.map.buildings.filter(
@@ -168,6 +186,9 @@ export default class Villager extends Phaser.GameObjects.Sprite {
     this.events.emit("villager-died", this); // remo
     // Destroy subparts
     this.healthBar.destroy();
+    if (this.nameTag) {
+      this.nameTag.destroy();
+    }
 
     this.destroy();
   }

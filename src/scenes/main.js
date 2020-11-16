@@ -14,6 +14,7 @@ const MAP_HEIGHT_TILES = 100;
 const MAP_WIDTH = MAP_WIDTH_TILES * TILE_SIZE;
 const MAP_HEIGHT = MAP_HEIGHT_TILES * TILE_SIZE;
 const INITIAL_VILLAGERS = 5;
+const INITIAL_VILLAGERS_VIEWERS_MODE = true;
 const INITIAL_ENEMIES = 1;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
@@ -117,8 +118,25 @@ export default class MainScene extends Phaser.Scene {
     let newPosition = townCenter.getNewVillagerPosition();
     for (var i = 0; i < INITIAL_VILLAGERS; i++) {
       this.villagers.push(
-        new Villager(this, newPosition.x, newPosition.y, townCenter)
+        new Villager(this, newPosition.x, newPosition.y, townCenter, null)
       );
+    }
+
+    // Extra villagers based on viewers
+    if (INITIAL_VILLAGERS_VIEWERS_MODE) {
+      let info = this.cache.json.get("stream-channel-info");
+      let viewers = info.chatters.viewers;
+      for (var i = 0; i < viewers.length; i++) {
+        this.villagers.push(
+          new Villager(
+            this,
+            newPosition.x,
+            newPosition.y,
+            townCenter,
+            viewers[i]
+          )
+        );
+      }
     }
 
     // Create initial enemies
