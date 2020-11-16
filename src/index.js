@@ -16,11 +16,11 @@ const config = {
       gravity: { x: 0, y: 0 },
     },
   },
-  width: 1080, // This is the real size in pixels of half my screen so that we do not have blurry text after 100% width resize in index.html
+  width: 1080,
   height: 720,
   scene: [BootScene, MenuScene, MainScene, UIScene, GameOverScene, MeshTesting],
   scale: {
-    mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   backgroundColor: "#FFFFFF",
