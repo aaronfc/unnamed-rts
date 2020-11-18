@@ -159,8 +159,10 @@ export default class TownCenter extends TiledGameObject {
       this.x + this.width / 2,
       this.y + this.height / 2,
       this.attackRange,
-      "0x0000FF"
+      "0x0000FF",
+      0.1
     );
+    this.attackRangeCircle.visible = false;
 
     // Set new villager initial position
     let bounds = this.getBounds();
@@ -279,12 +281,12 @@ export default class TownCenter extends TiledGameObject {
     this.setStrokeStyle(1, "0xFF0000");
     this.selected = true;
     this.menu.visible = true;
+    this.newEntityInitialPositionFlag.setVisible(true);
+    this.attackRangeCircle.visible = true;
     // Listen for any map click to unselect
     this.events.on("map-right-clicked", this.updateInitialPosition, this);
     this.events.once("map-left-or-middle-clicked", this.unselect, this);
     this.events.once("new-villager-selected", this.unselect, this);
-    this.newEntityInitialPositionFlag.setVisible(true);
-    this.attackRangeCircle.visible = true;
   }
 
   unselect() {
@@ -292,11 +294,11 @@ export default class TownCenter extends TiledGameObject {
     this.selected = false;
     this.menu.visible = false;
     this.newEntityInitialPositionFlag.setVisible(false);
+    this.attackRangeCircle.visible = false;
     // Stop listening events
     this.events.off("map-right-clicked", this.updateInitialPosition, this);
     this.events.off("map-left-or-middle-clicked", this.unselect, this);
     this.events.off("new-villager-selected", this.unselect, this);
-    this.attackRangeCircle.visible = false;
   }
 
   updateInitialPosition(pointer) {

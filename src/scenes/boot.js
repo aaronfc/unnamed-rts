@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-const ENABLE_VIWERS_MODE = true;
+const ENABLE_VIWERS_MODE = document.location.hostname === "localhost";
 
 export default class BootScene extends Phaser.Scene {
   constructor() {

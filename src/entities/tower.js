@@ -39,12 +39,21 @@ export default class Tower extends TiledGameObject {
     this.buildingAmount = 0;
     this.setAlpha(0.5);
     this.building = new Building(scene);
+    this.selected = false;
     // Attack-related attributes
     this.hitDamage = 10;
     this.coolDown = 1; // Time needed to be able to shoot again
     this.attackRange = 200;
     this.latestShootTime = null;
     this.target = null;
+    this.attackRangeCircle = this.scene.add.circle(
+      this.x + this.width / 2,
+      this.y + this.height / 3,
+      this.attackRange,
+      "0x0000FF",
+      0.1
+    );
+    this.attackRangeCircle.visible = false;
 
     // Events
     this.setInteractive();
@@ -52,6 +61,16 @@ export default class Tower extends TiledGameObject {
       if (this.status == "building" && pointer.rightButtonDown()) {
         this.events.emit("building-in-progress-right-clicked", this);
       }
+      if (pointer.leftButtonDown()) {
+        if (this.selected) {
+          this.unselect();
+        } else {
+          this.events.emit("new-building-selected");
+          this.select();
+        }
+      }
+      // Stop event propagation
+      event.stopPropagation();
     });
   }
 
@@ -70,6 +89,25 @@ export default class Tower extends TiledGameObject {
 
   move(position) {
     this.building.move(this, position);
+  }
+
+  select() {
+    console.log("selected");
+    this.setStrokeStyle(1, "0xFF0000");
+    this.selected = true;
+    this.attackRangeCircle.visible = true;
+    // Listen for any map event
+    this.events.once("map-left-or-middle-clicked", this.unselect, this);
+    this.events.once("new-villager-selected", this.unselect, this);
+  }
+
+  unselect() {
+    this.setStrokeStyle(0);
+    this.selected = false;
+    this.attackRangeCircle.visible = false;
+    // Stop listening events
+    this.events.off("map-left-or-middle-clicked", this.unselect, this);
+    this.events.off("new-villager-selected", this.unselect, this);
   }
 
   update() {

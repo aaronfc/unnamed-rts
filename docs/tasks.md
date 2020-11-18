@@ -35,7 +35,7 @@
 - [X] 💎 Change initialization position for camp now that we can move far away easier while playing
 - [X] Extra villagers for every viewer on the stream
 - [X] Make the Town Center (camp) shoot
-- [ ] Display range for Tower/Town Center when selected
+- [X] Display range for Tower/Town Center when selected
 - [ ] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
 - [ ] Remove initial tower
 - [ ] Extra villager improvements:
