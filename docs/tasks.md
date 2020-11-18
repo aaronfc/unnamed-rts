@@ -36,6 +36,7 @@
 - [X] Extra villagers for every viewer on the stream
 - [X] Make the Town Center (camp) shoot
 - [ ] Display range for Tower/Town Center when selected
+- [ ] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
 - [ ] Remove initial tower
 - [ ] Extra villager improvements:
     - [ ] Pink coloring -> random colors? or random based on the nametag.

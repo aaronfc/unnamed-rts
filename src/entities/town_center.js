@@ -155,6 +155,12 @@ export default class TownCenter extends TiledGameObject {
     this.latestShootTime = null;
     this.coolDown = 1;
     this.hitDamage = 10;
+    this.attackRangeCircle = this.scene.add.circle(
+      this.x + this.width / 2,
+      this.y + this.height / 2,
+      this.attackRange,
+      "0x0000FF"
+    );
 
     // Set new villager initial position
     let bounds = this.getBounds();
@@ -278,6 +284,7 @@ export default class TownCenter extends TiledGameObject {
     this.events.once("map-left-or-middle-clicked", this.unselect, this);
     this.events.once("new-villager-selected", this.unselect, this);
     this.newEntityInitialPositionFlag.setVisible(true);
+    this.attackRangeCircle.visible = true;
   }
 
   unselect() {
@@ -289,6 +296,7 @@ export default class TownCenter extends TiledGameObject {
     this.events.off("map-right-clicked", this.updateInitialPosition, this);
     this.events.off("map-left-or-middle-clicked", this.unselect, this);
     this.events.off("new-villager-selected", this.unselect, this);
+    this.attackRangeCircle.visible = false;
   }
 
   updateInitialPosition(pointer) {
