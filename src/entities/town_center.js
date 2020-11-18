@@ -3,6 +3,7 @@ import Villager from "./villager.js";
 import TiledGameObject from "../tiled-game-object.js";
 import Storing from "../behaviours/storing.js";
 import Flag from "./flag.js";
+import Projectile from "./projectile.js";
 
 export default class TownCenter extends TiledGameObject {
   constructor(scene, x, y) {
@@ -148,6 +149,12 @@ export default class TownCenter extends TiledGameObject {
     };
     this.characteristics = ["STORAGE"];
     this.storing = new Storing(scene);
+    // Attack-related attributes
+    this.target = null;
+    this.attackRange = 300;
+    this.latestShootTime = null;
+    this.coolDown = 1;
+    this.hitDamage = 10;
 
     // Set new villager initial position
     let bounds = this.getBounds();
@@ -202,6 +209,63 @@ export default class TownCenter extends TiledGameObject {
     // Update menu if visible
     if (this.menu.visible) {
       this.menu.update();
+    }
+
+    // Attacking from here
+    // Respect the cooldown
+    let now = Math.floor(new Date() / 1000);
+    if (
+      this.latestShootTime == null ||
+      this.latestShootTime < now - this.coolDown
+    ) {
+      if (this.target != null) {
+        // Remove lock if target is out of range (or dead)
+        if (this.target.health <= 0) {
+          this.target = null;
+          //console.log("Removing lock because dead");
+        } else {
+          let distance = Phaser.Math.Distance.BetweenPoints(
+            new Phaser.Math.Vector2(
+              this.x + this.width / 2,
+              this.y + this.height / 2
+            ),
+            this.target
+          );
+          //console.log("Closest enemy distance: ", distance);
+          if (distance > this.attackRange) {
+            this.target = null;
+            //console.log("Removing lock because out of range");
+          }
+        }
+      }
+      if (this.target == null) {
+        // Calculate closest enemy and lock it if in range
+        let closestEnemy = this.scene.map.getClosestEntity(
+          this,
+          this.scene.enemies
+        ); // TODO ⚠️  Non-optimal approach. We are calculating the closest enemy for every tick of the game!
+        //console.log("Closest enemy:", closestEnemy);
+        if (closestEnemy != null) {
+          let shootingOrigin = new Phaser.Math.Vector2(
+            this.x + this.width / 2,
+            this.y + this.height / 2
+          );
+          let distance = Phaser.Math.Distance.BetweenPoints(
+            shootingOrigin,
+            closestEnemy
+          );
+          if (distance <= this.attackRange) {
+            //console.log("Enemy locked!");
+            this.target = closestEnemy;
+          }
+        }
+      }
+      if (this.target != null) {
+        //console.log("Enemy shot!");
+        // Probably we should predict the new position of the enemy for optimal direction
+        this._shootProjectile(this.target.getCenter());
+        this.latestShootTime = now;
+      }
     }
   }
 
@@ -285,6 +349,22 @@ export default class TownCenter extends TiledGameObject {
 
   getEnqueuedOrdersAmount() {
     return this.enqueuedOrders.length;
+  }
+
+  _shootProjectile(destination) {
+    this.scene.projectiles.push(
+      new Projectile(
+        this.scene,
+        new Phaser.Math.Vector2(
+          this.x + this.width / 2,
+          this.y + this.height / 2
+        ),
+        1,
+        destination,
+        this.attackRange,
+        this.hitDamage
+      )
+    );
   }
 }
 

@@ -39,6 +39,7 @@ export default class Tower extends TiledGameObject {
     this.buildingAmount = 0;
     this.setAlpha(0.5);
     this.building = new Building(scene);
+    // Attack-related attributes
     this.hitDamage = 10;
     this.coolDown = 1; // Time needed to be able to shoot again
     this.attackRange = 200;
@@ -86,7 +87,13 @@ export default class Tower extends TiledGameObject {
         this.target = null;
         //console.log("Removing lock because dead");
       } else {
-        let distance = Phaser.Math.Distance.BetweenPoints(this, this.target);
+        let distance = Phaser.Math.Distance.BetweenPoints(
+          new Phaser.Math.Vector2(
+            this.x + this.width / 2,
+            this.y + this.height / 3
+          ),
+          this.target
+        );
         //console.log("Closest enemy distance: ", distance);
         if (distance > this.attackRange) {
           this.target = null;
@@ -102,7 +109,13 @@ export default class Tower extends TiledGameObject {
       ); // TODO ⚠️  Non-optimal approach. We are calculating the closest enemy for every tick of the game!
       //console.log("Closest enemy:", closestEnemy);
       if (closestEnemy != null) {
-        let distance = Phaser.Math.Distance.BetweenPoints(this, closestEnemy);
+        let distance = Phaser.Math.Distance.BetweenPoints(
+          new Phaser.Math.Vector2(
+            this.x + this.width / 2,
+            this.y + this.height / 3
+          ),
+          closestEnemy
+        );
         if (distance <= this.attackRange) {
           //console.log("Enemy locked!");
           this.target = closestEnemy;
