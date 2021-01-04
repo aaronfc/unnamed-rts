@@ -98,9 +98,9 @@ export default class MainScene extends Phaser.Scene {
     //this.map.addBuilding(house);
 
     // Built tower
-    var tower = new Tower(this, 300, 50);
-    tower.build(50); // Build to 100% by passing the total units needed
-    this.map.addBuilding(tower);
+    //var tower = new Tower(this, 300, 50);
+    //tower.build(50); // Build to 100% by passing the total units needed
+    //this.map.addBuilding(tower);
 
     // Shoot a projectile
     //var projectile = new Projectile(

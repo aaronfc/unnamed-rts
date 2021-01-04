@@ -37,7 +37,8 @@
 - [X] Make the Town Center (camp) shoot
 - [X] Display range for Tower/Town Center when selected
 - [ ] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
-- [ ] Remove initial tower
+- [X] Remove initial tower
+- [ ] Code review + lessons learnt
 - [ ] Extra villager improvements:
     - [ ] Pink coloring -> random colors? or random based on the nametag.
     - [ ] Font sizing - 8px seems big, and less seems small ... - maybe adjust size based on the zoom level (constant size no matter of zoom) - **maybe this means we must move this nametag to the UI scene**
