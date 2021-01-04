@@ -39,6 +39,17 @@
 - [X] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
 - [X] Remove initial tower
 - [ ] Code review + lessons learnt
+    - 📝 Some issues with pixelArt and canvas size regarding crispy or blurry graphics.
+    - [ ] Make UI Scene consume the counters by using the registry instead of accessing the MainScene.
+	- Old task: [ ] ⚠️  STOP CONSUMING INFORMATION FROM OTHER SCENES. WE MUST USE THE REGISTRY. EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
+    - 📝 Navigation part turned out very well. Pathfinding post already written and maybe more notes can be extracted.
+    - [ ] Clean up all comments from the main.js scene. Maybe move them to a "DEMO" scene.
+    - 📝 Zoom control tricky to implement because I wanted to keep the same world position under the cursor **after** zooming in and out.
+    - [ ] Events madness... Create a EventManager or something like that.
+	- Old task: [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
+	- ⚠️  Beware of the removeAllListeners method
+    - [ ] Move enemies creation to a separate class
+    - Keep reviewing entities and behaviours
 - [ ] Extra villager improvements:
     - [ ] Pink coloring -> random colors? or random based on the nametag.
     - [ ] Font sizing - 8px seems big, and less seems small ... - maybe adjust size based on the zoom level (constant size no matter of zoom) - **maybe this means we must move this nametag to the UI scene**
@@ -86,14 +97,12 @@
 	    - [ ] https://opengameart.org/content/roguelike-character-pack
 	- [ ] Check on other assets
 	    - [ ] https://opengameart.org/content/medieval-rts-120
-- [ ] ⚠️  STOP CONSUMING INFORMATION FROM OTHER SCENES. WE MUST USE THE REGISTRY. EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
 - [ ] ⚠️  We are not taking into account attack range when attacking (or receiving damage) - look into this when we start implementing the tower defense buildings
 - [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
 - [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
 - [ ] 💡 Have some "debug menu" that we can use to: generate enemies, generate villagers, toggle debug mode for the navigation mesh, etc
 - [ ] Revamp game-over screen style
-- [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
 - [ ] 🐛 Zooming / blurry on Firefox
 - [ ] 🐛 Pause time when game is paused (changing to different tab)
 - [ ] 🐛 Timer delay (already workarounded but after moving preload to separate scene maybe it's fixed)

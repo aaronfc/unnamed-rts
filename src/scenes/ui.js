@@ -8,12 +8,6 @@ export default class UIScene extends Phaser.Scene {
     super("UIScene");
   }
 
-  preload() {
-    this.load.image("villager-icon", "assets/villager-icon.png");
-    this.load.image("resource-icon", "assets/resource-icon.png");
-    this.load.image("time-icon", "assets/time-icon.png");
-  }
-
   create() {
     // TODO Stop using scene's data and use registry
     this.counters = this.scene.get("MainScene").counters;
