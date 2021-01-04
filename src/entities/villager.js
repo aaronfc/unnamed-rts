@@ -54,6 +54,7 @@ export default class Villager extends Phaser.GameObjects.Sprite {
     // Input Events
     this.setInteractive();
     this.on("pointerdown", (pointer, localX, localY, event) => {
+      this.scene.villagers.forEach((v) => v.unselect());
       if (this.selected) {
         this.unselect();
       } else {

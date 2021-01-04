@@ -36,7 +36,7 @@
 - [X] Extra villagers for every viewer on the stream
 - [X] Make the Town Center (camp) shoot
 - [X] Display range for Tower/Town Center when selected
-- [ ] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
+- [X] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
 - [X] Remove initial tower
 - [ ] Code review + lessons learnt
 - [ ] Extra villager improvements:
