@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import Movement from "../behaviours/movement.js";
-import Fighting from "../behaviours/fighting.js";
+import Movement from "../../behaviours/movement.js";
+import Fighting from "../../behaviours/fighting.js";
 
 export default class Projectile extends Phaser.GameObjects.Sprite {
   constructor(scene, initialPosition, speed, finalPosition, range, damage) {

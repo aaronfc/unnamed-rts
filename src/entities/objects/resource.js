@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import TiledGameObject from "../tiled-game-object.js";
+import TiledGameObject from "../../tiled-game-object.js";
 
 export default class Resource extends TiledGameObject {
   constructor(scene, position, initialAmount) {

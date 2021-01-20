@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import House from "../entities/house.js";
-import Storage from "../entities/storage.js";
-import Tower from "../entities/tower.js";
+import House from "../entities/buildings/house.js";
+import Storage from "../entities/buildings/storage.js";
+import Tower from "../entities/buildings/tower.js";
 
 const ICON_SIZE = 32;
 const ICONS_PADDING = 10;

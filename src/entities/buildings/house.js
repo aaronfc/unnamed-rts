@@ -1,5 +1,5 @@
-import TiledGameObject from "../tiled-game-object.js";
-import Building from "../behaviours/building.js";
+import TiledGameObject from "../../tiled-game-object.js";
+import Building from "../../behaviours/building.js";
 
 const TILE_SIZE = 16;
 

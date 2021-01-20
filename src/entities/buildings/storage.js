@@ -1,6 +1,6 @@
-import TiledGameObject from "../tiled-game-object.js";
-import Storing from "../behaviours/storing.js";
-import Building from "../behaviours/building.js";
+import TiledGameObject from "../../tiled-game-object.js";
+import Storing from "../../behaviours/storing.js";
+import Building from "../../behaviours/building.js";
 
 export default class Storage extends TiledGameObject {
   constructor(scene, x, y) {

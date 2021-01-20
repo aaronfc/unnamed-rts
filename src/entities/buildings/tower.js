@@ -1,6 +1,6 @@
-import TiledGameObject from "../tiled-game-object.js";
-import Building from "../behaviours/building.js";
-import Projectile from "./projectile.js";
+import TiledGameObject from "../../tiled-game-object.js";
+import Building from "../../behaviours/building.js";
+import Projectile from "../objects/projectile.js";
 
 export default class Tower extends TiledGameObject {
   constructor(scene, x, y) {

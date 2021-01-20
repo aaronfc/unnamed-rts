@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import Villager from "./villager.js";
-import TiledGameObject from "../tiled-game-object.js";
-import Storing from "../behaviours/storing.js";
-import Flag from "./flag.js";
-import Projectile from "./projectile.js";
+import Villager from "../units/villager.js";
+import TiledGameObject from "../../tiled-game-object.js";
+import Storing from "../../behaviours/storing.js";
+import Flag from "../../components/flag.js";
+import Projectile from "../objects/projectile.js";
 
 export default class TownCenter extends TiledGameObject {
   constructor(scene, x, y) {

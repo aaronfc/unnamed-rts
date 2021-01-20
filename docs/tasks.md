@@ -38,6 +38,10 @@
 - [X] Display range for Tower/Town Center when selected
 - [X] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
 - [X] Remove initial tower
+- [X] Updating all dependencies and fixing audit
+- [X] Moving around classes
+- [X] 💡 Adding jsconfig.json for easier refactoring with vscode
+- [ ] 🐛 Can't place a tower after updating references and moving around classes
 - [ ] Code review + lessons learnt
     - 📝 Some issues with pixelArt and canvas size regarding crispy or blurry graphics.
     - [ ] Make UI Scene consume the counters by using the registry instead of accessing the MainScene.
