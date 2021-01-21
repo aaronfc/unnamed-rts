@@ -12,12 +12,14 @@ export default class Fighting {
    * Try to move into attack range and when close enough attack dealing {damage} every {periodInSeconds} seconds.
    */
   moveIntoAttackRangeAndAttack(element, target, damage, periodInSeconds) {
+    let dead = false;
     this.movement.moveTo(element, target, () => {
       let now = Math.floor(new Date() / 1000);
       if (now - this.latestAttackTime >= periodInSeconds) {
-        target.hit(element, damage);
+        dead = target.hit(element, damage);
         this.latestAttackTime = now;
       }
     });
+    return dead;
   }
 }

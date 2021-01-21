@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Movement from "../../behaviours/movement.js";
 import Fighting from "../../behaviours/fighting.js";
 import HealthBar from "../../components/health-bar.js";
+import AtttackEntityCommand from "./commands/attack-entity.js";
 
 export default class Enemy extends Phaser.GameObjects.Arc {
   constructor(scene, position) {
@@ -21,6 +22,10 @@ export default class Enemy extends Phaser.GameObjects.Arc {
     this.scene = scene;
     this.initialHealth = 100;
     this.health = 100;
+    this.command = null;
+    this.team = "ai";
+    this.attackDamage = 10;
+    this.attackPeriodInSeconds = 1;
 
     // Behaviours
     this.movement = new Movement(this.scene);
@@ -49,19 +54,10 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   }
 
   update() {
-    if (this.status == "attacking") {
-      let closestVictim = this.scene.map.getClosestEntity(
-        this,
-        this.scene.villagers
-      ); // TODO ⚠️  Non-optimal approach. We are calculating the closest enemy for every tick of the game!
-      if (closestVictim != this.target) {
-        this.target = closestVictim;
-      }
-      if (this.target != null) {
-        this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 10, 1);
-      } else {
-        this.setVelocity(0, 0);
-        this.setFrictionAir(0.5); // High friction (not moving)
+    if (this.command != null) {
+      let done = this.command.update();
+      if (done) {
+        this.command = null;
       }
     }
 
@@ -123,5 +119,15 @@ export default class Enemy extends Phaser.GameObjects.Arc {
       return true;
     }
     return false;
+  }
+
+  attack(entity) {
+    if (
+      this.command == null ||
+      (this.command instanceof AtttackEntityCommand &&
+        this.command.attackedEntity !== entity)
+    ) {
+      this.command = new AtttackEntityCommand(this, entity);
+    }
   }
 }

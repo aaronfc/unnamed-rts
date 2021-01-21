@@ -2,6 +2,10 @@ import Phaser from "phaser";
 import Movement from "../../behaviours/movement.js";
 import Fighting from "../../behaviours/fighting.js";
 import HealthBar from "../../components/health-bar.js";
+import WalkToDestinationCommand from "./commands/walk-to-destination.js";
+import GatherResourceCommand from "./commands/gather-resource.js";
+import AtttackEntityCommand from "./commands/attack-entity.js";
+import BuildBuildingCommand from "./commands/build-building.js";
 
 export default class Villager extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, townCenter, name) {
@@ -14,11 +18,6 @@ export default class Villager extends Phaser.GameObjects.Sprite {
 
     // Properties
     this.selected = false;
-    this.closestDeposit = townCenter; // Assuming towncenter is the closest one at firts
-    this.resourceGatheringSpeed = 0.5; // Units per second
-    this.latestGatheringTime = 0;
-    this.buildingSpeed = 5; // Units per second
-    this.latestBuildingTime = 0;
     this.target = null;
     this.status = "idle";
     this.bagpack = {
@@ -29,6 +28,10 @@ export default class Villager extends Phaser.GameObjects.Sprite {
     this.health = 100;
     this.events = scene.events;
     this.scene = scene;
+    this.command = null;
+    this.team = "blue";
+    this.attackDamage = 5;
+    this.attackPeriodInSeconds = 1;
 
     // Subparts
     this.healthBar = new HealthBar(this.scene, this);
@@ -72,91 +75,11 @@ export default class Villager extends Phaser.GameObjects.Sprite {
       this.nameTag.x = this.x - this.nameTag.width / 2;
       this.nameTag.y = this.y + this.nameTag.height;
     }
-    this.closestDeposit = this.scene.map.getClosestEntity(
-      this,
-      this.scene.map.buildings.filter(
-        (b) => b.status == "built" && b.characteristics.includes("STORAGE")
-      )
-    );
-    // Movement
-    if (this.status == "walking-to-destination") {
-      // TODO Remove this margin from here. Move it to movement.js and think on a solution for "getting as closest as possible to a building"
-      this.movement.moveTo(this, this.target, () => {
-        this.target = null;
-        this._setStatus("idle");
-      });
-
-      // Collecting
-    } else if (this.status == "collecting") {
-      // Note: Here target must be Resource
-
-      // If villager is not full, keeps collecting
-      if (
-        this.bagpack.amount < this.bagpack.maxCapacity &&
-        this.target.amount > 0
-      ) {
-        this.movement.moveTo(this, this.target, () => {
-          // Stop movement
-          this.setVelocity(0);
-          // Collect resource
-          let nowTime = new Date().getTime() / 1000;
-          let timeSinceLatestGather = nowTime - this.latestGatheringTime;
-          if (timeSinceLatestGather >= 1 / this.resourceGatheringSpeed) {
-            var amountConsumed = this.target.consume(1); // Consuming unit by unit
-            this.bagpack.amount += amountConsumed;
-            if (amountConsumed < 1) {
-              this.target = null; // TODO Calculate next resource
-            }
-            this.latestGatheringTime = nowTime;
-          }
-        });
-      } else {
-        // Villager is at full capacity
-
-        this.movement.moveTo(this, this.closestDeposit, () => {
-          this.setVelocity(0);
-          // Unload
-          // TODO Make it take some time. ⚠️  If logic is not modified after unloading a little of the resource, the villager will go back to resource mine.
-          this.closestDeposit.deposit(this.bagpack.amount);
-          this.bagpack.amount = 0;
-        });
-
-        if (this.bagpack.amount == 0 && this.target.amount == 0) {
-          this.target = this.scene.map.getClosestEntity(
-            this,
-            this.scene.map.resources
-          );
-        }
+    if (this.command != null) {
+      let done = this.command.update();
+      if (done) {
+        this.command = null;
       }
-    } else if (this.status == "attacking") {
-      this.fighting.moveIntoAttackRangeAndAttack(this, this.target, 5, 1);
-    } else if (this.status == "looking-for-enemy") {
-      let closestEnemy = this.scene.map.getClosestEntity(
-        this,
-        this.scene.enemies
-      );
-      if (closestEnemy != null) {
-        this.target = closestEnemy;
-        this._setStatus("attacking");
-      } else {
-        this._setStatus("idle");
-      }
-    } else if (this.status == "building") {
-      this.movement.moveTo(this, this.target, () => {
-        // Stop movement
-        this.setVelocity(0);
-        // Collect resource
-        let nowTime = new Date().getTime() / 1000;
-        let timeSinceLatestBuild = nowTime - this.latestBuildingTime;
-        if (timeSinceLatestBuild >= 1) {
-          var isComplete = this.target.build(this.buildingSpeed); // TODO Take into account "building speed"
-          if (isComplete) {
-            this._setStatus("idle");
-            this.target = null; // TODO Calculate next resource
-          }
-          this.latestBuildingTime = nowTime;
-        }
-      });
     }
 
     // Update subparts
@@ -166,17 +89,12 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   // Private functions
 
   _setStatus(newStatus) {
-    if (newStatus == "collecting") {
-      this.latestGatheringTime = Math.floor(new Date().getTime() / 1000);
-    }
+    // TODO Deprecated? We are now relying on the Commands
     this.status = newStatus;
   }
 
   _onEnemyDied(enemy) {
-    if (this.target == enemy) {
-      this.target = null;
-      this._setStatus("looking-for-enemy");
-    }
+    // TODO Deprecated? We are checking the health in the AttackEntityCommand class.
   }
 
   _onDie() {
@@ -248,32 +166,31 @@ export default class Villager extends Phaser.GameObjects.Sprite {
 
   moveToPosition(position) {
     this.target = new Phaser.Math.Vector2(position);
-    this._setStatus("walking-to-destination");
+    this.command = new WalkToDestinationCommand(this, position);
   }
 
   startCollectingResource(resource) {
-    this._setStatus("collecting");
-    this.target = resource;
+    this.command = new GatherResourceCommand(this, resource);
     this.unselect();
   }
 
   startBuilding(building) {
-    this._setStatus("building");
-    this.target = building;
+    this.command = new BuildBuildingCommand(this, building);
     this.unselect();
   }
 
   hit(attacker, damage) {
-    // In case we are attacked: abort what we were doing and target first attacker.
-    if (this.status != "attacking") {
-      this._setStatus("attacking");
-      if (attacker != this.target) {
-        this.target = attacker;
-      }
+    // In case we are attacked: abort what we were doing and defend outselves.
+    if (
+      this.command === null ||
+      !(this.command instanceof AtttackEntityCommand)
+    ) {
+      this.command = new AtttackEntityCommand(this, attacker);
     }
     // Process damage
+    // TODO Move this to AttackEntityCommand ?
     this.health -= damage;
-    if (this.health < 0) {
+    if (this.health <= 0) {
       this._onDie();
       return true;
     }
@@ -281,7 +198,6 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   }
 
   attackEnemy(enemy) {
-    this._setStatus("attacking");
-    this.target = enemy;
+    this.command = new AtttackEntityCommand(this, enemy);
   }
 }

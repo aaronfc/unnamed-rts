@@ -9,51 +9,27 @@
 	- GameMaker
 
 ## Pipeline
-- [X] New building: storage
-    - [X] Decide on asset for this building: Wooden cabin
-    - [X] Create new entity
-    - [X] Add this entity to the `action_menu.js`
-    - [X] Make villagers go to "closest" storage (and not only the towncenter)
-- [X] 💎 Make villagers look for the closest resource and if it's closer than X start collecting from the new resource when the first one is exhausted. Nice to have since we moved from a big resource to a set of smaller resources.
-- [X] Search for icon for Storage building
-- [X] Refactor all storage-related logic duplicated on `TownCenter` and `Storage`
-- [X] Refactor all building-related logic duplicated on `House` and `Storage`
-- [X] Get back to the documentation - offcamera, maybe?
-    - [X] Update it - we have now assets 🎉
-    - [X] Plan next steps
-- [X] 🧠 Document what will the 0.5 version include - Tower Defense!!
-    - [X] Decide on features: Basic Tower that shoots enemies
-    - [X] Document them - started
-- [o] Tower Defense
-    - [X] Proof of concept
-    - [X] Add actual projectiles
-    - [X] Assets:
-	- [X] Tower - Ideas: tower / bunker / mini-camp with archer
-	- [X] Projectile - Currently it's a boy... but we neeed to change this
-    - [ ] 💎 Predict new position for improving accuracy when enemies are moving
-- [X] 🐛 Multi-selection is not working on the bottom / right of the map
-- [X] 💎 Change initialization position for camp now that we can move far away easier while playing
-- [X] Extra villagers for every viewer on the stream
-- [X] Make the Town Center (camp) shoot
-- [X] Display range for Tower/Town Center when selected
-- [X] 🐛 When selecting a villager by clicking on it we should deselect any previously selected ones.
-- [X] Remove initial tower
-- [X] Updating all dependencies and fixing audit
-- [X] Moving around classes
-- [X] 💡 Adding jsconfig.json for easier refactoring with vscode
 - [ ] 🐛 Can't place a tower after updating references and moving around classes
 - [ ] Code review + lessons learnt
-    - 📝 Some issues with pixelArt and canvas size regarding crispy or blurry graphics.
-    - [ ] Make UI Scene consume the counters by using the registry instead of accessing the MainScene.
-	- Old task: [ ] ⚠️  STOP CONSUMING INFORMATION FROM OTHER SCENES. WE MUST USE THE REGISTRY. EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
+    - [.] Refactoring on Villager and Enemy entities
+      - [X] Extract all logic to commands
+      - [X] Update Villager to use Commands
+      - [X] Update Enemy to use Commands
+      - [X] Generic Command for attacking enemies and/or villagers
+      - [X] Create AI concept to command the enemies
+      - [ ] 🐛 When enemy is attacking a villager we were creating one command everytime the AI was calling the `.attack()` method. Temporary fix: Checking on the `enemy.attack()` method for already running command. GOOD FIX: **I dont know**, maybe implementing `equals()` methods? Or maybe making the AI smarter so that it doesn't call everytime. Problem with that is that user could attack or gather more resource by rapid-clicking (which is essentially what the AI is doing).
+      - [ ] 💎 References to entity.scene and similar in all the commands - double check
+      - [ ] Create a base unit for Villagers and Enemies, because they are pretty much the same.
+    - [ ] Events madness... Create a EventManager or something like that.
+    	- Old task: [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
+    	- ⚠️  Beware of the removeAllListeners method
+	- [ ] Make UI Scene consume the counters by using the registry instead of accessing the MainScene.
+    	- Old task: [ ] ⚠️  STOP CONSUMING INFORMATION FROM OTHER SCENES. WE MUST USE THE REGISTRY. EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
     - 📝 Navigation part turned out very well. Pathfinding post already written and maybe more notes can be extracted.
     - [ ] Clean up all comments from the main.js scene. Maybe move them to a "DEMO" scene.
+    - [ ] Check on all TODOs from the code.
     - 📝 Zoom control tricky to implement because I wanted to keep the same world position under the cursor **after** zooming in and out.
-    - [ ] Events madness... Create a EventManager or something like that.
-	- Old task: [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
-	- ⚠️  Beware of the removeAllListeners method
     - [ ] Move enemies creation to a separate class
-    - Keep reviewing entities and behaviours
 - [ ] Extra villager improvements:
     - [ ] Pink coloring -> random colors? or random based on the nametag.
     - [ ] Font sizing - 8px seems big, and less seems small ... - maybe adjust size based on the zoom level (constant size no matter of zoom) - **maybe this means we must move this nametag to the UI scene**

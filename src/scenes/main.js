@@ -7,6 +7,7 @@ import Tower from "../entities/buildings/tower.js";
 import Projectile from "../entities/objects/projectile.js";
 import Map from "../components/map.js";
 import Navigation from "../navigation.js";
+import AI from "../ai.js";
 
 const TILE_SIZE = 16;
 const MAP_WIDTH_TILES = 150;
@@ -14,7 +15,7 @@ const MAP_HEIGHT_TILES = 100;
 const MAP_WIDTH = MAP_WIDTH_TILES * TILE_SIZE;
 const MAP_HEIGHT = MAP_HEIGHT_TILES * TILE_SIZE;
 const INITIAL_VILLAGERS = 5;
-const INITIAL_ENEMIES = 0;
+const INITIAL_ENEMIES = 1;
 const ENEMY_WAVES_INCREASE = 1;
 const ENEMY_WAVES_INTERVAL = 60000; // 1 minute
 const EXTRA_RESOURCES = 50;
@@ -65,6 +66,9 @@ export default class MainScene extends Phaser.Scene {
 
     // Navigation
     this.navigation = new Navigation(this, this.map);
+
+    // AI
+    this.ai = new AI(this);
 
     // Camera control
     var cursors = this.input.keyboard.addKeys("W,S,A,D");
@@ -323,6 +327,7 @@ export default class MainScene extends Phaser.Scene {
         });
       }
 
+      this.ai.update(time, delta);
       this.controls.update(delta);
     }
   }
