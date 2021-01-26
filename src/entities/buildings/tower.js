@@ -61,16 +61,16 @@ export default class Tower extends TiledGameObject {
       if (this.status == "building" && pointer.rightButtonDown()) {
         this.events.emit("building-in-progress-right-clicked", this);
       }
-      if (pointer.leftButtonDown()) {
+      if (this.status != "placing" && pointer.leftButtonDown()) {
         if (this.selected) {
           this.unselect();
         } else {
           this.events.emit("new-building-selected");
           this.select();
         }
+        // Stop event propagation
+        event.stopPropagation();
       }
-      // Stop event propagation
-      event.stopPropagation();
     });
   }
 

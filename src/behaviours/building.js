@@ -42,5 +42,11 @@ export default class Building {
     } else {
       entity.setTint(0xffaaaa);
     }
+    if (entity.attackRangeCircle != null) {
+      entity.attackRangeCircle.setPosition(
+        entity.x + entity.width / 2,
+        entity.y + entity.height / 2
+      );
+    }
   }
 }

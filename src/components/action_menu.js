@@ -67,20 +67,24 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
     icon.on("pointerdown", (pointer, localX, localY, event) => {
       if (pointer.leftButtonDown()) {
         if (this.scene.counters.resource >= item.cost) {
-          let house = new item.clazz(this.scene.scene.get("MainScene"), 0, 0);
+          let building = new item.clazz(
+            this.scene.scene.get("MainScene"),
+            0,
+            0
+          );
           let mainScene = this.scene.scene.get("MainScene");
           let moveFunction = (pointer) => {
-            house.move({ x: pointer.worldX, y: pointer.worldY });
+            building.move({ x: pointer.worldX, y: pointer.worldY });
           };
           let placeFunction = () => {
-            if (house.place()) {
+            if (building.place()) {
               this.scene.counters.resource -= item.cost;
               console.log("Placing");
               mainScene.input.off("pointermove", moveFunction);
               mainScene.selectedVillagers.forEach((v) =>
-                v.startBuilding(house)
+                v.startBuilding(building)
               );
-              mainScene.map.addBuilding(house);
+              mainScene.map.addBuilding(building);
               mainScene.navigation.regenerate();
             } else {
               console.log("Not placing");
@@ -95,8 +99,8 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
             if (pointer.leftButtonDown()) {
               mainScene.input.off("pointermove", moveFunction);
               mainScene.events.off("map-right-clicked", placeFunction);
-              if (house.status == "placing") {
-                house.destroy();
+              if (building.status == "placing") {
+                building.destroy();
               }
             }
           });
@@ -104,8 +108,8 @@ export default class ActionMenu extends Phaser.GameObjects.Container {
           mainScene.input.keyboard.once("keydown-ESC", () => {
             mainScene.input.off("pointermove", moveFunction);
             mainScene.events.off("map-right-clicked", placeFunction);
-            if (house.status == "placing") {
-              house.destroy();
+            if (building.status == "placing") {
+              building.destroy();
             }
           });
           mainScene.events.once("map-right-clicked", placeFunction);
