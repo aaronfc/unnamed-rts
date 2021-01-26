@@ -7,7 +7,7 @@ export default class AtttackEntityCommand {
     this.attackedEntity = attackedEntity;
     this.done = false; // Changing to true when reaching the destination
     // Behaviours
-    this.movement = new Movement(this.entity.scene); // TODO Fix this reference to entity's scene
+    this.movement = new Movement(this.entity.scene);
     this.fighting = new Fighting(this.movement);
   }
 

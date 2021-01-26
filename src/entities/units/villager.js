@@ -198,6 +198,14 @@ export default class Villager extends Phaser.GameObjects.Sprite {
   }
 
   attackEnemy(enemy) {
-    this.command = new AtttackEntityCommand(this, enemy);
+    // :info: Do not run the same AttackEntity again because it will produce a new hit when it shouldnt.
+    // Consider that the entity could change and the attacker should be allowed to exceed the tps limit.
+    if (
+      this.command == null ||
+      (this.command instanceof AtttackEntityCommand &&
+        this.command.attackedEntity !== enemy)
+    ) {
+      this.command = new AtttackEntityCommand(this, enemy);
+    }
   }
 }

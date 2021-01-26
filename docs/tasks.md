@@ -8,59 +8,49 @@
     - Testing new frameworks / tools / libraries:
 	- GameMaker
 
+## Blog post ideas 📝
+- Zoom control tricky to implement because I wanted to keep the same world position under the cursor **after** zooming in and out.
+- Navigation part turned out very well. Pathfinding post already written and maybe more notes can be extracted.
+- Deploying process to Github Pages
+
 ## Pipeline
-- [ ] 🐛 Can't place a tower after updating references and moving around classes
-- [ ] Code review + lessons learnt
-    - [.] Refactoring on Villager and Enemy entities
-      - [X] Extract all logic to commands
-      - [X] Update Villager to use Commands
-      - [X] Update Enemy to use Commands
-      - [X] Generic Command for attacking enemies and/or villagers
-      - [X] Create AI concept to command the enemies
-      - [ ] 🐛 When enemy is attacking a villager we were creating one command everytime the AI was calling the `.attack()` method. Temporary fix: Checking on the `enemy.attack()` method for already running command. GOOD FIX: **I dont know**, maybe implementing `equals()` methods? Or maybe making the AI smarter so that it doesn't call everytime. Problem with that is that user could attack or gather more resource by rapid-clicking (which is essentially what the AI is doing).
-      - [ ] 💎 References to entity.scene and similar in all the commands - double check
-      - [ ] Create a base unit for Villagers and Enemies, because they are pretty much the same.
-    - [ ] Events madness... Create a EventManager or something like that.
-    	- Old task: [ ] Look into a proper Events manager. We need a way to remove all the listener for a given entity.
-    	- ⚠️  Beware of the removeAllListeners method
-	- [ ] Make UI Scene consume the counters by using the registry instead of accessing the MainScene.
-    	- Old task: [ ] ⚠️  STOP CONSUMING INFORMATION FROM OTHER SCENES. WE MUST USE THE REGISTRY. EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
-    - 📝 Navigation part turned out very well. Pathfinding post already written and maybe more notes can be extracted.
-    - [ ] Clean up all comments from the main.js scene. Maybe move them to a "DEMO" scene.
-    - [ ] Check on all TODOs from the code.
-    - 📝 Zoom control tricky to implement because I wanted to keep the same world position under the cursor **after** zooming in and out.
-    - [ ] Move enemies creation to a separate class
-- [ ] Extra villager improvements:
+- [ ] 🐛 When fighting villagers push other villagers (and the enemy) so they keep walking/while fighting and pushing the enemies in a straight line
+  - Approaches:
+    - 1) Increase range for villager/enemy attacks
+    - ~~2) Do not push a friendly unit when trying to attack~~ -> This has been tested and generates some "excesively-polite" fighting. Many villagers in queue and only one fighting.
+    - 3) Update the navigational mesh with all the units positions.
+    - 4) Do something in the middle of 2 and 3. So basically detecting collision and trying to walk around in some heuristic-based behaviour.
+- [ ] [Refactor] Merge Enemy and Villager classes into one or at least create a base one. Most of the code is duplicated.
+- [ ] [Refactor] Enemy an Villager commands should be extracted to a separate CommandManager.
+  - 💡 Maybe we can even merge this with the `runningOrders` logic implemented in TownCenter.
+- [ ] [Refactor] Create an EventsManager.
+	- 💡 We need a way to remove all the listener for a given entity.
+	- ⚠️ Beware of the `removeAllListeners` method
+- [ ] [Refactor] Make UI Scene consume the counters by using the registry instead of accessing the `MainScene`.
+	- ℹ️ EXAMPLE: Detecting how many selected villagers we have in order to show or hide the action menu.
+- [ ] [Refactor] Move enemies creation to a separate class - maybe `ai.js`?
+- [ ] [Improvement] Extra villager improvements:
     - [ ] Pink coloring -> random colors? or random based on the nametag.
     - [ ] Font sizing - 8px seems big, and less seems small ... - maybe adjust size based on the zoom level (constant size no matter of zoom) - **maybe this means we must move this nametag to the UI scene**
     - [ ] Idea: nametag ui improvement - see Unnamed RTS doc's screenshot
     - [ ] Idea: show only the N older viewers? Or maybe randomly?
     - [ ] Idea: Make the nametags fade whenever we move the mouse close to them - mouseover or mouseout is not valid because we trigger the out whenever we hide the nametag (while being over it)
     - [ ] @polypiel's idea: Idea: add some basic commands from the chat. The owner could send /mine /attack /dance etc to its avatar
-- [ ] Cleanup doc
-    - [ ] Document tower
-    - [ ] Document Town Center: shooting and initial position selection
-- [ ] Think on buildings being attacked / destroyed / repaired.
-- [ ] Document different depth values used in the game - grep for `.depth`
-- [ ] 💎 Check on Rex plugins
-    - [ ] Toast for example https://rexrainbow.github.io/phaser3-rex-notes/docs/site/ui-toast/
-- [ ] 🐛 Corner case when villager can not find any resource available after exhausting one of them - he should go to the closest storage, store whatever he has, and go into idle status next to the building.
-- [ ] Display best score in Menu.
-- [ ] Display information about controlls in Menu -> 💡 Maybe it is better to show a random TIP.
-- [ ] Think on how to extend entities with some functionality. Currently we have "behaviours" that were ok for things that entities can do, but it doesn't really fit for things that entity "suffer" or that can be done to some entities - example: being built, being used as storage, ...
-- [ ] Buildings 2
+- [ ] [Doc] Update documentation
+- [ ] [New] Buildings can be attacked and also destroyed/repaired.
+- [ ] [Doc] Document different depth values used in the game - grep for `.depth`
+- [ ] [Improvement] Corner case when villager can not find any resource available after exhausting one of them - he should go to the closest storage, store whatever he has, and go into idle status next to the building.
+- [ ] [New] Display best score in Menu.
+- [ ] [New] Display information about controlls in Menu -> 💡 Maybe it is better to show a random TIP.
+- [ ] [Improvement] Buildings round 2
     - [ ] ❓ When a villager dies what happens with an ongoing action to start a building? (action menu open and the house being placed)
     - [ ] 💎 Improve building "progress" display (progress bar)
     - [ ] 💎 Mark unavailable buildings (not enough resource case) in the menu
     - [ ] 💎 Make `action_menu.js` generic so that we can have not only `building` actions but also any other actions - extract building logic to a separate `building_action.js` or sth like that.
-- [ ] 🐛 When fighting villagers push other villagers (and the enemy) so they keep walking/while fighting and pushing the enemies in a straight linejj
-- [ ] Think about relationship between the "building cost" and "building health"
 - [ ] ⚠️  Add attribution to the house icon author: `Iconos diseñados por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon"> www.flaticon.es</a>`
-- [ ] 💎 Make the composed gameobjects animated? 🔥
+- [ ] [Improvement] Make visual representation for gameobjects animated. For example the campfire from the town center 🔥
 - [ ] ⚠️  We had to manually add an empty `destroy()` function to the TiledGameObject. Maybe we will be leaking some memory? We need to double check that.
-- [ ] 💡 Make TiledGameObject to understand Tiled output (should be easy to do, check [dev-notes](dev-notes))
-- [ ] 🐛 When enabling `pixelArt` we get weird-looking shapes and texts
-- [ ] Start 0.4 version development.
+- [ ] [Improvement] 💡 Make TiledGameObject to understand Tiled output (should be easy to do, check [dev-notes](dev-notes))
 - [.] Research design possibilities for the game:
 	- [.] Check on free assets to add some basic styling to the game.
 	    - [X] Identify assets that we really need:
@@ -78,22 +68,15 @@
 	- [ ] Check on other assets
 	    - [ ] https://opengameart.org/content/medieval-rts-120
 - [ ] 🐛 While collecting resource sometimes entities keep collecting even though they were commanded to move. Probably there's a moment when they will just ignore the move command - check the collecting behaviour.
-- [ ] ⚠️  We are not taking into account attack range when attacking (or receiving damage) - look into this when we start implementing the tower defense buildings
 - [ ] 🐛 Seems like enemies could be generated in the "non-walkable-area" around buildings or resources.
-- [ ] 🐛 When moving a group of entities. Because of collisions between them they will eventually get stuck trying to get as closest as possible to one point of the path.
 - [ ] 💡 Have some "debug menu" that we can use to: generate enemies, generate villagers, toggle debug mode for the navigation mesh, etc
 - [ ] Revamp game-over screen style
-- [ ] 🐛 Zooming / blurry on Firefox
 - [ ] 🐛 Pause time when game is paused (changing to different tab)
 - [ ] 🐛 Timer delay (already workarounded but after moving preload to separate scene maybe it's fixed)
-- [ ] Document: Github Pages
 - [ ] 🐛 villager-icon key already in use - Fix: Move all images loading to a booting scene
-- [ ] Study alternatives to accessing Scene's data directly from, for example, GameOverSceen. Scene Registry?
 - [ ] Keep score leader board or similar
 - [ ] 💡 Make the "Next wave coming in 10 seconds" update the message every second @Chris2A
-- [ ] Villager refactor: Extract status to Tasks
 - [ ] Randomly generate map. - Main building position and resources. - Document that in the [game document][1].
-- [ ] Add "scenes" to the game. - Loading screen. - Main menu - Game (everything done until now)
 
 ## Done
 
@@ -236,6 +219,15 @@
     - [X] Display maximum counter in the GUI
     - [X] Accept new orders but do not execute them until we have free space for the new villagers.
     - [X] New house should increase by some amount (5) the maximum population counter until some predefined limit (200)
+- [X] ~~*🐛 Can't place a tower after updating references and moving around classes*~~ [2021-01-26]
+- [X] ~~*Code review + lessons learnt*~~ [2021-01-26]
+  - [X] ~~*Refactoring on Villager and Enemy entities*~~ [2021-01-26]
+    - [X] Extract all logic to commands
+    - [X] Update Villager to use Commands
+    - [X] Update Enemy to use Commands
+    - [X] Generic Command for attacking enemies and/or villagers
+    - [X] Create AI concept to command the enemies
+    - [X] ~~*🐛 When enemy is attacking a villager we were creating one command everytime the AI was calling the `.attack()` method. Temporary fix: Checking on the `enemy.attack()` method for already running command. GOOD FIX: **I dont know**, maybe implementing `equals()` methods? Or maybe making the AI smarter so that it doesn't call everytime. Problem with that is that user could attack or gather more resource by rapid-clicking (which is essentially what the AI is doing).*~~ [2021-01-26]
 
 # References
 

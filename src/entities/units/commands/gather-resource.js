@@ -10,8 +10,6 @@ export default class GatherResourceCommand {
     this.done = false; // Changing to true when reaching the destination
     // Behaviours
     this.movement = new Movement(this.entity.scene);
-
-    // ⚠️ TODO Fix this reference to entity's scene
   }
 
   update() {

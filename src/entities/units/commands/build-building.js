@@ -8,7 +8,7 @@ export default class BuildBuildingCommand {
     this.latestBuildingTime = 0;
     this.done = false;
     // Behaviours
-    this.movement = new Movement(this.entity.scene); // TODO Fix this reference to entity's scene
+    this.movement = new Movement(this.entity.scene);
   }
 
   update() {

@@ -122,6 +122,8 @@ export default class Enemy extends Phaser.GameObjects.Arc {
   }
 
   attack(entity) {
+    // :info: Do not run the same AttackEntity again because it will produce a new hit when it shouldnt.
+    // Consider that the entity could change and the attacker should be allowed to exceed the tps limit.
     if (
       this.command == null ||
       (this.command instanceof AtttackEntityCommand &&

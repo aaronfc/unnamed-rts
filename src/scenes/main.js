@@ -96,27 +96,6 @@ export default class MainScene extends Phaser.Scene {
     townCenter.status = "built";
     this.map.addBuilding(townCenter);
 
-    // Semi-built house
-    //var house = new House(this, 300, 50);
-    //house.status = "building";
-    //this.map.addBuilding(house);
-
-    // Built tower
-    //var tower = new Tower(this, 300, 50);
-    //tower.build(50); // Build to 100% by passing the total units needed
-    //this.map.addBuilding(tower);
-
-    // Shoot a projectile
-    //var projectile = new Projectile(
-    //  this,
-    //  new Phaser.Math.Vector2(300, 50),
-    //  5,
-    //  new Phaser.Math.Vector2(500, 500),
-    //  200,
-    //  10
-    //);
-    //this.projectiles.push(projectile);
-
     // Create initial villagers
     let newPosition = townCenter.getNewVillagerPosition();
     for (var i = 0; i < INITIAL_VILLAGERS; i++) {
@@ -167,9 +146,6 @@ export default class MainScene extends Phaser.Scene {
         this.events.emit("map-right-clicked", pointer);
       } else {
         this.events.emit("map-left-or-middle-clicked", pointer);
-        //tower._shootProjectile(
-        //  new Phaser.Math.Vector2(pointer.worldX, pointer.worldY)
-        //);
       }
     });
 
@@ -242,7 +218,9 @@ export default class MainScene extends Phaser.Scene {
     this.events.on(
       "new-villager-selected",
       (villager) => {
-        this.selectedVillagers.push(villager); // TODO Beware we might add duplicated villagers
+        if (this.selectedVillagers.filter((v) => v != villager).length == 0) {
+          this.selectedVillagers.push(villager);
+        }
       },
       this
     );
